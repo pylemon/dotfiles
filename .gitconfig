@@ -1,0 +1,11 @@
+[core]
+	editor = emacs
+[alias]
+	last = cat-file commit HEAD
+	li = log --graph --oneline --all
+	st = status
+	co = checkout
+	ci = commit
+[user]
+	name = pylemon
+	email = leeway1985@gmail.com
