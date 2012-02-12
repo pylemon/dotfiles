@@ -1,5 +1,3 @@
-[core]
-	editor = emacs
 [alias]
 	last = cat-file commit HEAD
 	li = log --graph --oneline --all
