@@ -29,7 +29,7 @@ ZSH_THEME="bucunzai"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git python django terminator autojump)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -41,7 +41,11 @@ alias la='ls -A'
 alias l='ls -CF'
 alias df='df -h'
 alias tree='tree -C'
-alias emacs='emacs -nw'
+alias nautilus='nautilus --no-desktop'
 alias vi='vim'
-#alias test_server="ssh -v -l USERNAME IP ADDRESS
-#alias steve="ssh -v -l USERNAME IP ADDRESS
+alias sylvia='ssh -l administrator 172.16.21.80'
+alias steve='ssh -l liwei 172.16.120.222'
+alias run80='cd ~/work/src/ && sudo python manage.py runserver 0.0.0.0:80'
+alias shell='cd ~/work/src/ && sudo python manage.py shell'
+alias dbshell='cd ~/work/src/ && sudo python manage.py dbshell'
+alias profile='python kernprof.py -l -v '
