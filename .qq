@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/home/liwei/Downloads/prism/prism -override "/home/liwei/.webapps/qq@prism.app/override.ini" -webapp qq@prism.app
