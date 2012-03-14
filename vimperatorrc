@@ -1,0 +1,88 @@
+" Colortheme
+colorscheme vimPgray
+
+" Window title
+set titlestring=Firefox
+
+" 默认布局
+set toolbars=noaddons,nobookmarks,menu,nonavigation,tabs
+
+" 状态栏元素
+set status=input,location,tabcount,position
+
+" Editor, C-i invokes it in text fields
+set editor=emacsclient\ -c
+
+" Show completions and use AwesomeBar (+search plugins)
+set autocomplete
+set complete=sl
+
+" Internal default search engine is ignored, plugins are used
+set ds=yubnub
+
+"超级的下一页,快捷键是[[和]]
+set nextpattern=\s*下一页|下一张|下一篇|下页|后页\s*,^\bnext\b,\\bnext\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
+set previouspattern=\s*上一页|上一张|上一篇|上页|前页\s*,^\bprev|previous\b,\\bprev|previous\\b,^<$,^(<<|«)$,^(<|«),(<|«)$
+
+"命令行菜单最多显示的条目数
+set maxitems=12
+
+"在dict.cn中查找所选词的英语
+"command! dict -nargs=* tabopen http://dict.cn/<args>
+"map w :dict
+"map <silent> w :exe ":dict "+content.getSelection()<CR>
+
+
+" {{{ Key bindings
+"     - Emacs GTK key-theme and FF already provide bindings for input fields
+
+" M-x enters command mode
+noremap <A-x> :
+
+" Goto the top of the document with M-<
+noremap <A-<> gg
+
+" Goto the end of the document with M->
+noremap <A->> G
+
+" Use C-s and C-r for searching (n/N for next/prev as in less)
+noremap <C-s> /
+noremap <C-r> ?
+
+" Copy the current URL to the clipboard with M-w
+noremap <A-w> y
+"
+" Copy selected text to the clipboard with C-w 
+noremap <C-w> Y
+
+" Paste the current clipboard selection to a new buffer with C-y
+noremap <C-y> P
+
+" }}}
+
+
+"jk一次多翻一点
+noremap j 3j
+noremap k 3k
+
+"修改JK为向上向下半页
+map J <C-d>
+noremap K <C-u>
+
+"外观配置
+map <C-Down> :set toolbars=none,navigation,tabs<CR>
+map <C-Up> :set toolbars=none,tabs<CR>
+
+"修改][为超级上下页
+map ] ]]
+map [ [[
+
+"修改hl为切换前后标签
+noremap q gT
+noremap w gt
+noremap h gT
+noremap l gt
+
+"访问shanbay时禁用vimperator
+"autocmd LocationChange .* :js modes.passAllKeys = /www\.shanbay\.com\/review/.test(buffer.URL)
+
