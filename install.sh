@@ -13,7 +13,6 @@ echo 'setting up .gitconfig ...'
 rm -f /home/liwei/.vimperatorrc
 cp -f /home/liwei/dotfiles/vimperatorrc /home/liwei/.vimperatorrc
 
-rm -rf /home/liwei/.vimperator
 cp -rf /home/liwei/dotfiles/vimperator /home/liwei/.vimperator
 
 echo 'setting up .vimperator ...'
