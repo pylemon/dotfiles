@@ -1,4 +1,4 @@
-### auto install ###
+### auto install dot files ###
 
 all my dotfiles are here, using 
 
@@ -6,6 +6,7 @@ all my dotfiles are here, using
 
 to copy files to certain location
 
-*  gitconfig
+my tool list:
 
+*  git
 *  vimperator
