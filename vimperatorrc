@@ -84,5 +84,5 @@ noremap h gT
 noremap l gt
 
 "访问shanbay时禁用vimperator
-"autocmd LocationChange .* :js modes.passAllKeys = /www\.shanbay\.com\/review/.test(buffer.URL)
+autocmd LocationChange /www\.shanbay\.com\/review :js modes.passAllKeys = /www\.shanbay\.com\/review/.test(buffer.URL)
 
