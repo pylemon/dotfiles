@@ -8,8 +8,9 @@
 [user]
 	name = pylemon
 	email = leeway1985@gmail.com
+[core]
+	editor = emacsclient
 [color]
-	editor = emacsclient -c
 	status = auto
 	branch = auto
 	diff = auto
