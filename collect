@@ -8,12 +8,12 @@ echo 'backing up .gitconfig ...'
 # backup vimperator
 cp -f /home/liwei/.vimperatorrc /home/liwei/dotfiles/_vimperatorrc
 echo 'backing up .vimperatorrc ...'
-rm -rf vimperator
-mkdir vimperator
-mkdir vimperator/plugin
-mkdir vimperator/colors
-cp -rf /home/liwei/.vimperator/plugin vimperator/
-cp -rf /home/liwei/.vimperator/colors vimperator/
+rm -rf _vimperator
+mkdir _vimperator
+mkdir _vimperator/plugin
+mkdir _vimperator/colors
+cp -rf /home/liwei/.vimperator/plugin _vimperator/
+cp -rf /home/liwei/.vimperator/colors _vimperator/
 echo 'backing up .vimperator ...'
 
 
