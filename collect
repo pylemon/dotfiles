@@ -7,10 +7,16 @@ echo 'backing up .gitconfig ...'
 
 # backup vimperator
 cp -f /home/liwei/.vimperatorrc /home/liwei/dotfiles/vimperatorrc
-cp -rf /home/liwei/.vimperator /home/liwei/dotfiles/vimperator
+rm -rf vimperator
+mkdir vimperator
+mkdir vimperator/plugin
+mkdir vimperator/colors
+cp -rf /home/liwei/.vimperator/plugin vimperator/plugin
+cp -rf /home/liwei/.vimperator/colors vimperator/colors
 echo 'backing up .vimperator ...'
 
 
 # backup awesome
-cp -rf /home/liwei/.config/awesome/ /home/liwei/dotfiles
+rm -rf awesome
+cp -rf /home/liwei/.config/awesome awesome
 echo 'backing up .config/awesome ...'
