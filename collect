@@ -26,3 +26,6 @@ echo 'backing up .muttatorrc ...'
 rm -rf _config/awesome
 cp -rf /home/liwei/.config/awesome _config/
 echo 'backing up .config/awesome ...'
+
+# copy all to dropbox
+cp -rf /home/liwei/dotfiles /home/liwei/Dropbox/
