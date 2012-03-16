@@ -18,7 +18,7 @@ echo 'backing up .vimperator ...'
 
 
 # backup muttatorrc
-cp -f /home/liwei/.muttatorrc /home/liwei/dotfiles/muttatorrc
+cp -f /home/liwei/.muttatorrc /home/liwei/dotfiles/_muttatorrc
 echo 'backing up .muttatorrc ...'
 
 
