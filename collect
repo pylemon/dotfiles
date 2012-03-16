@@ -12,8 +12,8 @@ rm -rf vimperator
 mkdir vimperator
 mkdir vimperator/plugin
 mkdir vimperator/colors
-cp -rf /home/liwei/.vimperator/plugin vimperator/plugin
-cp -rf /home/liwei/.vimperator/colors vimperator/colors
+cp -rf /home/liwei/.vimperator/plugin vimperator
+cp -rf /home/liwei/.vimperator/colors vimperator
 echo 'backing up .vimperator ...'
 
 
