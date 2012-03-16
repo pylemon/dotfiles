@@ -12,5 +12,5 @@ echo 'backing up .vimperator ...'
 
 
 # backup awesome
-cp -rf /home/liwei/.config/awesome /home/liwei/dotfiles/awesome
+cp -rf /home/liwei/.config/awesome/ /home/liwei/dotfiles
 echo 'backing up .config/awesome ...'
