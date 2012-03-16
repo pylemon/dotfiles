@@ -23,6 +23,6 @@ echo 'backing up .muttatorrc ...'
 
 
 # backup awesome
-rm -rf awesome
-cp -rf /home/liwei/.config/awesome awesome
+rm -rf _config/awesome
+cp -rf /home/liwei/.config/awesome _config/
 echo 'backing up .config/awesome ...'
