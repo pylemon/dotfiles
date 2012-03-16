@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# backup gitconfig
+
+rm -f gitconfig
+cp -f /home/liwei/.gitconfig /home/liwei/dotfiles/gitconfig
+
+echo 'backing up .gitconfig ...'
+
+# backup vimperator
+
+rm -f vimperatorrc
+cp -f /home/liwei/.vimperatorrc /home/liwei/dotfiles/vimperatorrc
+cp -rf /home/liwei/.vimperator /home/liwei/dotfiles/vimperator
+
+echo 'backing up .vimperator ...'
