@@ -1,24 +1,21 @@
-" Colortheme
+" 配色主题
 colorscheme vimPgray
 
-" Window title
-set titlestring=Firefox
-
 " 默认布局
-set toolbars=noaddons,nobookmarks,menu,nonavigation,tabs
+set toolbars=noaddons,nobookmarks,nomenu,nonavigation,tabs
 
 " 状态栏元素
 set status=input,location,tabcount,position
 
-" Editor, C-i invokes it in text fields
+" 编辑器设置, C-i 在编辑框中触发
 set editor=emacsclient\ -c
 
 " Show completions and use AwesomeBar (+search plugins)
 set autocomplete
 set complete=sl
 
-" Internal default search engine is ignored, plugins are used
-set ds=yubnub
+" 设置默认的搜索引擎
+set ds=g
 
 "超级的下一页,快捷键是[[和]]
 set nextpattern=\s*下一页|下一张|下一篇|下页|后页\s*,^\bnext\b,\\bnext\\b,^>$,^(>>|»)$,^(>|»),(>|»)$,\\bmore\\b
@@ -27,14 +24,17 @@ set previouspattern=\s*上一页|上一张|上一篇|上页|前页\s*,^\bprev|pr
 "命令行菜单最多显示的条目数
 set maxitems=12
 
-"在dict.cn中查找所选词的英语
-"command! dict -nargs=* tabopen http://dict.cn/<args>
-"map w :dict
-"map <silent> w :exe ":dict "+content.getSelection()<CR>
+"访问shanbay时禁用vimperator
+autocmd LocationChange /www\.shanbay\.com\/review :js modes.passAllKeys = /www\.shanbay\.com\/review/.test(buffer.URL)
 
 
-" {{{ Key bindings
+" {{{ Key bindings 键绑定设置
 "     - Emacs GTK key-theme and FF already provide bindings for input fields
+
+"在dict.cn中查找所选词的英语
+command! dict -nargs=* tabopen http://dict.cn/<args>
+map w :dict
+map <silent> w :exe ":dict "+content.getSelection()<CR>
 
 " M-x enters command mode
 noremap <A-x> :
@@ -51,15 +51,12 @@ noremap <C-r> ?
 
 " Copy the current URL to the clipboard with M-w
 noremap <A-w> y
-"
+
 " Copy selected text to the clipboard with C-w 
 noremap <C-w> Y
 
 " Paste the current clipboard selection to a new buffer with C-y
 noremap <C-y> P
-
-" }}}
-
 
 "jk一次多翻一点
 noremap j 3j
@@ -79,10 +76,8 @@ map [ [[
 
 "修改hl为切换前后标签
 noremap q gT
-noremap w gt
+"noremap w gt
 noremap h gT
 noremap l gt
 
-"访问shanbay时禁用vimperator
-autocmd LocationChange /www\.shanbay\.com\/review :js modes.passAllKeys = /www\.shanbay\.com\/review/.test(buffer.URL)
-
+" }}}
