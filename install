@@ -1,18 +1,16 @@
 #!/bin/bash
 
 # install gitconfig
-rm -f /home/liwei/.gitconfig
 cp -f /home/liwei/dotfiles/gitconfig /home/liwei/.gitconfig
 echo 'setting up .gitconfig ...'
 
 
 # install vimperator
-rm -f /home/liwei/.vimperatorrc
 cp -f /home/liwei/dotfiles/vimperatorrc /home/liwei/.vimperatorrc
 cp -rf /home/liwei/dotfiles/vimperator /home/liwei/.vimperator
 echo 'setting up .vimperator ...'
 
 
 # install awesome
-cp -rf /home/liwei/dotfiles/awesome /home/liwei/.config/awesome
-echo 'setting up .config/awesome ...'
+#cp -rf /home/liwei/dotfiles/awesome/ /home/liwei/.config/awesome/
+#echo 'setting up .config/awesome ...'
