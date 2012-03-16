@@ -6,7 +6,7 @@ echo 'backing up .gitconfig ...'
 
 
 # backup vimperator
-cp -f /home/liwei/.vimperatorrc /home/liwei/dotfiles/vimperatorrc
+cp -f /home/liwei/.vimperatorrc /home/liwei/dotfiles/_vimperatorrc
 echo 'backing up .vimperatorrc ...'
 rm -rf vimperator
 mkdir vimperator
