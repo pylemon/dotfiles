@@ -80,7 +80,7 @@ end
 -- }}}
 
 -- This is used later as the default terminal and editor to run.
-terminal = "sakura"
+terminal = "urxvtc"
 browser = "firefox"
 
 -- Default modkey.
@@ -416,7 +416,7 @@ awful.rules.rules = {
     { rule = { class = "gimp" },
       properties = { floating = true } },
 
-    { rule = { class = "sakura" },
+    { rule = { class = "Urxvt" },
       properties = { tag = tags[1][1] } },
     -- { rule = { class = "Emacs" },
     --   properties = { tag = tags[1][2] } },

@@ -26,6 +26,9 @@ killall emacs
 # 启动emacs deamon 方便使用 emacsclient (alias ex,et)
 emacs --daemon &
 
+# 启动urxvt deamon
+urxvtd &
+
 # 启动 tilda 下拉式虚拟终端
 tilda &
 
