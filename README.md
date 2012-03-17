@@ -1,14 +1,8 @@
-### auto install dot files ###
+## auto install dot files ##
 
 all my dotfiles are here
 
 #### Usage ####
-
-*install*
-
-    $ ./install
-
-This command will copy all dotfiles to their location
 
 *collect*
 
@@ -16,10 +10,19 @@ This command will copy all dotfiles to their location
 	
 This command will collect all dotfiles to this folder
 
+*install*
 
-my tool list:
+    $ ./install
 
+This command will copy all dotfiles to their location NOT finish
+
+
+
+##### Tool List #####
+
+*  rxvt-unicode
+*  awesome
 *  git
 *  vimperator
 *  muttator
-*  awesome
+
