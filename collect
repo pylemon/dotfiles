@@ -1,24 +1,22 @@
 #!/bin/bash
 
 # backup gitconfig
-cp -f /home/liwei/.gitconfig /home/liwei/dotfiles/_gitconfig
+cp -f /home/liwei/.gitconfig _gitconfig
 echo 'backing up .gitconfig ...'
 
 
 # backup vimperator
-cp -f /home/liwei/.vimperatorrc /home/liwei/dotfiles/_vimperatorrc
+cp -f /home/liwei/.vimperatorrc _vimperatorrc
 echo 'backing up .vimperatorrc ...'
-rm -rf _vimperator
-mkdir _vimperator
-mkdir _vimperator/plugin
-mkdir _vimperator/colors
+rm -rf _vimperator/plugin
+rm -rf _vimperator/colors
 cp -rf /home/liwei/.vimperator/plugin _vimperator/
 cp -rf /home/liwei/.vimperator/colors _vimperator/
 echo 'backing up .vimperator ...'
 
 
 # backup muttatorrc
-cp -f /home/liwei/.muttatorrc /home/liwei/dotfiles/_muttatorrc
+cp -f /home/liwei/.muttatorrc _muttatorrc
 echo 'backing up .muttatorrc ...'
 
 
@@ -26,6 +24,10 @@ echo 'backing up .muttatorrc ...'
 rm -rf _config/awesome
 cp -rf /home/liwei/.config/awesome _config/
 echo 'backing up .config/awesome ...'
+
+
+# backup rxvt-unicode
+cp -f /home/liwei/.Xresources _Xresources
 
 # copy all to dropbox
 cp -rf /home/liwei/dotfiles /home/liwei/Dropbox/
