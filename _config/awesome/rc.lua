@@ -120,8 +120,8 @@ tags[1] = awful.tag(
 -- 如果外接显示器 自定义标签如下
 if screen.count()==2 then
    tags[2] = awful.tag(
-      { "1.Term", "2.Emacs", "3.Firefox" }, 2,
-      { layouts[3], layouts[10], layouts[10] })
+      { "screen2", }, 2,
+      { layouts[10], })
 end
 -- }}}
 
@@ -304,6 +304,11 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+
+    -- emacs and firefox start
+    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("emacsclient -nc") end),
+    awful.key({ modkey, "Control" }, "f", function () awful.util.spawn(browser) end),
+
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -416,12 +421,12 @@ awful.rules.rules = {
     { rule = { class = "gimp" },
       properties = { floating = true } },
 
-    { rule = { class = "Urxvt" },
-      properties = { tag = tags[1][1] } },
+    -- { rule = { class = "urxvt" },
+    --   properties = { tag = tags[1][1] } },
     -- { rule = { class = "Emacs" },
     --   properties = { tag = tags[1][2] } },
-    { rule = { class = "Firefox" },
-      properties = { tag = tags[1][3] } },
+    -- { rule = { class = "Firefox" },
+    --   properties = { tag = tags[1][3] } },
     { rule = { class = "Pidgin" },
       properties = { tag = tags[1][4] } },
     { rule = { class = "Prism" },
