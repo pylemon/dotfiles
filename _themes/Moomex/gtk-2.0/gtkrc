@@ -1,0 +1,768 @@
+###################################################################
+# 	   Moomex Style For Gnome Desktop			  #
+#	 Copyright © 2007-2008 Faisal Hakami			  #
+#	         moomex@gmail.com 			  	  #
+#	Modify under GNU General Public License 		  #
+###################################################################
+gtk-button-images = 0
+gtk-icon-sizes = "panel-menu=24,24\npanel=20,20\ngtk-button=18,18\ngtk-large-toolbar=24,24"
+gtk_color_scheme = "fg_color:#000\nbg_color:#EDECEB\nbase_color:#fff\ntext_color:#1A1A1A\nselected_bg_color:#8E8E8E\nselected_fg_color:#000\ntooltip_bg_color:#000\ntooltip_fg_color:#FFF"
+
+style "moomex-pixmap" {
+  GtkMenu        ::horizontal_padding   = 0
+  GtkMenu        ::vertical_padding     = 0
+  WnckTasklist   ::fade-overlay-rect 	= 0
+  GtkRange       ::trough_border    	= 0
+  GtkRange       ::slider_width      	= 15
+  GtkRange       ::stepper_size      	= 15
+  GtkPaned       ::handle_size       	= 6
+  GtkToolbar     ::internal-padding  	= 1
+  GtkScrollbar   ::min_slider_length 	= 30
+  GtkMenuBar     ::internal-padding  	= 1
+  GtkExpander    ::expander_size     	= 16
+  GtkScale       ::slider-length     	= 15
+  GtkTreeView    ::expander_size     	= 14
+  GtkWidget	 ::interior_focus	= 1
+  GtkWidget	 ::focus_padding	= 0
+  GtkCheckButton ::indicator_size    	= 12
+  GtkButton      ::child-displacement-x = 0
+  GtkButton      ::child-displacement-y = 0
+  GtkButton      ::default_border    	= { 0, 0, 0, 0 }
+  GtkButton	 ::inner-border 	= { 3, 3, 0, 0 }
+  GtkButton	 ::outside-border	= { 0, 0, 0, 0 }
+  GtkEntry	 ::inner-border		= { 1, 1, 1, 1 }
+  GtkTreeView	 ::odd_row_color     	= @base_color
+  GtkTreeView	 ::even_row_color    	= shade (1.0, @base_color)
+
+  xthickness = 1
+  ythickness = 1
+
+  fg[NORMAL]        = @fg_color
+  fg[PRELIGHT]      = @fg_color
+  fg[SELECTED]      = @selected_fg_color
+  fg[ACTIVE]        = @fg_color
+  fg[INSENSITIVE]   = darker (@bg_color)
+
+  bg[NORMAL]        = @bg_color
+  bg[PRELIGHT]      = shade (1.02, @bg_color)
+  bg[SELECTED]	    = @selected_bg_color
+  bg[INSENSITIVE]   = @bg_color
+  bg[ACTIVE]        = shade (0.9, @bg_color)
+
+  base[NORMAL]      = @base_color
+  base[PRELIGHT]    = shade (0.95, @bg_color)
+  base[ACTIVE]      = shade (0.9, @selected_bg_color)
+  base[SELECTED]    = @selected_bg_color
+  base[INSENSITIVE] = @bg_color
+
+  text[NORMAL]      = @text_color
+  text[PRELIGHT]    = @text_color
+  text[ACTIVE]      = @tooltip_bg_color
+  text[SELECTED]    = @selected_fg_color
+  text[INSENSITIVE] = darker (@bg_color)
+
+	engine "pixmap"	{
+
+		image
+		{
+			function	= HANDLE
+			overlay_file	= "Pixmaps/handle-h.png"
+			overlay_stretch	= FALSE
+			orientation	= HORIZONTAL
+		}
+
+		image
+		{
+			function	= HANDLE
+			overlay_file	= "Pixmaps/handle-v.png"
+			overlay_stretch	= FALSE
+			orientation	= VERTICAL
+		}
+
+		image
+		{
+			function	= FOCUS
+			file		= "Pixmaps/null.png"
+			border		= {0,0,0,0}
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= VLINE
+			recolorable	= TRUE
+			file		= "Pixmaps/line-v.png"
+			border		= { 1, 1, 0, 0 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= HLINE
+			recolorable	= TRUE
+			file		= "Pixmaps/line-h.png"
+			border		= { 0, 0, 1, 1 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	 = ARROW
+			recolorable	 = TRUE
+			overlay_file	 = "Pixmaps/null.png"
+			overlay_border	 = { 0, 0, 0, 0 }
+			overlay_stretch	 = FALSE
+			arrow_direction	 = UP
+		}
+
+		image
+		{
+			function	 = ARROW
+			recolorable	 = TRUE
+			overlay_file	 = "Pixmaps/null.png"
+			overlay_border 	 = { 0, 0, 0, 0 }
+			overlay_stretch  = FALSE
+			arrow_direction	 = DOWN
+		}
+
+		image
+		{
+			function	 = ARROW
+			recolorable	 = TRUE
+			overlay_file	 = "Pixmaps/null.png"
+			overlay_border	 = { 0, 0, 0, 0 }
+			overlay_stretch	 = FALSE
+			arrow_direction	 = LEFT
+		}
+
+		image
+		{
+			function	 = ARROW
+			recolorable	 = TRUE
+			overlay_file	 = "Pixmaps/null.png"
+			overlay_border	 = { 0, 0, 0, 0 }
+			overlay_stretch	 = FALSE
+			arrow_direction	 = RIGHT
+		}
+	}
+}
+###################################################################
+#			PANEL-BLACK				  #
+###################################################################
+style "moomex-panel"
+{
+  xthickness	= 4
+  ythickness	= 0
+  GtkWidget::focus_padding = 6
+
+
+  fg[NORMAL]	   = @tooltip_fg_color
+  fg[PRELIGHT]     = @tooltip_fg_color
+  fg[ACTIVE]	   = @tooltip_fg_color
+  fg[SELECTED]     = @tooltip_fg_color
+  fg[INSENSITIVE]  = @tooltip_fg_color
+
+  bg[NORMAL]       = @tooltip_bg_color
+  bg[PRELIGHT]     = @tooltip_bg_color
+  bg[SELECTED]	   = @tooltip_bg_color
+  bg[INSENSITIVE]  = @tooltip_bg_color
+  bg[ACTIVE]       = @tooltip_bg_color
+
+  bg_pixmap[NORMAL]	 = "Panel/panel-bg-black.png"
+  bg_pixmap[INSENSITIVE] = "Panel/panel-bg-black.png"
+  bg_pixmap[PRELIGHT]	 = "Panel/panel-bg-black.png"
+  bg_pixmap[SELECTED]	 = "Panel/panel-bg-black.png"
+  bg_pixmap[ACTIVE]	 = "Panel/panel-bg-black.png"
+	engine "pixmap"	{
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			state		= NORMAL
+			file		= "Panel/panelbutton-black.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "Panel/panelbutton-1.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			shadow		= OUT
+			state		= PRELIGHT
+			file		= "Panel/panelbutton-black.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			shadow		= IN
+			state		= PRELIGHT
+			file		= "Panel/panelbutton-black-2.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			state		= ACTIVE
+			file		= "Panel/panelbutton-black-2.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			state		= INSENSITIVE
+			file		= "Panel/panelbutton-black.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+	}
+
+}
+
+###################################################################
+#			  MenuBar				  #
+###################################################################
+style "moomex-menubar"
+{
+  xthickness	= 2
+  ythickness	= 3
+
+  text[NORMAL]	= @tooltip_fg_color
+  fg[NORMAL]	   = @tooltip_fg_color
+  fg[PRELIGHT]     = @tooltip_fg_color
+  fg[ACTIVE]	   = @tooltip_fg_color
+  fg[SELECTED]     = @tooltip_fg_color
+  fg[INSENSITIVE]  = @tooltip_fg_color
+
+  bg[NORMAL]       = @tooltip_bg_color
+  bg[PRELIGHT]     = @tooltip_bg_color
+  bg[SELECTED]	   = @tooltip_bg_color
+  bg[INSENSITIVE]  = @tooltip_bg_color
+  bg[ACTIVE]       = @tooltip_bg_color
+
+
+	engine "pixmap"
+	{
+		image
+		{
+			function	= BOX
+			state		= NORMAL
+			file		= "Menu/menubar.png"
+			border		= { 0, 0, 0, 0 }
+			stretch		= TRUE
+    		}
+
+		image
+		{
+			function	= BOX
+			state		= ACTIVE
+			file		= "Menu/menubar.png"
+			border		= { 0, 0, 0, 0}
+			stretch		= TRUE
+    		}
+
+		image
+		{
+			function	= BOX
+			state		= INSENSITIVE
+			file		= "Menu/menubar.png"
+			border		= { 0, 0, 0, 0 }
+			stretch		= TRUE
+    		}
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			state		= PRELIGHT
+			file		= "Menu/menubar-item.png"
+			border		= { 1, 1, 1, 1 }
+			stretch		= TRUE
+		}
+ 	}
+}
+
+###################################################################
+#			   Menu 				  #
+###################################################################
+style "moomex-menu"
+{
+  xthickness = 0
+  ythickness = 0
+  bg[NORMAL] = @tooltip_bg_color
+
+	engine "pixmap"
+	{
+		image
+		{
+			function	= BOX
+			recolorable    	= TRUE
+			detail		= "menu"
+			file		= "Menu/menu.png"
+			border		= { 1, 1, 1, 1 }
+			stretch		= TRUE
+		}
+	}
+}
+
+###################################################################
+#			   Menu-Item				  #
+###################################################################
+style "moomex-menu-item"
+{
+  xthickness	= 2
+  ythickness	= 3
+
+
+	fg[NORMAL]         = @tooltip_fg_color
+	fg[PRELIGHT]	   = @tooltip_fg_color  
+	text[NORMAL]       = @tooltip_fg_color
+	text[PRELIGHT]     = @tooltip_fg_color
+	text[SELECTED]     = @tooltip_fg_color
+	text[ACTIVE]       = @tooltip_fg_color
+	text[INSENSITIVE]  = @tooltip_fg_color
+
+
+  #fg[NORMAL]	= @tooltip_fg_color
+  #fg[PRELIGHT]	= shade (0.9, @tooltip_fg_color)
+
+	engine "pixmap"
+	{
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			file		= "Menu/menuitem.png"
+			border		= { 1, 1, 1, 1 }
+			stretch		= TRUE
+		}
+		image
+		{
+			function	= ARROW
+			recolorable	= TRUE
+			state		= NORMAL
+			overlay_file	= "Arrows/arrow-right-norm.png"
+			overlay_stretch	= FALSE
+			arrow_direction	= RIGHT
+		}
+
+		image
+		{
+			function	= ARROW
+			recolorable	= TRUE
+			state		= PRELIGHT
+			overlay_file	= "Arrows/arrow-right-prelight.png"
+			overlay_stretch	= FALSE
+			arrow_direction	= RIGHT
+		}
+
+		image
+		{
+			function	= HLINE
+			recolorable	= TRUE
+			file		= "Menu/menuline.png"
+			border		= { 0, 0, 0, 0 }
+			stretch		= TRUE
+		}
+	}
+}
+
+###################################################################
+#			   Progressbar				  #
+###################################################################
+style "moomex-progressbar"
+{
+  xthickness = 0
+  ythickness = 0
+  bg[NORMAL]   = @tooltip_bg_color
+  bg[PRELIGHT] = @text_color
+  fg[PRELIGHT] = @text_color
+  fg[NORMAL]   = @fg_color
+
+	engine "pixmap"
+	{
+		image
+		{
+
+			function	= BOX
+			recolorable	= TRUE
+			detail		= "trough"
+			file		= "Progressbar/trough-progressbar-horiz.png"
+			border		= { 4 , 4 , 2 , 2}
+			stretch		= TRUE
+			orientation	= HORIZONTAL
+		}
+
+		image
+		{
+
+			function	= BOX
+			recolorable	= TRUE
+			detail		= "bar"
+			file		= "Progressbar/progressbar-horiz.png"
+			border		= { 2 , 2 , 2 , 2}
+			stretch		= TRUE
+			orientation	= HORIZONTAL
+		}
+
+		image
+		{
+
+			function	= BOX
+			recolorable	= TRUE
+			detail		= "trough"
+			file		= "Progressbar/trough-progressbar-vert.png"
+			border		= {2 , 2 ,4 , 4}
+			stretch		= TRUE
+			orientation	= VERTICAL
+		}
+
+		image
+		{
+
+			function	= BOX
+			recolorable	= TRUE
+			detail		= "bar"
+			file		= "Progressbar/progressbar-vert.png"
+			border		= { 2 , 2 , 2 ,2}
+			stretch		= TRUE
+			orientation	= VERTICAL
+		}
+	}
+}
+
+# progressbar widgets
+#class "GtkProgressBar"			style:highest "moomex-progressbar"
+#widget_class "*ProgressBar*" 		style:highest "moomex-progressbar"
+#widget_class "*MenuItem.*ProgressBar*" 	style:highest "moomex-progressbar"
+
+style "moomex-clearlooks"
+{
+
+  engine "clearlooks" {
+    radius = 2.5
+    menubarstyle      = 2 # 0 = flat, 1 = sunken, 2 = flat gradient
+    toolbarstyle      = 0 # 0 = flat, 1 = enable effects
+    animation         = FALSE
+    #scrollbar_color   = "#D5C8B5"
+    #colorize_scrollbar = TRUE
+    style  = GLOSSY
+  }
+}
+
+style "clearlooks-wide"
+{
+  xthickness = 2
+  ythickness = 2
+}
+
+style "clearlooks-wider"
+{
+  xthickness = 3
+  ythickness = 3
+}
+
+style "clearlooks-button" = "clearlooks-wider"
+{
+  xthickness = 0
+  ythickness = 3
+
+  bg[NORMAL]        = shade (1.05, @bg_color)
+  bg[INSENSITIVE]   = shade (1.04, @bg_color)
+  bg[PRELIGHT]      = mix(0.60, shade (1.05,@bg_color), @selected_bg_color)
+# bg[PRELIGHT]      = shade (1.08, @bg_color)
+  bg[ACTIVE]        = shade (0.85, @bg_color)
+  text[NORMAL]      = @fg_color
+  text[PRELIGHT]    = @fg_color
+}
+
+style "clearlooks-notebook"
+{
+  xthickness = 2
+  ythickness = 2
+  bg[NORMAL]        = shade (1.04, @bg_color)
+}
+
+style "clearlooks-tasklist"
+{
+  xthickness = 5
+  ythickness = 3
+}
+
+style "clearlooks-toolbar"
+{
+  bg[NORMAL]       = shade (1.02, @bg_color)
+}
+
+style "clearlooks-menu"
+{
+  xthickness = 0
+  ythickness = 0
+  bg[NORMAL] = shade (1.08, @bg_color)
+
+  engine "clearlooks" {
+    radius = 0.0
+    style  = GLOSSY
+  }
+}
+
+style "clearlooks-menubar-item"
+{
+  xthickness = 2
+  ythickness = 3
+  fg[PRELIGHT] = @selected_fg_color
+  engine "clearlooks" {
+    radius = 3.0
+    style  = GLOSSY
+  }
+}
+                  
+style "clearlooks-menu-item"
+{
+  xthickness = 2
+  ythickness = 3
+
+	fg[NORMAL]         = @tooltip_fg_color
+	fg[PRELIGHT]	   = @selected_fg_color  
+	text[NORMAL]       = @tooltip_fg_color
+	text[PRELIGHT]     = @selected_fg_color
+	text[SELECTED]     = @selected_fg_color
+	text[ACTIVE]       = @fg_color
+	text[INSENSITIVE]  = darker (@bg_color)
+
+  engine "clearlooks" {
+    radius = 0.0
+    style  = GLOSSY
+  }
+}
+
+style "clearlooks-radiobutton"
+{
+  text[NORMAL]      = @text_color
+  text[PRELIGHT]    = @text_color
+  text[ACTIVE]      = @selected_fg_color
+  text[SELECTED]    = @selected_fg_color
+  text[INSENSITIVE] = darker (@bg_color)
+}
+
+style "clearlooks-tree"
+{
+  xthickness = 2
+  ythickness = 1
+}
+
+style "clearlooks-frame-title"
+{
+  fg[NORMAL] = lighter (@fg_color)
+}
+
+style "clearlooks-tooltips"
+{
+	xthickness = 4
+	ythickness = 4
+
+	bg[NORMAL] = "#F5F5B5"
+	fg[NORMAL] = "#000000"
+}
+
+style "clearlooks-progressbar"
+{
+}
+
+style "clearlooks-scrollbar"
+{
+  engine "clearlooks" {
+    style  = GUMMY
+  }
+}
+
+style "clearlooks-combo"
+{
+}
+
+style "clearlooks-menubar"
+{
+}
+
+style "clearlooks-scale"
+{
+	GtkRange::trough-side-details = 1
+}	
+
+style "nautilus-location"
+{
+  bg[NORMAL] = mix(0.60, shade (1.05,@bg_color), @selected_bg_color)
+}
+
+style "clearlooks-combobox-text-color-workaround"
+{
+	text[NORMAL]      = @fg_color
+	text[PRELIGHT]    = @fg_color
+	text[SELECTED]    = @selected_fg_color
+	text[ACTIVE]      = @fg_color
+	text[INSENSITIVE] = darker (@bg_color)
+}
+
+style "moomex-label"
+{
+  engine "clearlooks" {
+    style  = CLASSIC
+  }
+}
+
+style "moomex-calendar"
+{
+  xthickness = 0
+  ythickness = 0
+  GtkWidget::focus_padding = 0
+
+  fg[NORMAL]        = @text_color
+  bg[NORMAL]        = shade (0.9, @base_color)
+  base[NORMAL]      = @base_color
+  base[ACTIVE]      = shade (1.0, @selected_bg_color)
+  text[ACTIVE]      = @selected_fg_color
+}
+
+style "panel-item-editor"
+{
+  xthickness = 0
+  ythickness = 0
+  bg[NORMAL]        = @bg_color
+  #text[NORMAL]      = @fg_color
+  text[PRELIGHT]    = @fg_color
+
+    bg_pixmap[NORMAL] = "Pixmaps/null.png"
+}
+
+style "panel-menu"
+{
+  fg[NORMAL]		 = @tooltip_fg_color
+  fg[PRELIGHT]	  	 = shade (0.9, @tooltip_fg_color)
+  bg_pixmap[NORMAL]	 = "Panel/panel-bg-black.png"
+
+	engine "pixmap"	{
+
+		image
+		{
+			function	= BOX
+			recolorable	= TRUE
+			state		= NORMAL
+			file		= "Panel/panel-bg-black.png"
+			border		= { 4, 4, 4, 4 }
+			stretch		= TRUE
+		}
+	}
+}
+widget_class "*Panel*Menu*"	style:highest "panel-menu"
+widget_class "*Panel*MenuBar*"  style:highest "panel-menu"
+widget "PanelDItemEditor"	style "panel-item-editor"
+
+# widget styles
+class "GtkWidget"	style "moomex-pixmap"
+class "GtkWidget"	style "moomex-clearlooks"
+class "GtkCalendar"	style "moomex-calendar"
+class "GtkStatusbar"	style "moomex-pixmap"
+class "GtkButton"	style "clearlooks-button"
+class "GtkCellView"	style "clearlooks-button"
+class "GtkScale"	style "clearlooks-scale"
+class "GtkCombo"	style "clearlooks-button"
+class "GtkRange"	style "clearlooks-wide"
+class "GtkFrame"	style "clearlooks-wide"
+class "GtkSeparator"	style "clearlooks-wide"
+class "GtkArrow"	style "clearlooks-wide"
+class "GtkDialog"	style "clearlooks-wide"
+class "GtkInvisible"	style "clearlooks-wide"
+class "GtkEntry"	style "clearlooks-wider"
+class "GtkNotebook"	style "clearlooks-notebook"
+class "GtkProgressBar"	style "clearlooks-progressbar"
+class "GtkScrollbar"	style "clearlooks-scrollbar"
+class "GtkToolbar"	style "clearlooks-toolbar" 
+widget "gtk-tooltip*"	style "clearlooks-tooltips"
+
+# radiobutton stuff
+#class "GtkRadioButton"		style:highest "moomex-radiobutton"
+#class "GtkCheckButton"		style:highest "moomex-radiobutton"
+class "GtkCheckMenuItem"	style:highest "clearlooks-radiobutton"
+class "GtkRadioMenuItem"	style:highest "clearlooks-radiobutton"
+
+# combobox stuff
+widget_class "*.GtkComboBox.GtkButton"	style "clearlooks-combo"
+widget_class "*.GtkCombo.GtkButton"	style "clearlooks-combo"
+widget_class "*.GtkComboBox"		style "clearlooks-combobox-text-color-workaround"
+
+# treeview stuff
+widget_class "*.GtkTreeView.GtkButton"	style "clearlooks-tree"
+widget_class "*.GtkCTree.GtkButton"	style "clearlooks-tree"
+widget_class "*.GtkList.GtkButton"	style "clearlooks-tree"
+widget_class "*.GtkCList.GtkButton"	style "clearlooks-tree"
+widget_class "*.GtkFrame.GtkLabel"	style "clearlooks-frame-title"
+
+# panel stuff
+class "*Panel*"		style "moomex-panel"
+widget "*Panel*"	style "panel-item-editor"
+class "*Panel*Applet*" 	style "moomex-panel"
+widget "*PanelApplet*"	style "moomex-panel"
+widget "*PanelWidget*"	style:highest "moomex-panel"
+
+widget "*fast-user-switch*"		style:highest "moomex-panel"
+widget_class "*.Panel*Button*GtkLabel" 	style "moomex-panel"
+widget_class "*.Panel*GtkLabel" 	style "moomex-panel"
+widget_class "*Netstatus*" 		style "moomex-panel"
+widget_class "*Tomboy*Tray*" 		style "moomex-panel"
+widget_class "*PanelToplevel*" 		style "moomex-panel"
+widget_class "*PanelApplet*" 		style "moomex-panel"
+widget_class "*PanelWidget*" 		style "moomex-panel"
+widget_class "*PanelToplevel*Button" 	style "moomex-panel"
+
+# menu stuff
+class "GtkMenu"				style "moomex-menu"
+class "*.GtkMenuItem*"			style "clearlooks-menu"
+class "GtkTearoffMenuItem"		style "moomex-menu"
+#class "GtkSeparatorToolItem"		style "moomex-pixmap"
+class "GtkRadioMenuItem"		style "moomex-menu-item"
+class "GtkCheckMenuItem"		style "moomex-menu-item"
+class "GtkSeparatorMenuItem"		style:highest "moomex-pixmap"
+widget_class "*.<GtkMenuItem>*"		style "moomex-menu-item"
+widget_class "*.<GtkMenuItem>*"		style "moomex-clearlooks"
+widget_class"*.GtkMenuItem.*"		style:highest "moomex-menu-item"
+widget_class"*.GtkAccelMenuItem.*"	style:highest "moomex-menu-item"
+class "GtkMenuItem"			style:highest "moomex-menu-item"
+class "GtkImageMenuItem"		style:highest "moomex-menu-item"
+class "GtkLabel"			style "clearlooks-notebook"
+class "*Label*"				style:highest "moomex-label"
+widget_class "*Label*"			style:highest "moomex-label"
+
+
+# menubar stuff
+class "GtkMenuBar*"	 		style:highest "moomex-menubar"
+widget_class "*.<GtkMenuBar>.*"		style:highest "moomex-menubar"
+widget_class "*Gimp*GtkMenuBar*"	style "moomex-menubar"
+widget_class "*Nautilus*.GtkMenuBar*"	style "moomex-menubar"
+widget_class "*E*.GtkMenuBar*"		style "moomex-menubar"
+#widget_class "*MenuBar*"		style "menubar-black"
+
+# notebook stuff
+widget_class "*.GtkNotebook.*.GtkEventBox"	style "clearlooks-notebook"
+widget_class "*.GtkNotebook.*.GtkViewport"	style "clearlooks-notebook"
+widget "*.nautilus-extra-view-widget"		style:highest "nautilus-location"

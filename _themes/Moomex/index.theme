@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=0.6
+Type=X-GNOME-Metatheme
+Name=Moomex
+Comment=Elegant Style For Gnome Desktop.
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Moomex
+IconTheme=Human
+MetacityTheme=Moomex
+ApplicationFont=UnDotum 10
+DesktopFont=UnDotum 10
+MonospaceFont=monospace 10
+
