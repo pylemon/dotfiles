@@ -1,15 +1,15 @@
 [alias]
-	last = cat-file commit HEAD
-	li = log --graph --oneline --all
 	st = status
 	co = checkout
 	ci = commit
 	glog = log --pretty=oneline --graph
+	slog = log --patch --stat
+	last = cat-file commit HEAD
 [user]
 	name = pylemon
 	email = leeway1985@gmail.com
 [core]
-	editor = emacsclient
+	editor = emacsclient -nw
 [color]
 	status = auto
 	branch = auto
