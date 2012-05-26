@@ -1,47 +1,51 @@
-!! 配色
-*foreground: #D7D0C7
-*background: #151515
-!black
-*color0:     #101010
-*color8:     #404040
-!red
-*color1:     #E84F4F
-*color9:     #D23D3D
-!green
-*color2:     #B8D68C
-*color10:    #A0CF5D
-!yellow
-*color3:     #E1AA5D
-*color11:    #F39D21
-!blue
-*color4:     #7DC1CF
-*color12:    #4E9FB1
-!magenta
-*color5:     #9B64FB
-*color13:    #8542FF
-!cyan
-*color6:     #6D878D
-*color14:    #42717B
-!white
-*color7:     #dddddd
-*color15:    #dddddd
-URxvt*borderColor:        #151515
-URxvt*colorBD:            #ffffff
-URxvt*cursorColor:        #ff8939
-URxvt*cursorColor2:       #151515
+! tango colortheme
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+urxvt*foreground: #f2f2f2
+urxvt*background: #101010
+urxvt*color0: #101010
+urxvt*color1: #f13a21
+urxvt*color2: #93f91d
+urxvt*color3: #ffd00a
+urxvt*color4: #004f9e
+urxvt*color5: #ec0048
+urxvt*color6: #2aa7e7
+urxvt*color7: #f2f2f2
+urxvt*color8: #1d202f
+urxvt*color9: #ff361e
+urxvt*color10: #ffc005
+urxvt*color11: #93ff00
+urxvt*color12: #0071ff
+urxvt*color13: #ef0051
+urxvt*color14: #4bb8fd
+urxvt*color15: #a020f0
+urxvt*transparent: true
+urxvt*shading: 60
+!! urxvt*fading: 20
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!! 设置输入法的输入风格。不设置这个的话，启动会很慢。
+Rxvt.preeditType:Root
+
+!Input Method
+URxvt.inputMethod: XIM
+URxvt.preeditType: OverTheSpot
+URxvt.imFont: xft:微软雅黑Monaco:pixelsize=11:antialias=true
+
+!urxvt typical
+URxvt.cutchars: "`\"()';@?=,*<>[]{|}"
 
 !!光标闪烁
 URxvt.cursorBlink:True
-
-!!浏览器
-URxvt.urlLauncher:firefox
-
-!!输入法设置
-URxvt.inputMethod:fcitx
 
 !!滚动条
 URxvt.scrollBar:False
 URxvt.saveLines:10000
 
 !!字体设置
-URxvt.font: xft:微软雅黑Monaco:size=10
+URxvt*font: xft:微软雅黑Monaco:pixelsize=11:antialias=true
+URxvt*boldfont: xft:微软雅黑Monaco:pixelsize=11:antialias=true
+
+!!浏览器设置
+URxvt.perl-ext-common:  default,matcher
+URxvt.urlLauncher:      /usr/bin/firefox
+URxvt.matcher.button:   1
