@@ -26,21 +26,21 @@ modkey_win = "Mod4"
 layouts =
 {
     -- awful.layout.suit.tile,                   -- 1
-    -- awful.layout.suit.tile.left,              -- 2
+    awful.layout.suit.floating,                  -- 1
+    awful.layout.suit.tile.left,                 -- 2
     -- awful.layout.suit.tile.bottom,            -- 3
     -- awful.layout.suit.tile.top,               -- 4
     -- awful.layout.suit.fair,                   -- 5
     -- awful.layout.suit.fair.horizontal,        -- 6
     -- awful.layout.suit.magnifier,              -- 7
-    awful.layout.suit.floating,                  -- 8
-    -- awful.layout.suit.max                     -- 9
+    awful.layout.suit.max                        -- 3
 }
 -- }}}
 
 -- {{{ Tags
 tags = {
    names  = { "1.Term", "2.Emacs", "3.Firefox", "4.vBox", "5.Chat", "6.Mail" },
-   layout = { layouts[1], layouts[1], layouts[1], layouts[1], layouts[1], layouts[1] }
+   layout = { layouts[2], layouts[3], layouts[3], layouts[3], layouts[2], layouts[3] }
 }
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
@@ -50,17 +50,13 @@ end
 
 --{{{ dropdown terminal  Modkey-F1 to call a dropdown emacsclient
 -- This function is for awesome versions prior to 3.4
-
 dropdown = {}
-
 function dropdown_toggle(prog, height, s)
    if s == nil then s = mouse.screen end
-   if height == nil then height = 0.99 end
-   
+   if height == nil then height = 0.99 end   
    if not dropdown[prog] then
       -- Create table
-      dropdown[prog] = {}
-      
+      dropdown[prog] = {}      
       -- Add unmanage hook for dropdown programs
       awful.hooks.unmanage.register(function (c)
                                        for scr, cl in pairs(dropdown[prog]) do
@@ -69,28 +65,22 @@ function dropdown_toggle(prog, height, s)
                                           end
                                        end
                                     end)
-   end
-   
+   end   
    if not dropdown[prog][s] then
       spawnw = function (c)
                   -- Store client
-                  dropdown[prog][s] = c
-                  
+                  dropdown[prog][s] = c                  
                   -- Float client
-                  awful.client.floating.set(c, true)
-                  
+                  awful.client.floating.set(c, true)                  
                   -- Get screen geometry
-                  screengeom = screen[s].workarea
-                  
+                  screengeom = screen[s].workarea                  
                   -- Calculate height
                   if height < 1 then
                      height = screengeom.height*height
                   end
-
                   -- I like a different border with for the popup window
                   -- So I don't confuse it with terminals in the layout
                   bw = 2
-
                   -- Resize client
                   c:geometry({
                                 x = screengeom.x,
@@ -98,33 +88,25 @@ function dropdown_toggle(prog, height, s)
                                 width = screengeom.width - bw, 
                                 height = height - bw
                              })
-
                   -- Mark terminal as ontop
                   --            c.ontop = true
                   --            c.above = true
                   c.border_width = bw
-
                   -- Focus and raise client
                   c:raise()
                   client.focus = c
-
                   -- Remove hook
                   awful.hooks.manage.unregister(spawnw)
                end
-
       -- Add hook
       awful.hooks.manage.register(spawnw)
-
       -- Spawn program
       awful.util.spawn(prog)
-
       dropdown.currtag = awful.tag.selected(s)
    else
       -- Get client
-      c = dropdown[prog][s]
-      
+      c = dropdown[prog][s]      
       -- Switch the client to the current workspace
-
       -- Focus and raise if not hidden
       if c.hidden then
          awful.client.movetotag(awful.tag.selected(s), c)
@@ -148,8 +130,8 @@ function dropdown_toggle(prog, height, s)
       dropdown.currtag = awful.tag.selected(s)
    end
 end
-
 -- }}}
+
 
 -- {{{ Autorun programs
 -- 自动启动程序
@@ -158,11 +140,12 @@ autorunApps =
 {
    "/home/liwei/Software/goagent/local/proxy.py",
    "killall nm-applet",
-   "urxvtd",
+   "killall urxvtd",
+   "killall emacs",
    "gnome-settings-daemon",
-   "emacs --daemon",
    "pidgin",
    "thunderbird",
+   "xcompmgr -Ss -n -Cc -fF -I-4 -O-4 -D1 -t-3 -l-4 -r4"
 }
 
 if autorun then
@@ -252,7 +235,7 @@ memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
    local text
-   local color2 = gradient("#ffffff","#FF5656",20,5767,args[2])
+   local color2 = gradient("#ffffff","#FF5656",20,20000,args[2])
    args[2] = string.format("<span color='%s'>%s</span>", color2, args[2])
    text = args[2].." / "..args[3].."<span color='#AECF96'> MB</span>"
    return text
@@ -380,9 +363,15 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+
+    -- M-left, M-right 切换左右 tag
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+
+    -- M-Esc 切换到上一个 tag
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+
+    -- M-j, M-k 切换程序
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -394,14 +383,13 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
-    -- Run or raise applications with dmenu
+    -- dmenu 集成到 awesome 启动或者跳转到程序
     awful.key({ modkey }, "r",
     	      function ()
     		 local f_reader = io.popen( "dmenu_path | dmenu -b -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'")
     		 local command = assert(f_reader:read('*a'))
     		 f_reader:close()
-    		 if command == "" then return end
-		 
+    		 if command == "" then return end		 
     		 -- Check throught the clients if the class match the command
     		 local lower_command=string.lower(command)
     		 for k, c in pairs(client.get()) do
@@ -419,27 +407,27 @@ globalkeys = awful.util.table.join(
     	      end),
 
     --Volume manipulation  
-     -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 5+") end),
-     -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 5-") end),
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 5+") end),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 5-") end),
 
-    -- Layout manipulation
-    -- awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    -- awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
+    -- C-M-j C-M-k 切换 screen
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-    -- awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
+    -- 切换到 高亮的 tag
+    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
-    -- Standard program
-    awful.key({ modkey,           }, "F1", function() dropdown_toggle('urxvtc -g 170x49 -e emacsclient -ct') end),
+    -- 自定义启动的程序
+    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("emacsclient -nc") end),
+    awful.key({ modkey, "Control" }, "f", function () awful.util.spawn("pcmanfm") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("slock") end),
+    awful.key({ modkey,           }, "F1", function() dropdown_toggle('urxvtc -g 170x49 -e emacsclient -tc') end),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-
+    
+    -- 重启和退出 awesome
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    -- emacs and firefox start
-    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("urxvtc -g 170x49 -e emacsclient -ct") end),
-    awful.key({ modkey, "Control" }, "f", function () awful.util.spawn(browser) end),
-
+    -- 增加或者减少 窗口面积
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
@@ -448,29 +436,17 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end)
-
-    -- Prompt
-    -- awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end)
-
-    -- awful.key({ modkey, "Shift" }, "x",
-    --           function ()
-    --               awful.prompt.run({ prompt = "Run Lua code: " },
-    --               mypromptbox[mouse.screen].widget,
-    --               awful.util.eval, nil,
-    --               awful.util.getdir("cache") .. "/history_eval")
-    --           end)
 )
 
 clientkeys = awful.util.table.join(
-    -- awful.key({ modkey, "Control" }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
+
+    -- 关闭当前高亮程序
     awful.key({ modkey, "Control" }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    -- this is useful
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
+    
+    -- 移动当前程序到下一个 screen
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end),
+
+    -- 最大化窗口 或 还原
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
@@ -524,7 +500,10 @@ clientbuttons = awful.util.table.join(
 
 -- Set keys
 root.keys(globalkeys)
+-- end of keybindings
 -- }}}
+
+
 
 -- {{{ Rules
 awful.rules.rules = {
@@ -555,48 +534,28 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.add_signal("manage", function (c, startup)
-    -- Add a titlebar
-    -- awful.titlebar.add(c, { modkey = modkey })
-
-    -- Enable sloppy focus
-    c:add_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
-
-    if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
-
-        -- Put windows in a smart way, only if they does not set an initial position.
-        if not c.size_hints.user_position and not c.size_hints.program_position then
-            awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
-        end
-    end
-end)
-
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
--- {{{ Tag signal handler - selection
--- - ASCII tags 1 [2] 3 4...
---   - start with tag 1 named [1] in tag setup
--- for s = 1, screen.count() do
---     for t = 1, #tags[s] do
---         tags[s][t]:add_signal("property::selected", function ()
---            if tags[s][t].selected then
---                 tags[s][t].name = "[" .. tags[s][t].name .. "]"
---             else
---                 tags[s][t].name = tags[s][t].name:gsub("[%[%]]", "")
---             end
---         end)
---     end
--- end
 -- }}}
 
+
+-- {{{ Tag signal handler - selection
+--   - ASCII tags 1 [2] 3 4...
+--   - start with tag 1 named [1] in tag setup
+for s = 1, screen.count() do
+    for t = 1, #tags[s] do
+        tags[s][t]:add_signal("property::selected", function ()
+           if tags[s][t].selected then
+                tags[s][t].name = "[" .. tags[s][t].name .. "]"
+            else
+                tags[s][t].name = tags[s][t].name:gsub("[%[%]]", "")
+            end
+        end)
+    end
+end
+-- }}}
+
+-- some command on startup
 os.execute("nm-applet &")
+os.execute("emacs --daemon")
+os.execute("urxvtd &")
