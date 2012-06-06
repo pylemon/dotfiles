@@ -50,21 +50,20 @@ end
 -- theme.font          = "微软雅黑Monaco 8"
 theme.font          = "profont 8"
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#cccccc"
+theme.bg_normal     = "#111111"
+theme.bg_focus      = "#333333"
 theme.bg_urgent     = "#d02e54"
-theme.bg_minimize   = "#444444"
+theme.bg_minimize   = "#111111"
 
-theme.fg_normal     = "#cccccc"
-theme.fg_focus      = "#000000"
+theme.fg_normal     = "#DDDDDD"
+theme.fg_focus      = "#1793D1"
 theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_minimize   = "#1793D1"
 
 theme.border_width  = "1"
-theme.border_normal = "#000000"
+theme.border_normal = "#111111"
 theme.border_marked = "#91231c"
-theme.border_focus  = "#96bf33"
--- "#ce2c51"
+theme.border_focus  = "#1793D1"
 
 -- There are other variable sets
 -- overriding the default one when

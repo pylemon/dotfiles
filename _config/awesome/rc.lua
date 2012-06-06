@@ -10,9 +10,6 @@ require("vicious")
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/home/liwei/.config/awesome/themes/niceandclean/theme.lua")
 
--- #TODO old method of autostart is not working, cannot set env for this method
--- awful.util.spawn("bash /home/liwei/.config/awesome/autostart.sh")
-
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
@@ -145,7 +142,7 @@ autorunApps =
    "gnome-settings-daemon",
    "pidgin",
    "thunderbird",
-   "xcompmgr -Ss -n -Cc -fF -I-4 -O-4 -D1 -t-3 -l-4 -r4"
+   "xcompmgr -CcfF -I20 -O10 -D1 -t-5 -l-5 -r4.2 -o.82"
 }
 
 if autorun then
@@ -215,18 +212,18 @@ function (widget, args)
    local cpu
    cpu = args[1]+args[2]+args[3]+args[4]
    cpu = math.floor(cpu/4)
-   local color = gradient("#AECF96","#FF5656",0,100,cpu)
+   local color = gradient("#1793d1","#FF5656",0,100,cpu)
    text = string.format("<span color='%s'>%s</span>", color, cpu)
-   text = text.."<span color='#AECF96'>%</span>"
+   text = text.."<span color='#1793d1'>%</span>"
    return text
 end)
 tzswidget = widget({ type = "textbox" })
 vicious.register(tzswidget, vicious.widgets.thermal,
 function (widget, args)
    local text
-   local color = gradient("#AECF96","#FF5656",30,85,args[1])
+   local color = gradient("#1793d1","#FF5656",30,85,args[1])
    args[1] = string.format("<span color='%s'> %s</span>", color, args[1])
-   text = args[1].."<span color='#AECF96'>C</span>"
+   text = args[1].."<span color='#1793d1'>C</span>"
    return text
 end, 19, "thermal_zone0")
 
@@ -235,9 +232,9 @@ memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
    local text
-   local color2 = gradient("#ffffff","#FF5656",20,20000,args[2])
+   local color2 = gradient("#1793d1","#FF5656",20,7000,args[2])
    args[2] = string.format("<span color='%s'>%s</span>", color2, args[2])
-   text = args[2].." / "..args[3].."<span color='#AECF96'> MB</span>"
+   text = args[2].."<span color='#1793d1'>M</span>"
    return text
 end, 13)
 
@@ -246,7 +243,7 @@ batwidget = widget({ type = "textbox" })
 vicious.register(batwidget, vicious.widgets.bat,
 function (widget, args)
    local text
-   local color = gradient("#FF5656","#AECF96",10,100,args[2])
+   local color = gradient("#FF5656","#1793d1",10,100,args[2])
    args[2] = string.format("<span color='%s'>%s</span>", color, args[2])
    text = args[1]..args[2]
    return text
@@ -254,7 +251,7 @@ end, 32, "BAT1")
 
 -- Create a textclock widget
 mytextclock = widget({ type = "textbox" })
-vicious.register(mytextclock, vicious.widgets.date, "<span color='#AECF96'> %Y/%m/%d %a %T </span>", 1)
+vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y/%m/%d %a %T </span>", 1)
 
 --Create icons
 spicon = widget({ type = "imagebox" })
@@ -273,8 +270,8 @@ mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
-mypromptbox = {}
-mylayoutbox = {}
+-- mypromptbox = {}
+-- mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
@@ -314,15 +311,15 @@ for s = 1, screen.count() do
     -- Set a screen margin for borders
 awful.screen.padding( screen[s], {top = 0} )
     -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright, prompt = "" })
+    -- mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright, prompt = "" })
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-                           awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+    -- mylayoutbox[s] = awful.widget.layoutbox(s)
+    -- mylayoutbox[s]:buttons(awful.util.table.join(
+    --                        awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+    --                        awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+    --                        awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+    --                        awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
@@ -336,18 +333,14 @@ awful.screen.padding( screen[s], {top = 0} )
    -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
-	    mylauncher,
             mytaglist[s],
-	    mypromptbox[s],
-            layout = awful.widget.layout.horizontal.leftright
+	    layout = awful.widget.layout.horizontal.leftright
         },
-	mylayoutbox[s],
-	mytextclock, timeicon, spacer,
-	seperator, spacer, tzswidget, cpuwidget, spacer, cpuicon, spacer,
-	seperator, spacer, memwidget, spacer, memicon, spacer, 
-	seperator, spacer, batwidget, spacer, baticon, spacer,
-	mytasklist[s],
-	-- seperator,spacer, s == 1 and mysystray or nil,
+	mytextclock, tzswidget, 
+	cpuwidget, spacer, 
+	memwidget, spacer, 
+	batwidget, spacer, 
+	mysystray, mytasklist[s],	
         layout = awful.widget.layout.horizontal.rightleft
     }
 end
@@ -386,7 +379,7 @@ globalkeys = awful.util.table.join(
     -- dmenu 集成到 awesome 启动或者跳转到程序
     awful.key({ modkey }, "r",
     	      function ()
-    		 local f_reader = io.popen( "dmenu_path | dmenu -b -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'")
+    		 local f_reader = io.popen( "dmenu_path | dmenu -b -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#1793d1'")
     		 local command = assert(f_reader:read('*a'))
     		 f_reader:close()
     		 if command == "" then return end		 
@@ -417,7 +410,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     -- 自定义启动的程序
-    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("emacsclient -nc") end),
+    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("emacsclient -c -e '(reset-default-font)'") end),
     awful.key({ modkey, "Control" }, "f", function () awful.util.spawn("pcmanfm") end),
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey,           }, "F1", function() dropdown_toggle('urxvtc -g 170x49 -e emacsclient -tc') end),
@@ -542,17 +535,17 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- {{{ Tag signal handler - selection
 --   - ASCII tags 1 [2] 3 4...
 --   - start with tag 1 named [1] in tag setup
-for s = 1, screen.count() do
-    for t = 1, #tags[s] do
-        tags[s][t]:add_signal("property::selected", function ()
-           if tags[s][t].selected then
-                tags[s][t].name = "[" .. tags[s][t].name .. "]"
-            else
-                tags[s][t].name = tags[s][t].name:gsub("[%[%]]", "")
-            end
-        end)
-    end
-end
+-- for s = 1, screen.count() do
+--     for t = 1, #tags[s] do
+--         tags[s][t]:add_signal("property::selected", function ()
+--            if tags[s][t].selected then
+--                 tags[s][t].name = "[" .. tags[s][t].name .. "]"
+--             else
+--                 tags[s][t].name = tags[s][t].name:gsub("[%[%]]", "")
+--             end
+--         end)
+--     end
+-- end
 -- }}}
 
 -- some command on startup

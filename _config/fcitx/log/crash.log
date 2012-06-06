@@ -1,0 +1,12 @@
+FCITX -- Get Signal No.: 11
+Obtained 10 stack frames.
+fcitx() [0x4010aa]
+/lib/x86_64-linux-gnu/libc.so.6(+0x364c0) [0x7f78c75e04c0]
+/lib/x86_64-linux-gnu/libc.so.6(+0x130626) [0x7f78c76da626]
+/usr/lib/x86_64-linux-gnu/fcitx/fcitx-ipc.so(+0x20a5) [0x7f78bf7830a5]
+/usr/lib/x86_64-linux-gnu/libfcitx-core.so.0(FcitxInstanceEnableIM+0xa2) [0x7f78c7fa4e32]
+/usr/lib/x86_64-linux-gnu/fcitx/fcitx-ipc.so(+0x3ed1) [0x7f78bf784ed1]
+/lib/x86_64-linux-gnu/libdbus-1.so.3(+0x1cb01) [0x7f78c6898b01]
+/lib/x86_64-linux-gnu/libdbus-1.so.3(dbus_connection_dispatch+0x380) [0x7f78c688a9f0]
+/usr/lib/x86_64-linux-gnu/fcitx/fcitx-dbus.so(+0x13e0) [0x7f78c6ac13e0]
+/usr/lib/x86_64-linux-gnu/libfcitx-core.so.0(+0x4ece) [0x7f78c7f9dece]
