@@ -1,0 +1,104 @@
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+# ZSH_THEME="random"
+# ZSH_THEME="frisk"
+ZSH_THEME="dpoggi"
+# ZSH_THEME="candy"
+# ZSH_THEME="mortalscumbag"
+# ZSH_THEME="clean"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git python django autojump)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
+export PYTHONSTARTUP=$HOME/.pythonrc.py
+export EDITOR='emacsclient --nw'
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+export LC_CTYPE="zh_CN.UTF-8"
+export LANG="zh_CN.UTF-8"
+
+# some aliases here
+alias l='ls -CF'
+alias e='emacsclient -t'
+alias ll='ls -ahlF'
+alias la='ls -A'
+alias df='df -h'
+alias du='ncdu'
+alias vi='vim'
+alias et='emacsclient -c -e "(reset-default-font)"'
+alias fm='pcmanfm'
+alias ack='ack-grep'
+alias nau='nautilus --no-desktop'
+alias git='hub'
+alias ww='cd ~/work/src'
+alias pdf='evince'
+alias tree='tree -C'
+alias htop='htop'
+alias halt='sudo halt -p'
+alias iotop='sudo iotop'
+alias iftop='sudo iftop'
+alias wlantop='sudo nethogs wlan0'
+alias ethtop='sudo nethogs eth0'
+alias cvhtml='cd ~/Documents/cv && rst2html cv.rst cv.html'
+alias setscreen='xrandr --output LVDS1 --mode 1366x768'
+alias fablist='cd ~/work/src/ && fab --list'
+alias rs='cd ~/work/src/ && python manage.py runserver_plus 0.0.0.0:8000'
+alias shell='cd ~/work/src/ && sudo python manage.py shell_plus'
+alias dbshell='cd ~/work/src/ && sudo python manage.py dbshell'
+alias update='sudo apt-get update'
+alias upgrade='sudo apt-get update && sudo apt-get upgrade'
+alias getinstall="sudo apt-get install"
+alias show="apt-cache show"
+alias search='apt-cache search'
+alias keyboard='gnome-control-center keyboard'
+alias sound='gnome-control-center sound'
+alias screen='gnome-control-center screen'
+alias ax='Xephyr :1 -ac -br -noreset -screen 1152x720 &'
+alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
+
+# alias profile='python kernprof.py -l -v '
+# alias gae='cd ~/Software/goagent/local/ && python proxy.py'
+# alias winxp='virtualbox --startvm xp'
+
+
+# user-ret 
+user-ret(){
+    if [[ $BUFFER = "" ]] ;then
+        BUFFER="ls"
+        zle end-of-line
+        zle accept-line
+    elif [[ $BUFFER =~ "^cd\ \.\.\.+$" ]] ;then
+        BUFFER=${${BUFFER//\./\.\.\/}/\.\.\//}
+        zle end-of-line
+        zle accept-line
+    else
+        zle accept-line
+    fi
+}
+zle -N user-ret
+bindkey "\r" user-ret
+
+# for virtualenvwrapper
+export WORKON_HOME=~/Envs
+source /usr/local/bin/virtualenvwrapper.sh
+
+d=.dircolors
+test -r $d && eval "$(dircolors $d)"
+
+xrdb -merge $HOME/.Xresources
