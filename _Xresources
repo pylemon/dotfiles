@@ -1,7 +1,78 @@
-! tango colortheme
+!TomorrowNight
+
+*.foreground: #c5c8c6
+*.background: #1d1f21
+*.cursorColor: #aeafad
+! Black / Grey
+*.color0: #000000
+*.color8: #666666
+! Red / Bright Red
+*.color1: #cc6666
+*.color9: #FF3334
+! Green + Bright Green
+*.color2: #b5bd68
+*.color10: #9ec400
+! Yellow (Orange) + Bright Yellow (Yellow)
+*.color3: #de935f
+*.color11: #f0c674
+! Blue + Bright Blue
+*.color4: #81a2be
+*.color12: #81a2be
+! Magenta (Purple) + Bright Magenta
+*.color5: #b294bb
+*.color13: #b777e0
+! Cyan (Aqua) + Bright Cyan
+*.color6: #8abeb7
+*.color14: #54ced6
+! Light Grey (Selection) + White (Current Line)
+*.color7: #373b41
+*.color15: #282a2e
+
+!look and feel
+xterm.termName: xterm-256color
+! xterm.geometry: 80x36
+xterm*scrollBar: false
+xterm*rightScrollBar: true
+xterm*loginshell: true
+xterm*cursorBlink: true
+! xterm*background:  black
+xterm*foreground:  gray
+xterm.borderLess: true
+xterm.cursorBlink: true
+! xterm*colorUL: yellow
+! xterm*colorBD: white
+
+!fix alt key input
+xterm*eightBitInput: false
+xterm*altSendsEscape: true
+
+!print color and bold/underline attributes
+xterm*printAttributes: 2
+xterm*printerCommand: cat > ~/xtermdump
+
+!mouse selecting to copy, ctrl-v to paste
+!Ctrl p to print screen content to file
+XTerm*VT100.Translations: #override \
+    Ctrl <KeyPress> V: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+    <BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+    Ctrl <KeyPress> P: print() \n
+
+!font and locale
+xterm*locale: true
+xterm.utf8: true
+xterm*utf8Title: true
+xterm*fontMenu*fontdefault*Label: Default
+xterm*faceName: 微软雅黑Monaco:pixelsize=10:antialias=False
+xterm*faceNameDoublesize: 微软雅黑Monaco:pixelsize=10:antialias=False
+xterm*xftAntialias: False
+xterm*cjkWidth: False
+
+!! begin urxvt config
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! tango colortheme
 urxvt*foreground: #f2f2f2
-urxvt*background: #101010
+urxvt*background: #202020
 urxvt*color0: #101010
 urxvt*color1: #f13a21
 urxvt*color2: #93f91d
@@ -19,17 +90,13 @@ urxvt*color13: #ef0051
 urxvt*color14: #4bb8fd
 urxvt*color15: #a020f0
 urxvt*transparent: true
-urxvt*shading: 60
-!! urxvt*fading: 20
+urxvt*shading: 70
+urxvt*fading: 15
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-!! 设置输入法的输入风格。不设置这个的话，启动会很慢。
-Rxvt.preeditType:Root
 
 !Input Method
 URxvt.inputMethod: XIM
 URxvt.preeditType: OverTheSpot
-URxvt.imFont: xft:微软雅黑Monaco:pixelsize=11:antialias=true
 
 !urxvt typical
 URxvt.cutchars: "`\"()';@?=,*<>[]{|}"
@@ -42,8 +109,8 @@ URxvt.scrollBar:False
 URxvt.saveLines:10000
 
 !!字体设置
-URxvt*font: xft:微软雅黑Monaco:pixelsize=11:antialias=true
-URxvt*boldfont: xft:微软雅黑Monaco:pixelsize=11:antialias=true
+URxvt*font: xft:微软雅黑Monaco:pixelsize=11
+URxvt*boldfont: xft:PowerlineSymbols:pixelsize=11
 
 !!浏览器设置
 URxvt.perl-ext-common:  default,matcher

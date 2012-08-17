@@ -15,13 +15,15 @@ ZSH_THEME="dpoggi"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git python django autojump)
+plugins=(git history-substring-search dircycle python django autojump virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PYTHONSTARTUP=$HOME/.pythonrc.py
-export EDITOR='emacsclient --nw'
+export EDITOR='emacsclient -c'
+
+# make man documents have color
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -33,51 +35,63 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 export LC_CTYPE="zh_CN.UTF-8"
 export LANG="zh_CN.UTF-8"
 
-# some aliases here
+
+# system
 alias l='ls -CF'
-alias e='emacsclient -t'
 alias ll='ls -ahlF'
 alias la='ls -A'
 alias df='df -h'
-alias du='ncdu'
-alias vi='vim'
-alias et='emacsclient -c -e "(reset-default-font)"'
-alias fm='pcmanfm'
-alias ack='ack-grep'
-alias nau='nautilus --no-desktop'
-alias git='hub'
-alias ww='cd ~/work/src'
-alias pdf='evince'
-alias tree='tree -C'
+alias ipy='ipython -cl'
+alias rmpyc='find . -type f -name "*.pyc" -print0 | xargs -0 rm'
+alias rmsvn='find . -type d -name ".svn" -print0 | xargs -0 rm -Rf'
 alias htop='htop'
 alias halt='sudo halt -p'
+alias suspend='sudo pm-suspend'
 alias iotop='sudo iotop'
 alias iftop='sudo iftop'
-alias wlantop='sudo nethogs wlan0'
-alias ethtop='sudo nethogs eth0'
-alias cvhtml='cd ~/Documents/cv && rst2html cv.rst cv.html'
-alias setscreen='xrandr --output LVDS1 --mode 1366x768'
-alias fablist='cd ~/work/src/ && fab --list'
-alias rs='cd ~/work/src/ && python manage.py runserver_plus 0.0.0.0:8000'
-alias shell='cd ~/work/src/ && sudo python manage.py shell_plus'
-alias dbshell='cd ~/work/src/ && sudo python manage.py dbshell'
+alias netop='sudo nethogs $@'
 alias update='sudo apt-get update'
 alias upgrade='sudo apt-get update && sudo apt-get upgrade'
-alias getinstall="sudo apt-get install"
-alias show="apt-cache show"
+alias show='apt-cache show'
 alias search='apt-cache search'
-alias keyboard='gnome-control-center keyboard'
-alias sound='gnome-control-center sound'
-alias screen='gnome-control-center screen'
+
+# git
+alias gl='git glog'
+alias gla='git glog --all'
+alias gls='git slog'
+alias gs='git status'
+alias gdf='git diff -w'
+
+# software
+alias e='emacsclient -t'
+alias et='emacsclient -c -e "(reset-default-font)"'
+alias vi='vim'
+alias du='ncdu'
+alias nau='thunar'
+alias pdf='evince'
+alias ack='ack-grep -a --smart-case $@'
+alias epub='fbreader'
+alias tree='tree -C'
+alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
+
+# adaptive
+alias ww='cd ~/work/src'
+alias fabls='fab --list'
+alias ata='cd ~/work/src/ && python manage.py $@'
+alias rs='cd ~/work/src/ && python manage.py runserver_plus 0.0.0.0:8000'
+alias rse='cd ~/work/src/ && STAGING=development_exam python manage.py runserver 0.0.0.0:8001'
+
+# aimi
+alias dowant='cd ~/aimi/aimifan/dowant'
+
+# awesome
+alias gnome='gnome-control-center $@'
 alias ax='Xephyr :1 -ac -br -noreset -screen 1152x720 &'
 alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
-
-# alias profile='python kernprof.py -l -v '
-# alias gae='cd ~/Software/goagent/local/ && python proxy.py'
-# alias winxp='virtualbox --startvm xp'
+alias setscreen='xrandr --output LVDS1 --mode 1366x768'
 
 
-# user-ret 
+# user-ret
 user-ret(){
     if [[ $BUFFER = "" ]] ;then
         BUFFER="ls"
@@ -102,3 +116,5 @@ d=.dircolors
 test -r $d && eval "$(dircolors $d)"
 
 xrdb -merge $HOME/.Xresources
+
+source $HOME/resp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
