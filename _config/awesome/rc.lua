@@ -11,13 +11,14 @@ require("vicious")
 beautiful.init("/home/liwei/.config/awesome/themes/niceandclean/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+-- terminal = "roxterm"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
-modkey = "Mod1"
-modkey_win = "Mod4"
+modkey = "Mod4"
+modkey_alt = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
@@ -36,7 +37,7 @@ layouts =
 
 -- {{{ Tags
 tags = {
-   names  = { "1.Term", "2.Emacs", "3.Firefox", "4.vBox", "5.Chat", "6.Mail" },
+   names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Firefox", "5.Vbox", "6.Mail" },
    layout = { layouts[2], layouts[3], layouts[3], layouts[3], layouts[2], layouts[3] }
 }
 for s = 1, screen.count() do
@@ -45,113 +46,67 @@ end
 -- }}}
 
 
---{{{ dropdown terminal  Modkey-F1 to call a dropdown emacsclient
--- This function is for awesome versions prior to 3.4
-dropdown = {}
-function dropdown_toggle(prog, height, s)
-   if s == nil then s = mouse.screen end
-   if height == nil then height = 0.99 end   
-   if not dropdown[prog] then
-      -- Create table
-      dropdown[prog] = {}      
-      -- Add unmanage hook for dropdown programs
-      awful.hooks.unmanage.register(function (c)
-                                       for scr, cl in pairs(dropdown[prog]) do
-                                          if cl == c then
-                                             dropdown[prog][scr] = nil
-                                          end
-                                       end
-                                    end)
-   end   
-   if not dropdown[prog][s] then
-      spawnw = function (c)
-                  -- Store client
-                  dropdown[prog][s] = c                  
-                  -- Float client
-                  awful.client.floating.set(c, true)                  
-                  -- Get screen geometry
-                  screengeom = screen[s].workarea                  
-                  -- Calculate height
-                  if height < 1 then
-                     height = screengeom.height*height
-                  end
-                  -- I like a different border with for the popup window
-                  -- So I don't confuse it with terminals in the layout
-                  bw = 2
-                  -- Resize client
-                  c:geometry({
-                                x = screengeom.x,
-                                y = screengeom.y - 1000,
-                                width = screengeom.width - bw, 
-                                height = height - bw
-                             })
-                  -- Mark terminal as ontop
-                  --            c.ontop = true
-                  --            c.above = true
-                  c.border_width = bw
-                  -- Focus and raise client
-                  c:raise()
-                  client.focus = c
-                  -- Remove hook
-                  awful.hooks.manage.unregister(spawnw)
-               end
-      -- Add hook
-      awful.hooks.manage.register(spawnw)
-      -- Spawn program
-      awful.util.spawn(prog)
-      dropdown.currtag = awful.tag.selected(s)
-   else
-      -- Get client
-      c = dropdown[prog][s]      
-      -- Switch the client to the current workspace
-      -- Focus and raise if not hidden
-      if c.hidden then
-         awful.client.movetotag(awful.tag.selected(s), c)
-         c.hidden = false
-         c:raise()
-         client.focus = c
-      else
-         if awful.tag.selected(s) == dropdown.currtag then
-            c.hidden = true
-            local ctags = c:tags()
-            for i, t in pairs(ctags) do
-               ctags[i] = nil
-            end
-            c:tags(ctags)
-         else
-            awful.client.movetotag(awful.tag.selected(s), c)
-            c:raise()
-            client.focus = c
-         end
-      end
-      dropdown.currtag = awful.tag.selected(s)
-   end
-end
--- }}}
-
-
 -- {{{ Autorun programs
 -- 自动启动程序
-autorun = true
-autorunApps =
-{
-   "/home/liwei/Software/goagent/local/proxy.py",
-   "killall nm-applet",
-   "killall urxvtd",
-   "killall emacs",
-   "gnome-settings-daemon",
-   "pidgin",
-   "thunderbird",
-   "xcompmgr -CcfF -I20 -O10 -D1 -t-5 -l-5 -r4.2 -o.82"
-}
-
-if autorun then
-    for app = 1, #autorunApps do
-	awful.util.spawn_with_shell(autorunApps[app])
-    end
+function run_once(cmd)
+  findme = cmd
+  firstspace = cmd:find(" ")
+  if firstspace then
+    findme = cmd:sub(0, firstspace-1)
+  end
+  awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
+
+-- run_once("fcitx")
+run_once("xcompmgr")
+run_once("kupfer")
+run_once("tilda")
+run_once("synclient touchpadoff=1")
+-- run_once("pidgin")
+-- run_once("thunderbird")
 -- }}}
 
+
+function suspend()
+   os.execute("slock")
+   os.execute("pm-suspend")
+end
+
+
+-- {{{ daemon
+function start_daemon(dae)
+	daeCheck = os.execute("ps -eF | grep -v grep | grep -w " .. dae)
+	if (daeCheck ~= 0) then
+		os.execute(dae .. " &")
+	end
+end
+
+procs = {
+   "gnome-settings-daemon",
+   "gnome-keyring-daemon",
+   "gnome-sound-applet",
+   "nm-applet",
+   "emacs --daemon",
+   "gae"
+}
+
+for k = 1, #procs do
+	start_daemon(procs[k])
+end
+--- }}}
+
+-- The systray is a bit complex. We need to configure it to display
+-- the right colors. Here is a link with more background about this:
+--  http://thread.gmane.org/gmane.comp.window-managers.awesome/9028
+xprop = assert(io.popen("xprop -root _NET_SUPPORTING_WM_CHECK"))
+wid = xprop:read():match("^_NET_SUPPORTING_WM_CHECK.WINDOW.: window id # (0x[%S]+)$")
+xprop:close()
+if wid then
+   wid = tonumber(wid) + 1
+   os.execute("xprop -id " .. wid .. " -format _NET_SYSTEM_TRAY_COLORS 32c " ..
+	      "-set _NET_SYSTEM_TRAY_COLORS " ..
+	      "65535,65535,65535,65535,8670,8670,65535,32385,0,8670,65535,8670")
+end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -174,15 +129,10 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- Separators
-
 spacer = widget({ type = "textbox" })
-seperator = widget({ type = "textbox" })
-dash = widget({ type = "textbox" })
 spacer.text = " "
+seperator = widget({ type = "textbox" })
 seperator.text = "|"
-dash.text = "-"
-
--- {{{ Wibox
 
 -- color function convert value to color
 function gradient(color, to_color, min, max, value)
@@ -190,13 +140,13 @@ function gradient(color, to_color, min, max, value)
         return tonumber(c:sub(2,3),16), tonumber(c:sub(4,5),16), tonumber(c:sub(6,7),16)
     end
     local factor = 0
-    if (value >= max ) then 
-        factor = 1  
-    elseif (value > min ) then 
+    if (value >= max ) then
+        factor = 1
+    elseif (value > min ) then
         factor = (value - min) / (max - min)
-    end 
-    local red, green, blue = color2dec(color) 
-    local to_red, to_green, to_blue = color2dec(to_color) 
+    end
+    local red, green, blue = color2dec(color)
+    local to_red, to_green, to_blue = color2dec(to_color)
     red   = red   + (factor * (to_red   - red))
     green = green + (factor * (to_green - green))
     blue  = blue  + (factor * (to_blue  - blue))
@@ -256,22 +206,26 @@ vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y/%
 --Create icons
 spicon = widget({ type = "imagebox" })
 spicon.image = image("/home/liwei/.config/awesome/icons/separator.png")
+spicon.resize = false
 baticon = widget({ type = "imagebox" })
 baticon.image = image("/home/liwei/.config/awesome/icons/bat-blue.png")
+baticon.resize = false
 cpuicon = widget({ type = "imagebox" })
-cpuicon.image = image("/home/liwei/.config/awesome/icons/cpuinfow-green.png")
+cpuicon.image = image("/home/liwei/.config/awesome/icons/cpuinfo-blue.png")
+cpuicon.resize = false
 memicon = widget({ type = "imagebox" })
 memicon.image = image("/home/liwei/.config/awesome/icons/cpuinfow-blue.png")
+memicon.resize = false
 timeicon = widget({ type = "imagebox" })
-timeicon.image = image("/home/liwei/.config/awesome/icons/time-red.png")
-
--- Create a systray
+timeicon.image = image("/home/liwei/.config/awesome/icons/wifi-blue.png")
+timeicon.resize = false
 mysystray = widget({ type = "systray" })
+mysystray.resize = false
 
 -- Create a wibox for each screen and add it
 mywibox = {}
 -- mypromptbox = {}
--- mylayoutbox = {}
+mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
@@ -309,17 +263,17 @@ mytasklist.buttons = awful.util.table.join(
 
 for s = 1, screen.count() do
     -- Set a screen margin for borders
-awful.screen.padding( screen[s], {top = 0} )
-    -- Create a promptbox for each screen
+    awful.screen.padding( screen[s], {top = 0} )
+
     -- mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright, prompt = "" })
-    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    -- mylayoutbox[s] = awful.widget.layoutbox(s)
-    -- mylayoutbox[s]:buttons(awful.util.table.join(
-    --                        awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-    --                        awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-    --                        awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-    --                        awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+    mylayoutbox[s] = awful.widget.layoutbox(s)
+    mylayoutbox[s]:buttons(awful.util.table.join(
+                              awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+                              awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+                              awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+                              awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
@@ -329,18 +283,20 @@ awful.screen.padding( screen[s], {top = 0} )
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0, border_color = "#FFFFFF" })
-   -- Add widgets to the wibox - order matters
+    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0 })
+    -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
+            mylauncher,
             mytaglist[s],
 	    layout = awful.widget.layout.horizontal.leftright
         },
-	mytextclock, tzswidget, 
-	cpuwidget, spacer, 
-	memwidget, spacer, 
-	batwidget, spacer, 
-	mysystray, mytasklist[s],	
+	mylayoutbox[s], mytextclock, timeicon, spacer, tzswidget,
+	cpuwidget, spacer, cpuicon, spacer,
+	memwidget, spacer, memicon, spacer,
+	batwidget, spacer, baticon, spacer,
+        s == 1 and mysystray or nil,
+	mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
 end
@@ -358,11 +314,11 @@ root.buttons(awful.util.table.join(
 globalkeys = awful.util.table.join(
 
     -- M-left, M-right 切换左右 tag
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+    awful.key({ modkey_alt, "Control" }, "Left",   awful.tag.viewprev       ),
+    awful.key({ modkey_alt, "Control" }, "Right",  awful.tag.viewnext       ),
 
     -- M-Esc 切换到上一个 tag
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+    awful.key({ modkey_alt,           }, "Tab", awful.tag.history.restore),
 
     -- M-j, M-k 切换程序
     awful.key({ modkey,           }, "j",
@@ -377,12 +333,12 @@ globalkeys = awful.util.table.join(
         end),
 
     -- dmenu 集成到 awesome 启动或者跳转到程序
-    awful.key({ modkey }, "r",
+    awful.key({ modkey_alt,       }, "r",
     	      function ()
     		 local f_reader = io.popen( "dmenu_path | dmenu -b -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#1793d1'")
     		 local command = assert(f_reader:read('*a'))
     		 f_reader:close()
-    		 if command == "" then return end		 
+    		 if command == "" then return end
     		 -- Check throught the clients if the class match the command
     		 local lower_command=string.lower(command)
     		 for k, c in pairs(client.get()) do
@@ -399,23 +355,27 @@ globalkeys = awful.util.table.join(
     		 awful.util.spawn(command)
     	      end),
 
-    --Volume manipulation  
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 5+") end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 5-") end),
+    -- sleep and shutdown
+    awful.key({}, "XF86PowerOff", function () suspend() end),
 
     -- C-M-j C-M-k 切换 screen
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey_alt, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey_alt, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
     -- 切换到 高亮的 tag
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     -- 自定义启动的程序
-    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("emacsclient -c -e '(reset-default-font)'") end),
-    awful.key({ modkey, "Control" }, "f", function () awful.util.spawn("pcmanfm") end),
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("slock") end),
-    awful.key({ modkey,           }, "F1", function() dropdown_toggle('urxvtc -g 170x49 -e emacsclient -tc') end),
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    
+    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -c") end),
+    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("thunar") end),
+    awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
+    awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
+
+    -- 打开关闭触摸板
+    awful.key({                   }, "XF86WebCam", function () awful.util.spawn('synclient touchpadoff=0') end),
+
+    -- 打开 terminal
+    awful.key({ modkey_alt,       }, "Return", function () awful.util.spawn(terminal) end),
+
     -- 重启和退出 awesome
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
@@ -425,8 +385,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end)
 )
@@ -434,10 +392,10 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
 
     -- 关闭当前高亮程序
-    awful.key({ modkey, "Control" }, "c",      function (c) c:kill()                         end),
-    
+    awful.key({ modkey_alt, "Control" }, "c",      function (c) c:kill()                         end),
+
     -- 移动当前程序到下一个 screen
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ modkey_alt,           }, "o",      awful.client.movetoscreen                        ),
 
     -- 最大化窗口 或 还原
     awful.key({ modkey,           }, "m",
@@ -465,25 +423,25 @@ for i = 1, keynumber do
                             awful.tag.viewonly(tags[screen][i])
                         end
                   end),
-        awful.key({ modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = mouse.screen
-                      if tags[screen][i] then
-                          awful.tag.viewtoggle(tags[screen][i])
-                      end
-                  end),
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
+        -- awful.key({ modkey, "Control" }, "#" .. i + 9,
+        --           function ()
+        --               local screen = mouse.screen
+        --               if tags[screen][i] then
+        --                   awful.tag.viewtoggle(tags[screen][i])
+        --               end
+        --           end),
+        awful.key({ modkey_alt, "Control" }, "#" .. i + 9,
                   function ()
                       if client.focus and tags[client.focus.screen][i] then
                           awful.client.movetotag(tags[client.focus.screen][i])
                       end
-                  end),
-        awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus and tags[client.focus.screen][i] then
-                          awful.client.toggletag(tags[client.focus.screen][i])
-                      end
                   end))
+        -- awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
+        --           function ()
+        --               if client.focus and tags[client.focus.screen][i] then
+        --                   awful.client.toggletag(tags[client.focus.screen][i])
+        --               end
+        --           end))
 end
 
 clientbuttons = awful.util.table.join(
@@ -510,16 +468,40 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
+    { rule = { class = "Kupfer" },
+      properties = { floating = true } },
     { rule = { class = "pinentry" },
+      properties = { floating = true } },
+    { rule = { class = "Download" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
-    { rule = { class = "Firefox" },
+    { rule = { class = "Wine" },
+      properties = { floating = true } },
+
+    { rule = { class = "Pidgin" },
+      properties = { floating = true },
+      callback = function( c )
+	 c:geometry( { width = 700 , height = 500 } )
+      end },
+
+    -- flash 播放器全屏播放
+    { rule = { instance = "plugin-container" },
+      properties = { floating = true } },
+    { rule = { class = "Chromium-browser" },
       properties = { tag = tags[1][3] } },
-    { rule = { class = "VirtualBox" },
+    -- { rule = { class = "Google-chrome" },
+    --   properties = { tag = tags[1][3] } },
+    { rule = { class = "Firefox" },
       properties = { tag = tags[1][4] } },
+    { rule = { class = "VirtualBox" },
+      properties = { tag = tags[1][5] } },
+    { rule = { class = "Skype" },
+      properties = { tag = tags[1][5] } },
     { rule = { class = "Pidgin" },
       properties = { tag = tags[1][5] } },
+    -- { rule = { class = "Wine" },
+    --   properties = { tag = tags[1][5] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][6] } },
 }
@@ -530,25 +512,3 @@ awful.rules.rules = {
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
-
--- {{{ Tag signal handler - selection
---   - ASCII tags 1 [2] 3 4...
---   - start with tag 1 named [1] in tag setup
--- for s = 1, screen.count() do
---     for t = 1, #tags[s] do
---         tags[s][t]:add_signal("property::selected", function ()
---            if tags[s][t].selected then
---                 tags[s][t].name = "[" .. tags[s][t].name .. "]"
---             else
---                 tags[s][t].name = tags[s][t].name:gsub("[%[%]]", "")
---             end
---         end)
---     end
--- end
--- }}}
-
--- some command on startup
-os.execute("nm-applet &")
-os.execute("emacs --daemon")
-os.execute("urxvtd &")

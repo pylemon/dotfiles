@@ -19,10 +19,10 @@ if not awful.util.file_readable(themes .. themename .. "/theme.lua") then
 end
 themedir = themes .. themename
 
-wallpaper1    = themedir .. "/background.jpg"
-wallpaper2    = themedir .. "/background.png"
-wallpaper3    = sharedthemes .. "/zenburn/zenburn-background.png"
-wallpaper4    = sharedthemes .. "/default/background.png"
+-- wallpaper1    = themedir .. "/background.jpg"
+-- wallpaper2    = themedir .. "/background.png"
+-- wallpaper3    = sharedthemes .. "/zenburn/zenburn-background.png"
+-- wallpaper4    = sharedthemes .. "/default/background.png"
 -- wpscript      = home .. "/.wallpaper"
 -- wpscript2     = themedir .. "/niceandclean.sh"
 
@@ -39,8 +39,8 @@ wallpaper4    = sharedthemes .. "/default/background.png"
 -- else
 -- 	theme.wallpaper_cmd = { "awsetbg " .. wallpaper4 }
 -- end
-
-theme.wallpaper_cmd = { "awsetbg " .. wallpaper1 }
+-- wallpaper1    = themedir .. "/background.jpg"
+theme.wallpaper_cmd = { "awsetbg " .. "/home/liwei/.config/awesome/background.jpg" }
 
 if awful.util.file_readable(config .. "/vain/init.lua") then
     theme.useless_gap_width  = "3"
@@ -50,7 +50,7 @@ end
 -- theme.font          = "微软雅黑Monaco 8"
 theme.font          = "profont 8"
 
-theme.bg_normal     = "#111111"
+theme.bg_normal     = "#222222"
 theme.bg_focus      = "#333333"
 theme.bg_urgent     = "#d02e54"
 theme.bg_minimize   = "#111111"
