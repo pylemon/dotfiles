@@ -1,0 +1,2 @@
+#!/bin/sh
+python /home/liwei/Software/goagent/local/proxy.py
