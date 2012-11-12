@@ -47,7 +47,7 @@ if awful.util.file_readable(config .. "/vain/init.lua") then
 end
 --}}}
 
--- theme.font          = "微软雅黑Monaco 8"
+-- theme.font          = "微软雅黑Monaco 6"
 theme.font          = "profont 8"
 
 theme.bg_normal     = "#222222"

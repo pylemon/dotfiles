@@ -1,9 +1,11 @@
 require("awful")
+awful.util.spawn_with_shell("xcompmgr -cF &")
 require("awful.autofocus")
 require("awful.rules")
 require("beautiful")
 require("naughty")
 require("vicious")
+
 
 -- {{{ Variable definitions
 
@@ -11,8 +13,9 @@ require("vicious")
 beautiful.init("/home/liwei/.config/awesome/themes/niceandclean/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
--- terminal = "roxterm"
-terminal = "urxvt"
+-- terminal = "lxterminal"
+terminal = "urxvtc"
+-- terminal = "urxvt -e zsh -c \"tmux -q has-session && exec tmux attach-session -d\""
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -37,8 +40,8 @@ layouts =
 
 -- {{{ Tags
 tags = {
-   names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Firefox", "5.Vbox", "6.Mail" },
-   layout = { layouts[2], layouts[3], layouts[3], layouts[3], layouts[2], layouts[3] }
+   names  = { "1.Rxvt", "2.Emacs", "3.Chrome", "4.Others"},
+   layout = { layouts[2], layouts[3], layouts[3], layouts[2] }
 }
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
@@ -56,14 +59,7 @@ function run_once(cmd)
   end
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
-
--- run_once("fcitx")
-run_once("xcompmgr")
-run_once("kupfer")
 run_once("tilda")
-run_once("synclient touchpadoff=1")
--- run_once("pidgin")
--- run_once("thunderbird")
 -- }}}
 
 
@@ -82,12 +78,13 @@ function start_daemon(dae)
 end
 
 procs = {
-   "gnome-settings-daemon",
-   "gnome-keyring-daemon",
    "gnome-sound-applet",
    "nm-applet",
+   "fcitx",
+   "urxvtd -q -f -o",
    "emacs --daemon",
-   "gae"
+   "/home/liwei/.dropbox-dist/dropboxd",
+   "/home/liwei/Dropbox/bin/gae"
 }
 
 for k = 1, #procs do
@@ -154,29 +151,6 @@ function gradient(color, to_color, min, max, value)
     return string.format("#%02x%02x%02x", red, green, blue)
 end
 
--- Create a cpuwidget
-local cpuwidget = widget({ type = "textbox" })
-vicious.register(cpuwidget, vicious.widgets.cpu,
-function (widget, args)
-   local text
-   local cpu
-   cpu = args[1]+args[2]+args[3]+args[4]
-   cpu = math.floor(cpu/4)
-   local color = gradient("#1793d1","#FF5656",0,100,cpu)
-   text = string.format("<span color='%s'>%s</span>", color, cpu)
-   text = text.."<span color='#1793d1'>%</span>"
-   return text
-end)
-tzswidget = widget({ type = "textbox" })
-vicious.register(tzswidget, vicious.widgets.thermal,
-function (widget, args)
-   local text
-   local color = gradient("#1793d1","#FF5656",30,85,args[1])
-   args[1] = string.format("<span color='%s'> %s</span>", color, args[1])
-   text = args[1].."<span color='#1793d1'>C</span>"
-   return text
-end, 19, "thermal_zone0")
-
 -- Create a memwidget
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem,
@@ -188,17 +162,6 @@ function (widget, args)
    return text
 end, 13)
 
--- Create a batwidget
-batwidget = widget({ type = "textbox" })
-vicious.register(batwidget, vicious.widgets.bat,
-function (widget, args)
-   local text
-   local color = gradient("#FF5656","#1793d1",10,100,args[2])
-   args[2] = string.format("<span color='%s'>%s</span>", color, args[2])
-   text = args[1]..args[2]
-   return text
-end, 32, "BAT1")
-
 -- Create a textclock widget
 mytextclock = widget({ type = "textbox" })
 vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y/%m/%d %a %T </span>", 1)
@@ -207,15 +170,6 @@ vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y/%
 spicon = widget({ type = "imagebox" })
 spicon.image = image("/home/liwei/.config/awesome/icons/separator.png")
 spicon.resize = false
-baticon = widget({ type = "imagebox" })
-baticon.image = image("/home/liwei/.config/awesome/icons/bat-blue.png")
-baticon.resize = false
-cpuicon = widget({ type = "imagebox" })
-cpuicon.image = image("/home/liwei/.config/awesome/icons/cpuinfo-blue.png")
-cpuicon.resize = false
-memicon = widget({ type = "imagebox" })
-memicon.image = image("/home/liwei/.config/awesome/icons/cpuinfow-blue.png")
-memicon.resize = false
 timeicon = widget({ type = "imagebox" })
 timeicon.image = image("/home/liwei/.config/awesome/icons/wifi-blue.png")
 timeicon.resize = false
@@ -224,7 +178,6 @@ mysystray.resize = false
 
 -- Create a wibox for each screen and add it
 mywibox = {}
--- mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
@@ -265,7 +218,6 @@ for s = 1, screen.count() do
     -- Set a screen margin for borders
     awful.screen.padding( screen[s], {top = 0} )
 
-    -- mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright, prompt = "" })
     -- We need one layoutbox per screen.
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
@@ -283,7 +235,7 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0 })
+    mywibox[s] = awful.wibox({ position = "bottom", screen = s, border_width = 0 })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
@@ -291,10 +243,8 @@ for s = 1, screen.count() do
             mytaglist[s],
 	    layout = awful.widget.layout.horizontal.leftright
         },
-	mylayoutbox[s], mytextclock, timeicon, spacer, tzswidget,
-	cpuwidget, spacer, cpuicon, spacer,
-	memwidget, spacer, memicon, spacer,
-	batwidget, spacer, baticon, spacer,
+	mylayoutbox[s], mytextclock, tzswidget,
+	memwidget, spacer,
         s == 1 and mysystray or nil,
 	mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -304,9 +254,7 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
 -- }}}
 
@@ -318,7 +266,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey_alt, "Control" }, "Right",  awful.tag.viewnext       ),
 
     -- M-Esc 切换到上一个 tag
-    awful.key({ modkey_alt,           }, "Tab", awful.tag.history.restore),
+    -- awful.key({ modkey_alt,           }, "Tab", awful.tag.history.restore),
 
     -- M-j, M-k 切换程序
     awful.key({ modkey,           }, "j",
@@ -366,12 +314,12 @@ globalkeys = awful.util.table.join(
 
     -- 自定义启动的程序
     awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -c") end),
-    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("thunar") end),
+    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
 
     -- 打开关闭触摸板
-    awful.key({                   }, "XF86WebCam", function () awful.util.spawn('synclient touchpadoff=0') end),
+    -- awful.key({                   }, "XF86WebCam", function () awful.util.spawn('synclient touchpadoff=0') end),
 
     -- 打开 terminal
     awful.key({ modkey_alt,       }, "Return", function () awful.util.spawn(terminal) end),
@@ -395,7 +343,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey_alt, "Control" }, "c",      function (c) c:kill()                         end),
 
     -- 移动当前程序到下一个 screen
-    awful.key({ modkey_alt,           }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
 
     -- 最大化窗口 或 还原
     awful.key({ modkey,           }, "m",
@@ -423,25 +371,12 @@ for i = 1, keynumber do
                             awful.tag.viewonly(tags[screen][i])
                         end
                   end),
-        -- awful.key({ modkey, "Control" }, "#" .. i + 9,
-        --           function ()
-        --               local screen = mouse.screen
-        --               if tags[screen][i] then
-        --                   awful.tag.viewtoggle(tags[screen][i])
-        --               end
-        --           end),
         awful.key({ modkey_alt, "Control" }, "#" .. i + 9,
                   function ()
                       if client.focus and tags[client.focus.screen][i] then
                           awful.client.movetotag(tags[client.focus.screen][i])
                       end
                   end))
-        -- awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-        --           function ()
-        --               if client.focus and tags[client.focus.screen][i] then
-        --                   awful.client.toggletag(tags[client.focus.screen][i])
-        --               end
-        --           end))
 end
 
 clientbuttons = awful.util.table.join(
@@ -451,10 +386,7 @@ clientbuttons = awful.util.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- end of keybindings
--- }}}
-
-
+-- end of keybindings}}}
 
 -- {{{ Rules
 awful.rules.rules = {
@@ -478,32 +410,16 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Wine" },
       properties = { floating = true } },
-
     { rule = { class = "Pidgin" },
-      properties = { floating = true },
-      callback = function( c )
-	 c:geometry( { width = 700 , height = 500 } )
-      end },
-
+      properties = { floating = true, opacity = 0.8 },
     -- flash 播放器全屏播放
     { rule = { instance = "plugin-container" },
       properties = { floating = true } },
-    { rule = { class = "Chromium-browser" },
+      callback = function( c )
+	 c:geometry( { width = 700 , height = 500 } )
+      end },
+    { rule = { class = "google-chrome" },
       properties = { tag = tags[1][3] } },
-    -- { rule = { class = "Google-chrome" },
-    --   properties = { tag = tags[1][3] } },
-    { rule = { class = "Firefox" },
-      properties = { tag = tags[1][4] } },
-    { rule = { class = "VirtualBox" },
-      properties = { tag = tags[1][5] } },
-    { rule = { class = "Skype" },
-      properties = { tag = tags[1][5] } },
-    { rule = { class = "Pidgin" },
-      properties = { tag = tags[1][5] } },
-    -- { rule = { class = "Wine" },
-    --   properties = { tag = tags[1][5] } },
-    { rule = { class = "Thunderbird" },
-      properties = { tag = tags[1][6] } },
 }
 -- }}}
 
