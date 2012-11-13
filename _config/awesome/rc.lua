@@ -362,13 +362,17 @@ end
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
+-- 当切换一个窗口时， 再按第二次会切回到之前的窗口.like i3
 for i = 1, keynumber do
     globalkeys = awful.util.table.join(globalkeys,
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
                         local screen = mouse.screen
-                        if tags[screen][i] then
-                            awful.tag.viewonly(tags[screen][i])
+                        if tags[screen][i].selected then
+			    return awful.tag.history.restore()
+			end
+			if tags[screen][i] then
+			   awful.tag.viewonly(tags[screen][i])
                         end
                   end),
         awful.key({ modkey_alt, "Control" }, "#" .. i + 9,
