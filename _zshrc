@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="../custom/themes/pylemon"
+ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="agnoster"
 
 plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting)
