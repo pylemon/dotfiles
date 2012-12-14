@@ -1,15 +1,22 @@
 [alias]
 	st = status
 	co = checkout
+        br = branch
 	ci = commit
-	glog = log --pretty=oneline --graph
-	slog = log --patch --stat
-	last = cat-file commit HEAD
+	slog = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p
+	glog = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	last = log -1 HEAD -p -w
+        rank = shortlog -sn --no-merges
+	unstage = reset HEAD --
+
 [user]
 	name = pylemon
 	email = leeway1985@gmail.com
+
 [core]
-	editor = emacsclient -nw
+	editor = emacsclient -a '' -t
+	excludesfile = /home/liwei/.gitignore_global
+
 [color]
 	status = auto
 	branch = auto
@@ -17,5 +24,17 @@
 	grep = auto
 	interactive = auto
 	ui = auto
+
+[color "status"]
+       added = green
+       changed = red bold
+       untracked = cyan bold
+
+[color "branch"]
+       remote = yellow
+
 [format]
 	pretty = oneline
+
+[credential]
+	helper = cache
