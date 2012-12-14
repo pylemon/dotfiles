@@ -1,5 +1,6 @@
 # Exact Solarized color theme for the color GNU ls utility.
 # Designed for dircolors (GNU coreutils) 5.97
+tfest merge
 #
 # This simple theme was simultaneously designed for these terminal color schemes:
 # - Solarized dark (best)
