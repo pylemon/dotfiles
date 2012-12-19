@@ -1,4 +1,6 @@
 #!/bin/sh
+# set locales to en_US
+sudo locale-gen --lang en_US.UTF-8
 
 # set timezone to Asia Shanghai
 sudo dpkg-reconfigure tzdata
@@ -14,8 +16,6 @@ sudo apt-get -y install htop tmux git mg zsh nginx apache2-utils
 # python dependence
 sudo apt-get -y install python-dev build-essential python-pip
 
-# set locales to en_US
-sudo locale-gen --lang en_US.UTF-8
 
 # install zsh
 if [ ! -d $HOME/.oh-my-zsh ]; then
@@ -38,10 +38,20 @@ if [ ! -d $HOME/dotfiles ]; then
     if [ ! -d $HOME/.zshrc ]; then
 	mv $HOME/.zshrc $HOME/.zshrc.`date +%s`
     fi
+    if [ ! -d $HOME/.dircolors ]; then
+	mv $HOME/.dircolors $HOME/.dircolors.`date +%s`
+    fi
+    if [ ! -d $HOME/.gitconfig ]; then
+	mv $HOME/.gitconfig $HOME/.gitconfig.`date +%s`
+    fi
+    if [ ! -d $HOME/.gitignore_global ]; then
+	mv $HOME/.HOME/.gitignore_global $HOME/.HOME/.gitignore_global.`date +%s`
+    fi
+
+    ln -s $HOME/dotfiles/_zshrc $HOME/.zshrc
     ln -s $HOME/dotfiles/_dircolors $HOME/.dircolors
     ln -s $HOME/dotfiles/_gitconfig $HOME/.gitconfig
     ln -s $HOME/dotfiles/_gitignore_global $HOME/.gitignore_global
-    ln -s $HOME/dotfiles/_zshrc $HOME/.zshrc
 fi
 
 # virtualenv wrapper
