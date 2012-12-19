@@ -2,23 +2,31 @@
 ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="../../dotfiles/pylemon"
-# ZSH_THEME="agnoster"
 
-plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting)
+
+plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting gitfast command-not-found cp rsync python django)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.git-prompt.sh
+source $HOME/.git-completion.sh
+setopt correctall
+
+compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 export LC_CTYPE="zh_CN.UTF-8"
 export LANG="zh_CN.UTF-8"
+export EDITOR="emacsclient -a ''"
 
 # system
-alias l='ls -CF'
+alias l='ls -C --group-directories-first'
 alias ll='ls -ahlF'
 alias la='ls -A'
 alias df='df -h'
+alias tm='teamocil'
 alias ipy='ipython'
 alias svnclean='find . -type d -name ".svn" -print0 | xargs -0 rm -Rf'
 alias killtcp='fuser -k -n tcp $@'
+alias kk='fuser -k -n tcp 8000'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
 alias htop='htop'
 alias halt='sudo halt -p'
@@ -30,6 +38,15 @@ alias update='sudo apt-get update'
 alias upgrade='sudo apt-get update && sudo apt-get -y upgrade'
 alias show='apt-cache show'
 alias search='apt-cache search'
+alias m='udisks --mount'
+alias m1='udisks --mount /dev/sdb1'
+alias m2='udisks --mount /dev/sdc1'
+alias m3='udisks --mount /dev/sdd1'
+alias um='udisks --unmount'
+alias um1='udisks --unmount /dev/sdb1'
+alias um2='udisks --unmount /dev/sdc1'
+alias um3='udisks --unmount /dev/sdd1'
+alias vps='ssh -N -D 8080 -l liwei pylemon -v'
 
 # git
 alias gl='git glog'
@@ -40,8 +57,7 @@ alias gdf='git diff -w'
 alias grm='git rm --cached'
 
 # software
-alias e='emacs -u root -nw'
-alias et='sudo emacsclient -t'
+alias et="emacsclient -a '' -t"
 alias vi='vim'
 alias du='ncdu'
 alias nau='nautilus --no-desktop'
