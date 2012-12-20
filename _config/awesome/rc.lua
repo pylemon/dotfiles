@@ -13,9 +13,7 @@ require("vicious")
 beautiful.init("/home/liwei/.config/awesome/themes/niceandclean/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
--- terminal = "lxterminal"
-terminal = "urxvtc"
--- terminal = "urxvt -e zsh -c \"tmux -q has-session && exec tmux attach-session -d\""
+terminal = "lxterminal"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -81,10 +79,7 @@ procs = {
    "gnome-sound-applet",
    "nm-applet",
    "fcitx",
-   "urxvtd -q -f -o",
-   "emacs --daemon",
    "/home/liwei/.dropbox-dist/dropboxd",
-   "/home/liwei/Dropbox/bin/gae"
 }
 
 for k = 1, #procs do

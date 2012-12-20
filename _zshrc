@@ -7,8 +7,6 @@ ZSH_THEME="../../dotfiles/pylemon"
 plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting gitfast command-not-found cp rsync python django)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.git-prompt.sh
-source $HOME/.git-completion.sh
 setopt correctall
 
 compctl -g '~/.teamocil/*(:t:r)' teamocil
