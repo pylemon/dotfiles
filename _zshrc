@@ -46,7 +46,7 @@ alias um='udisks --unmount'
 alias um1='udisks --unmount /dev/sdb1'
 alias um2='udisks --unmount /dev/sdc1'
 alias um3='udisks --unmount /dev/sdd1'
-alias vps='ssh -N -D 8080 -l liwei pylemon -v'
+alias fuckgfw='ssh liwei@pylemon -ND 8080 -p 1423 -v'
 
 # git
 alias gl='git glog'
