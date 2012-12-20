@@ -11,7 +11,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 # useful tools
-sudo apt-get -y install htop tmux git mg zsh nginx apache2-utils
+sudo apt-get -y install htop tmux git mg zsh nginx apache2-utils awesome awesome-extra suckless-tools lxterminal
 
 # python dependence
 sudo apt-get -y install python-dev build-essential python-pip
