@@ -37,8 +37,8 @@ layouts =
 
 -- {{{ Tags
 tags = {
-   names  = { "1.Rxvt", "2.Emacs", "3.Chrome", "4.Others"},
-   layout = { layouts[2], layouts[3], layouts[3], layouts[2] }
+   names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Thunderbird"},
+   layout = { layouts[2], layouts[3], layouts[3], layouts[3] }
 }
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
@@ -86,18 +86,6 @@ for k = 1, #procs do
 end
 --- }}}
 
--- The systray is a bit complex. We need to configure it to display
--- the right colors. Here is a link with more background about this:
---  http://thread.gmane.org/gmane.comp.window-managers.awesome/9028
-xprop = assert(io.popen("xprop -root _NET_SUPPORTING_WM_CHECK"))
-wid = xprop:read():match("^_NET_SUPPORTING_WM_CHECK.WINDOW.: window id # (0x[%S]+)$")
-xprop:close()
-if wid then
-   wid = tonumber(wid) + 1
-   os.execute("xprop -id " .. wid .. " -format _NET_SYSTEM_TRAY_COLORS 32c " ..
-	      "-set _NET_SYSTEM_TRAY_COLORS " ..
-	      "65535,65535,65535,65535,8670,8670,65535,32385,0,8670,65535,8670")
-end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
@@ -119,6 +107,8 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
 -- }}}
 
+
+-- {{{ widgets
 -- Separators
 spacer = widget({ type = "textbox" })
 spacer.text = " "
@@ -145,16 +135,34 @@ function gradient(color, to_color, min, max, value)
     return string.format("#%02x%02x%02x", red, green, blue)
 end
 
--- Create a memwidget
+-- CPU widget
+cpuwidget = widget({ type = "textbox" })
+vicious.register(cpuwidget, vicious.widgets.cpu,
+		 function (widget, args)
+		    if string.len(args[1]) == 1 then
+		       return "<span color='#1793d1'>☢  " .. args[1] .. "% </span>"
+		    else
+		       return "<span color='#1793d1'>☢ " .. args[1] .. "% </span>"
+		    end
+		 end)
+cpuwidget:buttons(
+   awful.util.table.join(awful.button({ }, 1, 
+				      function ()
+					 awful.util.spawn(terminal .. " -e htop")
+				      end),
+                         awful.button({ }, 3,
+				      function ()
+                                         cpuwidget.width = 1
+				      end)))
+
+
+-- Memory widget
 memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem,
-function (widget, args)
-   local text
-   local color2 = gradient("#1793d1","#FF5656",20,9000,args[2])
-   args[2] = string.format("<span color='%s'>%s</span>", color2, args[2])
-   text = args[2].."<span color='#1793d1'>M</span>"
-   return text
-end, 13)
+vicious.register(memwidget, vicious.widgets.mem, 
+                 function (widget, args)
+                    return "♻ " ..args[1].."%"
+                 end, 13)
+
 
 -- Create a textclock widget
 mytextclock = widget({ type = "textbox" })
@@ -239,6 +247,8 @@ for s = 1, screen.count() do
         },
 	mylayoutbox[s], mytextclock, tzswidget,
 	memwidget, spacer,
+	cputempwidget, spacer,
+	cpuwidget, spacer,
         s == 1 and mysystray or nil,
 	mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
