@@ -149,7 +149,7 @@ memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem,
 function (widget, args)
    local text
-   local color2 = gradient("#1793d1","#FF5656",20,7000,args[2])
+   local color2 = gradient("#1793d1","#FF5656",20,9000,args[2])
    args[2] = string.format("<span color='%s'>%s</span>", color2, args[2])
    text = args[2].."<span color='#1793d1'>M</span>"
    return text
@@ -157,7 +157,7 @@ end, 13)
 
 -- Create a textclock widget
 mytextclock = widget({ type = "textbox" })
-vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y/%m/%d %a %T </span>", 1)
+vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y-%m-%d %a %T </span>", 1)
 
 --Create icons
 spicon = widget({ type = "imagebox" })
@@ -258,9 +258,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey_alt, "Control" }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey_alt, "Control" }, "Right",  awful.tag.viewnext       ),
 
-    -- M-Esc 切换到上一个 tag
-    -- awful.key({ modkey_alt,           }, "Tab", awful.tag.history.restore),
-
     -- M-j, M-k 切换程序
     awful.key({ modkey,           }, "j",
         function ()
@@ -273,7 +270,7 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
         end),
 
-    -- dmenu 集成到 awesome 启动或者跳转到程序
+    -- using dmenu in awesome
     awful.key({ modkey_alt,       }, "r",
     	      function ()
     		 local f_reader = io.popen( "dmenu_path | dmenu -b -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#1793d1'")
@@ -297,31 +294,30 @@ globalkeys = awful.util.table.join(
     	      end),
 
     -- sleep and shutdown
-    awful.key({}, "XF86PowerOff", function () suspend() end),
+    awful.key({                       }, "XF86PowerOff", function () suspend() end),
 
-    -- C-M-j C-M-k 切换 screen
+    -- C-M-j C-M-k switch screen
     awful.key({ modkey_alt, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey_alt, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
-    -- 切换到 高亮的 tag
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
-    -- 自定义启动的程序
+    -- jump to alert tag
+    awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
+
+    -- some useful software control keys
     awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
+    awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
 
-    -- 打开关闭触摸板
+    -- touchpad control
     -- awful.key({                   }, "XF86WebCam", function () awful.util.spawn('synclient touchpadoff=0') end),
 
-    -- 打开 terminal
-    awful.key({ modkey_alt,       }, "Return", function () awful.util.spawn(terminal) end),
-
-    -- 重启和退出 awesome
+    -- restart and quit awesome 
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    -- 增加或者减少 窗口面积
+    -- layout control
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
@@ -330,16 +326,17 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end)
 )
 
+
 clientkeys = awful.util.table.join(
 
-    -- 关闭当前高亮程序
-    awful.key({ modkey_alt, "Control" }, "c",      function (c) c:kill()                         end),
+    -- close current frame
+    awful.key({ modkey_alt, "Control" }, "c", function (c) c:kill()        end),
 
-    -- 移动当前程序到下一个 screen
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    -- switch to next screen
+    awful.key({ modkey,               }, "o", awful.client.movetoscreen),
 
-    -- 最大化窗口 或 还原
-    awful.key({ modkey,           }, "m",
+    -- toggle maximized window
+    awful.key({ modkey,               }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
@@ -355,7 +352,7 @@ end
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
--- 当切换一个窗口时， 再按第二次会切回到之前的窗口.like i3
+-- nice i3 feture, choose a window twice will get return prev window
 for i = 1, keynumber do
     globalkeys = awful.util.table.join(globalkeys,
         awful.key({ modkey }, "#" .. i + 9,
@@ -381,7 +378,6 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
--- Set keys
 root.keys(globalkeys)
 -- end of keybindings}}}
 
@@ -409,7 +405,7 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Pidgin" },
       properties = { floating = true, opacity = 0.8 },
-    -- flash 播放器全屏播放
+    -- flash player fullscreen
     { rule = { instance = "plugin-container" },
       properties = { floating = true } },
       callback = function( c )
@@ -425,7 +421,6 @@ awful.rules.rules = {
 -- }}}
 
 -- {{{ Signals
--- Signal function to execute when a new client appears.
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}

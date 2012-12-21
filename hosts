@@ -1,16 +1,8 @@
 127.0.0.1	localhost
-127.0.0.1       examadmin
-
-
-# ata hosts
-172.16.16.38	project.ata.net.cn
-172.16.21.80	sylvia
-172.16.120.1	mark
-172.16.120.3	bill
-
 
 # aimi
 114.80.203.146  aimi
+
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback

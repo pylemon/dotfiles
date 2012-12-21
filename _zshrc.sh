@@ -11,9 +11,8 @@ setopt correctall
 
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
-export LC_CTYPE="zh_CN.UTF-8"
-export LANG="zh_CN.UTF-8"
 export EDITOR="emacsclient -a ''"
+export LC_CTYPE="zh_CN.UTF-8"
 
 # system
 alias l='ls -C --group-directories-first'
@@ -45,7 +44,8 @@ alias um1='udisks --unmount /dev/sdb1'
 alias um2='udisks --unmount /dev/sdc1'
 alias um3='udisks --unmount /dev/sdd1'
 alias fuckgfw='ssh liwei@pylemon -ND 8080 -p 1423 -v'
-alias touchpad='synclient touchpadoff=0'
+alias touchpadoff='synclient touchpadoff=0'
+alias touchpadon='synclient touchpadoff=1'
 
 # git
 alias gl='git glog'
@@ -69,14 +69,11 @@ alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
 
 # adaptive
 alias fabls='fab --list'
-alias ww='cd ~/work/src'
-alias rs='cd ~/work/src/ && python manage.py runserver_plus 0.0.0.0:8000'
-alias rse='cd ~/work/src/ && STAGING=development_exam python manage.py runserver 0.0.0.0:8001'
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 1152x720 &'
 alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
-alias resetscreen='xrandr --output LVDS1 --mode 1366x768'
+alias resetscreen='xrandr --output LVDS1 --mode 1280x800'
 
 # custom commands
 # mkdir and cd into that dirctionary
