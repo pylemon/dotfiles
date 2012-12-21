@@ -5,7 +5,6 @@ require("beautiful")
 require("naughty")
 require("vicious")
 
-
 -- {{{ Variable definitions
 
 -- Themes define colours, icons, and wallpapers
@@ -13,7 +12,7 @@ beautiful.init("/home/liwei/.config/awesome/themes/niceandclean/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "lxterminal"
-editor = os.getenv("EDITOR") or "emacs"
+editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -23,21 +22,15 @@ modkey_alt = "Mod1"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    -- awful.layout.suit.tile,                   -- 1
     awful.layout.suit.floating,                  -- 1
     awful.layout.suit.tile.left,                 -- 2
-    -- awful.layout.suit.tile.bottom,            -- 3
-    -- awful.layout.suit.tile.top,               -- 4
-    -- awful.layout.suit.fair,                   -- 5
-    -- awful.layout.suit.fair.horizontal,        -- 6
-    -- awful.layout.suit.magnifier,              -- 7
     awful.layout.suit.max                        -- 3
 }
 -- }}}
 
 -- {{{ Tags
 tags = {
-   names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Thunderbird"},
+   names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Mail"},
    layout = { layouts[2], layouts[3], layouts[3], layouts[3] }
 }
 for s = 1, screen.count() do
@@ -55,8 +48,9 @@ function run_once(cmd)
   end
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
-run_once("tilda")
 run_once("xcompmgr -cF")
+run_once("thunderbird")
+run_once("tilda")
 -- }}}
 
 
@@ -140,9 +134,9 @@ cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu,
 		 function (widget, args)
 		    if string.len(args[1]) == 1 then
-		       return "<span color='#1793d1'>☢  " .. args[1] .. "% </span>"
+		       return "<span color='#1793d1'>☢  " .. args[1] .. "%</span>"
 		    else
-		       return "<span color='#1793d1'>☢ " .. args[1] .. "% </span>"
+		       return "<span color='#1793d1'>☢ " .. args[1] .. "%</span>"
 		    end
 		 end)
 cpuwidget:buttons(
@@ -155,12 +149,11 @@ cpuwidget:buttons(
                                          cpuwidget.width = 1
 				      end)))
 
-
 -- Memory widget
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, 
                  function (widget, args)
-                    return "♻ " ..args[1].."%"
+                    return "<span color='#1793d1'>♻ " ..args[2].."M "..args[1].."%</span> "
                  end, 13)
 
 
@@ -237,7 +230,7 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 1 })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
@@ -247,7 +240,6 @@ for s = 1, screen.count() do
         },
 	mylayoutbox[s], mytextclock, tzswidget,
 	memwidget, spacer,
-	cputempwidget, spacer,
 	cpuwidget, spacer,
         s == 1 and mysystray or nil,
 	mytasklist[s],
