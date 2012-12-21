@@ -110,26 +110,6 @@ spacer.text = " "
 seperator = widget({ type = "textbox" })
 seperator.text = "|"
 
--- color function convert value to color
-function gradient(color, to_color, min, max, value)
-    local function color2dec(c)
-        return tonumber(c:sub(2,3),16), tonumber(c:sub(4,5),16), tonumber(c:sub(6,7),16)
-    end
-    local factor = 0
-    if (value >= max ) then
-        factor = 1
-    elseif (value > min ) then
-        factor = (value - min) / (max - min)
-    end
-    local red, green, blue = color2dec(color)
-    local to_red, to_green, to_blue = color2dec(to_color)
-    red   = red   + (factor * (to_red   - red))
-    green = green + (factor * (to_green - green))
-    blue  = blue  + (factor * (to_blue  - blue))
-    -- dec2color
-    return string.format("#%02x%02x%02x", red, green, blue)
-end
-
 -- CPU widget
 cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu,
@@ -143,7 +123,7 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 cpuwidget:buttons(
    awful.util.table.join(awful.button({ }, 1, 
 				      function ()
-					 awful.util.spawn(terminal .. " -e htop")
+					 awful.util.spawn(terminal .. " -e htop -s PERCENT_CPU")
 				      end),
                          awful.button({ }, 3,
 				      function ()
@@ -156,6 +136,15 @@ vicious.register(memwidget, vicious.widgets.mem,
                  function (widget, args)
                     return "<span color='#1793d1'>♻ " ..args[2].."M "..args[1].."%</span> "
                  end, 13)
+memwidget:buttons(
+   awful.util.table.join(awful.button({ }, 1, 
+				      function ()
+					 awful.util.spawn(terminal .. " -e htop -s PERCENT_MEM")
+				      end),
+                         awful.button({ }, 3,
+				      function ()
+                                         memwidget.width = 1
+				      end)))
 
 
 -- Create a textclock widget
