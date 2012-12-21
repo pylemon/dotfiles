@@ -51,6 +51,7 @@ end
 run_once("xcompmgr -cF")
 run_once("thunderbird")
 run_once("tilda")
+run_once("ssh liwei@pylemon -ND 8080 -v")
 -- }}}
 
 
