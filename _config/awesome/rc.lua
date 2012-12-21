@@ -1,5 +1,4 @@
 require("awful")
-awful.util.spawn_with_shell("xcompmgr -cF &")
 require("awful.autofocus")
 require("awful.rules")
 require("beautiful")
@@ -14,7 +13,7 @@ beautiful.init("/home/liwei/.config/awesome/themes/niceandclean/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "lxterminal"
-editor = os.getenv("EDITOR") or "vim"
+editor = os.getenv("EDITOR") or "emacs"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -48,7 +47,6 @@ end
 
 
 -- {{{ Autorun programs
--- 自动启动程序
 function run_once(cmd)
   findme = cmd
   firstspace = cmd:find(" ")
@@ -76,9 +74,9 @@ function start_daemon(dae)
 end
 
 procs = {
-   "gnome-sound-applet",
+   "volti",
    "nm-applet",
-   "fcitx",
+   "gnome-settings-daemon",
    "/home/liwei/.dropbox-dist/dropboxd",
 }
 
@@ -308,7 +306,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     -- 自定义启动的程序
-    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -c") end),
+    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
@@ -417,8 +415,12 @@ awful.rules.rules = {
       callback = function( c )
 	 c:geometry( { width = 700 , height = 500 } )
       end },
+    { rule = { class = "Emacs" },
+      properties = { tag = tags[1][2] } },
     { rule = { class = "google-chrome" },
       properties = { tag = tags[1][3] } },
+    { rule = { class = "Thunderbird" },
+      properties = { tag = tags[1][4] } },
 }
 -- }}}
 
