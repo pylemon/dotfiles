@@ -1,4 +1,3 @@
-xcompmgr -cF &
 xmodmap ~/.xmodmap
 export XMODIFIERS="@im=fcitx"
 export XIM=fcitx

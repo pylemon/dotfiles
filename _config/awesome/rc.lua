@@ -56,6 +56,7 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 run_once("tilda")
+run_once("xcompmgr -cF")
 -- }}}
 
 
@@ -228,7 +229,7 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "bottom", screen = s, border_width = 0 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0 })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
