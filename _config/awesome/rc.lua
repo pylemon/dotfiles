@@ -51,7 +51,9 @@ end
 run_once("xcompmgr -cF")
 run_once("thunderbird")
 run_once("tilda")
-run_once("ssh liwei@pylemon -ND 8080 -v")
+run_once("ssh liwei@pylemon -ND 10086 -v")
+run_once("skype")
+run_once("killall emacs")
 -- }}}
 
 
@@ -115,9 +117,9 @@ cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu,
 		 function (widget, args)
 		    if string.len(args[1]) == 1 then
-		       return "<span color='#1793d1'>☢  " .. args[1] .. "%</span>"
+		       return "<span color='#1793d1'>❖  " .. args[1] .. "%</span>"
 		    else
-		       return "<span color='#1793d1'>☢ " .. args[1] .. "%</span>"
+		       return "<span color='#1793d1'>❖ " .. args[1] .. "%</span>"
 		    end
 		 end)
 cpuwidget:buttons(
@@ -145,6 +147,20 @@ memwidget:buttons(
 				      function ()
                                          memwidget.width = 1
 				      end)))
+
+-- Battery widget
+batterywidget = widget({ type = "textbox" })
+function battery_status ()
+   local fd = io.popen("ibam --percentbattery | awk '{print $3}'")
+   local time = fd:read()
+   fd:close()
+   return time
+end
+my_battmon_timer = timer({ timeout = 30 })
+my_battmon_timer:add_signal("timeout", function()
+    batterywidget.text = "<span color='#1793d1'>☢ " .. battery_status() .. "%</span>"
+end)
+my_battmon_timer:start()
 
 
 -- Create a textclock widget
@@ -231,6 +247,7 @@ for s = 1, screen.count() do
 	mylayoutbox[s], mytextclock, tzswidget,
 	memwidget, spacer,
 	cpuwidget, spacer,
+	batterywidget, spacer,
         s == 1 and mysystray or nil,
 	mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -406,7 +423,7 @@ awful.rules.rules = {
       end },
     { rule = { class = "Emacs" },
       properties = { tag = tags[1][2] } },
-    { rule = { class = "google-chrome" },
+    { rule = { class = "Google-chrome" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
