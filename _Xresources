@@ -1,32 +1,38 @@
-!TomorrowNight
+*foreground: #D7D0C7
+*background: #151515
 
-*.foreground: #c5c8c6
-*.background: #1d1f21
-*.cursorColor: #aeafad
-! Black / Grey
-*.color0: #000000
-*.color8: #666666
-! Red / Bright Red
-*.color1: #cc6666
-*.color9: #FF3334
-! Green + Bright Green
-*.color2: #b5bd68
-*.color10: #9ec400
-! Yellow (Orange) + Bright Yellow (Yellow)
-*.color3: #de935f
-*.color11: #f0c674
-! Blue + Bright Blue
-*.color4: #81a2be
-*.color12: #81a2be
-! Magenta (Purple) + Bright Magenta
-*.color5: #b294bb
-*.color13: #b777e0
-! Cyan (Aqua) + Bright Cyan
-*.color6: #8abeb7
-*.color14: #54ced6
-! Light Grey (Selection) + White (Current Line)
-*.color7: #373b41
-*.color15: #282a2e
+!black
+! *color0:     #AF875F
+! *color8:     #AF875F
+*color0:     #101010
+*color8:     #404040
+!red
+*color1:     #E84F4F
+*color9:     #D23D3D
+!green
+*color2:     #B8D68C
+*color10:    #A0CF5D
+!yellow
+*color3:     #E1AA5D
+*color11:    #F39D21
+!blue
+*color4:     #7DC1CF
+*color12:    #4E9FB1
+!magenta
+*color5:     #9B64FB
+*color13:    #8542FF
+!cyan
+*color6:     #6D878D
+*color14:    #42717B
+!white
+*color7:     #dddddd
+*color15:    #dddddd
+
+URxvt*borderColor:        #151515
+URxvt*colorBD:            #ffffff
+URxvt*cursorColor:        #ff8939
+URxvt*cursorColor2:       #151515
+
 
 !look and feel
 xterm.termName: xterm-256color
