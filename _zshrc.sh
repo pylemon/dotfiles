@@ -43,9 +43,9 @@ alias um='udisks --unmount'
 alias um1='udisks --unmount /dev/sdb1'
 alias um2='udisks --unmount /dev/sdc1'
 alias um3='udisks --unmount /dev/sdd1'
-alias fuckgfw='ssh liwei@pylemon -ND 8080 -p 1423 -v'
-alias touchpadoff='synclient touchpadoff=0'
-alias touchpadon='synclient touchpadoff=1'
+alias gfw='ssh liwei@pylemon -ND 10086 -p 1423 -v'
+alias tpoff='synclient touchpadoff=1'
+alias tpon='synclient touchpadoff=0'
 
 # git
 alias gl='git glog'
