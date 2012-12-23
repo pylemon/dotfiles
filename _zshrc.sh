@@ -71,8 +71,8 @@ alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
 alias fabls='fab --list'
 
 # awesome
-alias ax='Xephyr :1 -ac -br -noreset -screen 1152x720 &'
-alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
+alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
+alias ay='DISPLAY=:1.0 awesome -c ~/dotfiles/_config/awesome/rc.lua'
 alias resetscreen='xrandr --output LVDS1 --mode 1280x800'
 
 # custom commands
