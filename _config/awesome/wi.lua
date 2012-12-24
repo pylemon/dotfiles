@@ -10,9 +10,9 @@ local beautiful = require("beautiful")
 local vicious = require("vicious")
 local naughty = require("naughty")
 
-graphwidth  = 60
-graphheight = 20
-pctwidth    = 40
+graphwidth  = 50
+graphheight = 16
+pctwidth    = 20
 netwidth    = 30
 mpdwidth    = 365
 
@@ -90,7 +90,7 @@ cpupct1 = wibox.widget.textbox()
 cpupct1.fit = function(box,w,h)
   local w,h = wibox.widget.textbox.fit(box,w,h) return math.max(pctwidth,w),h
 end
-vicious.register(cpupct1, vicious.widgets.cpu, "$3%", 2)
+vicious.register(cpupct1, vicious.widgets.cpu, "| cpu $3% ", 2)
 
 -- Core 2 graph
 cpugraph2 = awful.widget.graph()
@@ -124,7 +124,7 @@ vicious.cache(vicious.widgets.mem)
 -- Ram used
 memused = wibox.widget.textbox()
 vicious.register(memused, vicious.widgets.mem,
-  "<span color='" .. beautiful.fg_em .. "'>ram </span>$2MB", 5)
+  "<span color='" .. beautiful.fg_em .. "'>ram </span>$2m ", 5)
 
 -- Ram bar
 membar = awful.widget.progressbar()
@@ -172,35 +172,35 @@ vicious.register(swappct, vicious.widgets.mem,
   "<span color='" .. beautiful.fg_em .. "'>swap</span>$5%", 5)
 
 -- {{{ FILESYSTEM
--- -- Cache
--- vicious.cache(vicious.widgets.fs)
+-- Cache
+vicious.cache(vicious.widgets.fs)
 
--- -- Root used
--- rootfsused = wibox.widget.textbox()
--- vicious.register(rootfsused, vicious.widgets.fs,
---   "<span color='" .. beautiful.fg_em .. "'>ssd</span>${/ used_gb}GB", 97)
+-- Root used
+rootfsused = wibox.widget.textbox()
+vicious.register(rootfsused, vicious.widgets.fs,
+  "<span color='" .. beautiful.fg_em .. "'>ssd</span>${/ used_gb}GB", 97)
 
--- -- Root bar
--- rootfsbar = awful.widget.progressbar()
--- rootfsbar:set_vertical(false):set_width(graphwidth):set_height(graphheight)
--- rootfsbar:set_ticks(false):set_ticks_size(2)
--- rootfsbar:set_border_color(nil)
--- rootfsbar:set_background_color(beautiful.bg_widget)
--- rootfsbar:set_color({
---   type = "linear",
---   from = { 0, 0 },
---   to = { graphwidth, 0 },
---   stops = {
---     { 0, beautiful.fg_widget },
---     { 0.25, beautiful.fg_center_widget },
---     { 1, beautiful.fg_end_widget }
---   }})
--- vicious.register(rootfsbar, vicious.widgets.fs, "${/ used_p}", 97)
+-- Root bar
+rootfsbar = awful.widget.progressbar()
+rootfsbar:set_vertical(false):set_width(graphwidth):set_height(graphheight)
+rootfsbar:set_ticks(false):set_ticks_size(2)
+rootfsbar:set_border_color(nil)
+rootfsbar:set_background_color(beautiful.bg_widget)
+rootfsbar:set_color({
+  type = "linear",
+  from = { 0, 0 },
+  to = { graphwidth, 0 },
+  stops = {
+    { 0, beautiful.fg_widget },
+    { 0.25, beautiful.fg_center_widget },
+    { 1, beautiful.fg_end_widget }
+  }})
+vicious.register(rootfsbar, vicious.widgets.fs, "${/ used_p}", 97)
 
--- -- Root %
--- rootfspct = wibox.widget.textbox()
--- rootfspct.width = pctwidth
--- vicious.register(rootfspct, vicious.widgets.fs, "${/ used_p}%", 97)
+-- Root %
+rootfspct = wibox.widget.textbox()
+rootfspct.width = pctwidth
+vicious.register(rootfspct, vicious.widgets.fs, "| disk ${/ used_p}% ", 97)
 -- }}}
 
 -- {{{ NETWORK
@@ -261,7 +261,7 @@ downwidget = wibox.widget.textbox()
 downwidget.fit = function(box,w,h)
   local w,h = wibox.widget.textbox.fit(box,w,h) return math.max(netwidth,w),h
 end
-vicious.register(downwidget, vicious.widgets.net, "${eth1 down_kb} kB/s", 2)
+vicious.register(downwidget, vicious.widgets.net, "| ${eth1 down_kb} kB/s |", 2)
 -- }}}
 
 -- {{{ WEATHER

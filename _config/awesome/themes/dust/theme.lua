@@ -14,10 +14,10 @@ theme.font = "profont 8"
 
 -- {{{ Colors
 theme.fg_center_widget = "#636363"
-theme.fg_em            = "#d6d6d6"
+theme.fg_em            = "#1793D1"
 theme.fg_end_widget    = "#1a1a1a"
-theme.fg_focus         = "#1793D1"
-theme.fg_normal        = "#DDDDDD"
+theme.fg_focus         = "#ffffff"
+theme.fg_normal        = "#1793D1"
 theme.fg_tooltip       = "#1a1a1a"
 theme.fg_urgent        = "#ffffff"
 theme.fg_minimize      = "#1793D1"

@@ -10,6 +10,7 @@ local menubar = require("menubar")
 local vicious = require("vicious")
 local wi = require("wi")
 
+
 -- {{{ Error handling
 -- Startup
 if awesome.startup_errors then
@@ -97,11 +98,11 @@ function run_once(cmd)
 end
 
 run_once("xcompmgr -cF")
-run_once("thunderbird")
 run_once("tilda")
 run_once("ssh liwei@pylemon -ND 10086 -v")
 run_once("skype")
--- run_once("killall emacs")
+run_once("thunderbird")
+run_once("killall emacs")
 -- }}}
 
 function start_daemon(dae)
@@ -129,7 +130,7 @@ end
 menubar.utils.terminal = terminal
 
 -- Clock
-mytextclock = awful.widget.textclock("<span color='" .. beautiful.fg_em .. "'>%a %m/%d</span> @ %H:%M %p")
+mytextclock = awful.widget.textclock("<span color='" .. beautiful.fg_em .. "'>%a %Y/%m/%d</span> @ %H:%M %p")
 
 -- {{{ Wiboxes
 mywibox = {}
@@ -202,10 +203,12 @@ for s = 1, screen.count() do
   right_wibox:add(space)
   -- right_wibox:add(baticon)
   -- right_wibox:add(batpct)
-  -- right_wibox:add(space)
+  right_wibox:add(rootfspct)
+  right_wibox:add(cpupct1)
   right_wibox:add(cpugraph1)
   right_wibox:add(space)
   right_wibox:add(memused)
+  right_wibox:add(membar)
   right_wibox:add(space)
   right_wibox:add(downwidget)
   right_wibox:add(space)
