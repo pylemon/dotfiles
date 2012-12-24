@@ -273,8 +273,8 @@ globalkeys = awful.util.table.join(
     awful.key({                       }, "XF86PowerOff", function () suspend() end),
 
     -- C-M-j C-M-k switch screen
-    awful.key({ modkey_alt, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey_alt, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey, "Control"     }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey, "Control"     }, "k", function () awful.screen.focus_relative(-1) end),
 
     -- jump to alert tag
     awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
