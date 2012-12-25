@@ -73,7 +73,7 @@ alias fabls='fab --list'
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
 alias ay='DISPLAY=:1.0 awesome -c ~/dotfiles/_config/awesome/rc.lua'
-alias resetscreen='xrandr --output LVDS1 --mode 1280x800'
+alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
 
 # custom commands
 # mkdir and cd into that dirctionary

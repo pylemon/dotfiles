@@ -273,8 +273,8 @@ globalkeys = awful.util.table.join(
     awful.key({                       }, "XF86PowerOff", function () suspend() end),
 
     -- C-M-j C-M-k switch screen
-    awful.key({ modkey, "Control"     }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey, "Control"     }, "k", function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey_alt, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey_alt, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
 
     -- jump to alert tag
     awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
@@ -397,10 +397,10 @@ awful.rules.rules = {
       callback = function( c )
 	 c:geometry( { width = 700 , height = 500 } )
       end },
-    { rule = { class = "Emacs" },
-      properties = { tag = tags[1][2] } },
-    { rule = { class = "Google-chrome" },
-      properties = { tag = tags[1][3] } },
+    -- { rule = { class = "Emacs" },
+    --   properties = { tag = tags[1][2] } },
+    -- { rule = { class = "Google-chrome" },
+    --   properties = { tag = tags[1][3] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
 }
