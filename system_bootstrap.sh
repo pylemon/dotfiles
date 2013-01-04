@@ -48,7 +48,7 @@ if [ ! -d ~/dotfiles ]; then
 	mv ~/.gitignore_global ~/.gitignore_global.`date +%s`
     fi
 
-    ln -s ~/dotfiles/_zshrc ~/.zshrc
+    ln -s ~/dotfiles/_zshrc.sh ~/.zshrc
     ln -s ~/dotfiles/_dircolors ~/.dircolors
     ln -s ~/dotfiles/_gitconfig ~/.gitconfig
     ln -s ~/dotfiles/_gitignore_global ~/.gitignore_global

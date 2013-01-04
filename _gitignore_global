@@ -1,2 +1,4 @@
 .ropeproject/
 *~
+runtests.sh
+tests/

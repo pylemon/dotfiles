@@ -21,7 +21,8 @@ alias la='ls -A'
 alias df='df -h'
 alias tm='teamocil'
 alias ipy='ipython'
-alias svnclean='find . -type d -name ".svn" -print0 | xargs -0 rm -Rf'
+alias rmsvn='find . -type d -name ".svn" -print0 | xargs -0 rm -Rf'
+alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
 alias killtcp='fuser -k -n tcp $@'
 alias kk='fuser -k -n tcp 8000'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
@@ -31,10 +32,11 @@ alias suspend='sudo pm-suspend'
 alias iotop='sudo iotop'
 alias iftop='sudo iftop'
 alias netop='sudo nethogs $@'
-alias update='sudo apt-get update'
-alias upgrade='sudo apt-get update && sudo apt-get -y upgrade'
-alias show='apt-cache show'
-alias search='apt-cache search'
+alias aptinstall='sudo aptitude install'
+alias update='sudo aptitude update'
+alias upgrade='sudo aptitude update && sudo aptitude -y upgrade'
+alias show='aptitude show'
+alias search='aptitude search'
 alias m='udisks --mount'
 alias m1='udisks --mount /dev/sdb1'
 alias m2='udisks --mount /dev/sdc1'
@@ -62,7 +64,6 @@ alias du='ncdu'
 alias nau='nautilus --no-desktop'
 alias nautilus='nautilus --no-desktop'
 alias pdf='evince'
-alias ack='ack-grep'
 alias epub='fbreader'
 alias tree='tree -C'
 alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
@@ -104,3 +105,9 @@ export PATH=$HOME/Dropbox/bin:$PATH
 export WORKON_HOME=~/Envs
 # zsh syntax highlighting when input a command
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# delivery hero envs
+export dhero=$HOME/work/dhero/
+export PYTHONPATH=$dhero/dowant/:$dhero/msupport/:$dhero/msupport/django/v1.2.4/
+export DJANGO_SETTINGS_MODULE=dowant.settings
+export OPERATION_MODE=DEV
