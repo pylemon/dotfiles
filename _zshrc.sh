@@ -45,7 +45,7 @@ alias um='udisks --unmount'
 alias um1='udisks --unmount /dev/sdb1'
 alias um2='udisks --unmount /dev/sdc1'
 alias um3='udisks --unmount /dev/sdd1'
-alias gfw='ssh liwei@pylemon -ND 10086 -p 1423 -v'
+alias gfw='ssh -ND 7070 -z -Z pylemonkeyword -p 2201 liwei@pylemon -v'
 alias tpoff='synclient touchpadoff=1'
 alias tpon='synclient touchpadoff=0'
 
@@ -68,8 +68,13 @@ alias epub='fbreader'
 alias tree='tree -C'
 alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
 
-# adaptive
+# project
+alias dhero='cd ~/work/dhero/ && workon dh_p26_d12'
 alias fabls='fab --list'
+alias shell='dhero && python dowant/manage.py shell_plus'
+alias dbshell='dhero && python dowant/manage.py dbshell'
+alias rs='dhero && python dowant/manage.py runserver 0.0.0.0:8000'
+alias rserver='sudo fuser -k -n tcp 80 && sudo lighttpd -f /opt/dh_site/lighttpd.conf'
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
