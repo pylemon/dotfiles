@@ -1,6 +1,6 @@
 awful = require("awful")
--- awful.autofocus = require("awful.autofocus")
--- awful.rules = require("awful.rules")
+awful.autofocus = require("awful.autofocus")
+awful.rules = require("awful.rules")
 beautiful = require("beautiful")
 naughty = require("naughty")
 vicious = require("vicious")
@@ -49,9 +49,9 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
--- run_once("xcompmgr -cF")
--- run_once("thunderbird")
--- run_once("tilda")
+run_once("xcompmgr -cF")
+run_once("thunderbird")
+run_once("tilda")
 -- run_once("ssh liwei@pylemon -ND 10086 -v")
 -- run_once("skype")
 -- run_once("killall emacs")
@@ -72,16 +72,16 @@ function start_daemon(dae)
 	end
 end
 
--- procs = {
-   -- "volti",
-   -- "nm-applet",
-   -- "gnome-settings-daemon",
-   -- "/home/liwei/.dropbox-dist/dropboxd",
--- }
+procs = {
+   "volti",
+   "nm-applet",
+   "gnome-settings-daemon",
+   "/home/liwei/.dropbox-dist/dropboxd",
+}
 
--- for k = 1, #procs do
-	-- start_daemon(procs[k])
--- end
+for k = 1, #procs do
+	start_daemon(procs[k])
+end
 --- }}}
 
 
@@ -101,160 +101,145 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                   }
                         })
 
--- mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
---                                      menu = mymainmenu })
+mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
+                                     menu = mymainmenu })
 -- }}}
 
 
 -- {{{ widgets
 -- Separators
--- spacer = widget({ type = "textbox" })
--- spacer.text = " "
--- seperator = widget({ type = "textbox" })
--- seperator.text = "|"
+spacer = widget({ type = "textbox" })
+spacer.text = " "
+seperator = widget({ type = "textbox" })
+seperator.text = "|"
 
 -- CPU widget
--- cpuwidget = widget({ type = "textbox" })
--- vicious.register(cpuwidget, vicious.widgets.cpu,
--- 		 function (widget, args)
--- 		    if string.len(args[1]) == 1 then
--- 		       return "<span color='#1793d1'>❖  " .. args[1] .. "%</span>"
--- 		    else
--- 		       return "<span color='#1793d1'>❖ " .. args[1] .. "%</span>"
--- 		    end
--- 		 end)
--- cpuwidget:buttons(
---    awful.util.table.join(awful.button({ }, 1, 
--- 				      function ()
--- 					 awful.util.spawn(terminal .. " -e htop -s PERCENT_CPU")
--- 				      end),
---                          awful.button({ }, 3,
--- 				      function ()
---                                          cpuwidget.width = 1
--- 				      end)))
+cpuwidget = widget({ type = "textbox" })
+vicious.register(cpuwidget, vicious.widgets.cpu,
+		 function (widget, args)
+		    if string.len(args[1]) == 1 then
+		       return "<span color='#1793d1'>❖  " .. args[1] .. "%</span>"
+		    else
+		       return "<span color='#1793d1'>❖ " .. args[1] .. "%</span>"
+		    end
+		 end)
+cpuwidget:buttons(
+   awful.util.table.join(awful.button({ }, 1, 
+				      function ()
+					 awful.util.spawn(terminal .. " -e htop -s PERCENT_CPU")
+				      end),
+                         awful.button({ }, 3,
+				      function ()
+                                         cpuwidget.width = 1
+				      end)))
 
--- -- Memory widget
--- memwidget = widget({ type = "textbox" })
--- vicious.register(memwidget, vicious.widgets.mem, 
---                  function (widget, args)
---                     return "<span color='#1793d1'>♻ " ..args[2].."M "..args[1].."%</span> "
---                  end, 13)
--- memwidget:buttons(
---    awful.util.table.join(awful.button({ }, 1, 
--- 				      function ()
--- 					 awful.util.spawn(terminal .. " -e htop -s PERCENT_MEM")
--- 				      end),
---                          awful.button({ }, 3,
--- 				      function ()
---                                          memwidget.width = 1
--- 				      end)))
-
--- -- Battery widget
--- -- batterywidget = widget({ type = "textbox" })
--- -- function battery_status ()
---    -- local fd = io.popen("ibam --percentbattery | awk '{print $3}'")
---    -- local time = fd:read()
---    -- fd:close()
---    -- return time
--- -- end
--- -- my_battmon_timer = timer({ timeout = 30 })
--- -- my_battmon_timer:add_signal("timeout", function()
---     -- batterywidget.text = "<span color='#1793d1'>☢ " .. battery_status() .. "%</span>"
--- -- end)
--- -- my_battmon_timer:start()
+-- Memory widget
+memwidget = widget({ type = "textbox" })
+vicious.register(memwidget, vicious.widgets.mem, 
+                 function (widget, args)
+                    return "<span color='#1793d1'>♻ " ..args[2].."M </span>"
+                 end, 13)
+memwidget:buttons(
+   awful.util.table.join(awful.button({ }, 1, 
+				      function ()
+					 awful.util.spawn(terminal .. " -e htop -s PERCENT_MEM")
+				      end),
+                         awful.button({ }, 3,
+				      function ()
+                                         memwidget.width = 1
+				      end)))
 
 
 -- Create a textclock widget
--- mytextclock = widget({ type = "textbox" })
--- vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y-%m-%d %a %T </span>", 1)
+mytextclock = widget({ type = "textbox" })
+vicious.register(mytextclock, vicious.widgets.date, "<span color='#1793d1'> %Y-%m-%d %a %T </span>", 1)
 
--- --Create icons
--- spicon = widget({ type = "imagebox" })
--- spicon.image = image("/home/liwei/.config/awesome/icons/separator.png")
--- spicon.resize = false
--- timeicon = widget({ type = "imagebox" })
--- timeicon.image = image("/home/liwei/.config/awesome/icons/wifi-blue.png")
--- timeicon.resize = false
--- mysystray = widget({ type = "systray" })
--- mysystray.resize = false
+--Create icons
+spicon = widget({ type = "imagebox" })
+spicon.image = image("/home/liwei/.config/awesome/icons/separator.png")
+spicon.resize = false
+timeicon = widget({ type = "imagebox" })
+timeicon.image = image("/home/liwei/.config/awesome/icons/wifi-blue.png")
+timeicon.resize = false
+mysystray = widget({ type = "systray" })
+mysystray.resize = false
 
--- -- Create a wibox for each screen and add it
--- mywibox = {}
--- mylayoutbox = {}
--- mytaglist = {}
--- mytaglist.buttons = awful.util.table.join(
---                     awful.button({ }, 1, awful.tag.viewonly),
---                     awful.button({ modkey }, 1, awful.client.movetotag),
---                     awful.button({ }, 3, awful.tag.viewtoggle),
---                     awful.button({ modkey }, 3, awful.client.toggletag),
---                     awful.button({ }, 4, awful.tag.viewnext),
---                     awful.button({ }, 5, awful.tag.viewprev)
---                     )
--- mytasklist = {}
--- mytasklist.buttons = awful.util.table.join(
---                      awful.button({ }, 1, function (c)
---                                               if not c:isvisible() then
---                                                   awful.tag.viewonly(c:tags()[1])
---                                               end
---                                               client.focus = c
---                                               c:raise()
---                                           end),
---                      awful.button({ }, 3, function ()
---                                               if instance then
---                                                   instance:hide()
---                                                   instance = nil
---                                               else
---                                                   instance = awful.menu.clients({ width=250 })
---                                               end
---                                           end),
---                      awful.button({ }, 4, function ()
---                                               awful.client.focus.byidx(1)
---                                               if client.focus then client.focus:raise() end
---                                           end),
---                      awful.button({ }, 5, function ()
---                                               awful.client.focus.byidx(-1)
---                                               if client.focus then client.focus:raise() end
---                                           end))
+-- Create a wibox for each screen and add it
+mywibox = {}
+mylayoutbox = {}
+mytaglist = {}
+mytaglist.buttons = awful.util.table.join(
+                    awful.button({ }, 1, awful.tag.viewonly),
+                    awful.button({ modkey }, 1, awful.client.movetotag),
+                    awful.button({ }, 3, awful.tag.viewtoggle),
+                    awful.button({ modkey }, 3, awful.client.toggletag),
+                    awful.button({ }, 4, awful.tag.viewnext),
+                    awful.button({ }, 5, awful.tag.viewprev)
+                    )
+mytasklist = {}
+mytasklist.buttons = awful.util.table.join(
+                     awful.button({ }, 1, function (c)
+                                              if not c:isvisible() then
+                                                  awful.tag.viewonly(c:tags()[1])
+                                              end
+                                              client.focus = c
+                                              c:raise()
+                                          end),
+                     awful.button({ }, 3, function ()
+                                              if instance then
+                                                  instance:hide()
+                                                  instance = nil
+                                              else
+                                                  instance = awful.menu.clients({ width=250 })
+                                              end
+                                          end),
+                     awful.button({ }, 4, function ()
+                                              awful.client.focus.byidx(1)
+                                              if client.focus then client.focus:raise() end
+                                          end),
+                     awful.button({ }, 5, function ()
+                                              awful.client.focus.byidx(-1)
+                                              if client.focus then client.focus:raise() end
+                                          end))
 
--- for s = 1, screen.count() do
---     -- Set a screen margin for borders
---     awful.screen.padding( screen[s], {top = 0} )
+for s = 1, screen.count() do
+    -- Set a screen margin for borders
+    awful.screen.padding( screen[s], {top = 0} )
 
---     -- We need one layoutbox per screen.
---     mylayoutbox[s] = awful.widget.layoutbox(s)
---     mylayoutbox[s]:buttons(awful.util.table.join(
---                               awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
---                               awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
---                               awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
---                               awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+    -- We need one layoutbox per screen.
+    mylayoutbox[s] = awful.widget.layoutbox(s)
+    mylayoutbox[s]:buttons(awful.util.table.join(
+                              awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+                              awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+                              awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+                              awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
 
---     -- Create a taglist widget
---     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    -- Create a taglist widget
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
---     -- Create a tasklist widget
---     mytasklist[s] = awful.widget.tasklist(function(c)
--- 					     return awful.widget.tasklist.label.currenttags(c, s)
---                                           end, mytasklist.buttons)
+    -- Create a tasklist widget
+    mytasklist[s] = awful.widget.tasklist(function(c)
+					     return awful.widget.tasklist.label.currenttags(c, s)
+                                          end, mytasklist.buttons)
 
---     -- Create the wibox
---     mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0 })
---     -- Add widgets to the wibox - order matters
---     mywibox[s].widgets = {
---         {
---             mylauncher,
---             mytaglist[s],
--- 	    layout = awful.widget.layout.horizontal.leftright
---         },
--- 	mylayoutbox[s], mytextclock, tzswidget,
--- 	memwidget, spacer,
--- 	cpuwidget, spacer,
--- 	-- batterywidget, spacer,
---         s == 1 and mysystray or nil,
--- 	mytasklist[s],
---         layout = awful.widget.layout.horizontal.rightleft
---     }
--- end
--- -- }}}
+    -- Create the wibox
+    mywibox[s] = awful.wibox({ position = "top", screen = s, border_width = 0 })
+    -- Add widgets to the wibox - order matters
+    mywibox[s].widgets = {
+        {
+            mylauncher,
+            mytaglist[s],
+	    layout = awful.widget.layout.horizontal.leftright
+        },
+	mylayoutbox[s], mytextclock, tzswidget,
+	memwidget, spacer,
+	cpuwidget, spacer,
+        s == 1 and mysystray or nil,
+	mytasklist[s],
+        layout = awful.widget.layout.horizontal.rightleft
+    }
+end
+-- }}}
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
@@ -319,7 +304,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
-    awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
+    -- awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
 
     -- touchpad control
     -- awful.key({                   }, "XF86WebCam", function () awful.util.spawn('synclient touchpadoff=0') end),
