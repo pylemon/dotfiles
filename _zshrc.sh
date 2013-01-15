@@ -23,8 +23,7 @@ alias tm='teamocil'
 alias ipy='ipython'
 alias rmsvn='find . -type d -name ".svn" -print0 | xargs -0 rm -Rf'
 alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
-alias killtcp='fuser -k -n tcp $@'
-alias kk='fuser -k -n tcp 8000'
+alias kk='sudo fuser -k -n tcp $@'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
 alias htop='htop'
 alias halt='sudo halt -p'
@@ -74,7 +73,7 @@ alias fabls='fab --list'
 alias shell='dhero && python dowant/manage.py shell_plus'
 alias dbshell='dhero && python dowant/manage.py dbshell'
 alias rs='dhero && python dowant/manage.py runserver 0.0.0.0:8000'
-alias rserver='sudo fuser -k -n tcp 80 && sudo lighttpd -f /opt/dh_site/lighttpd.conf'
+alias rse='sudo /usr/sbin/lighttpd -f /opt/dh_site/lighttpd.conf'
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'

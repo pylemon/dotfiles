@@ -33,6 +33,13 @@ tags = {
    names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Mail"},
    layout = { layouts[2], layouts[3], layouts[3], layouts[3] }
 }
+if screen.count() > 1 then
+   tags = {
+      names  = { "1.Left", "2.Right" },
+      layout = { layouts[3], layouts[3], }
+   }
+end
+
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
@@ -49,9 +56,9 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
-run_once("xcompmgr -cF")
+
 run_once("thunderbird")
-run_once("tilda")
+run_once("xcompmgr -cF")
 -- run_once("ssh liwei@pylemon -ND 10086 -v")
 -- run_once("skype")
 -- run_once("killall emacs")
@@ -76,6 +83,7 @@ procs = {
    "volti",
    "nm-applet",
    "gnome-settings-daemon",
+   "tilda",
    "/home/liwei/.dropbox-dist/dropboxd",
 }
 
@@ -202,6 +210,8 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+mytaglist[1] = awful.widget.taglist(1, awful.widget.taglist.label.all, mytaglist.buttons)
+
 for s = 1, screen.count() do
     -- Set a screen margin for borders
     awful.screen.padding( screen[s], {top = 0} )
@@ -215,7 +225,7 @@ for s = 1, screen.count() do
                               awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
 
     -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    -- mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(function(c)
@@ -293,8 +303,8 @@ globalkeys = awful.util.table.join(
     awful.key({                       }, "XF86PowerOff", function () suspend() end),
 
     -- C-M-j C-M-k switch screen
-    awful.key({ modkey_alt, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey_alt, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey_alt, "Control" }, "Up", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey_alt, "Control" }, "Down", function () awful.screen.focus_relative(-1) end),
 
     -- jump to alert tag
     awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
@@ -307,7 +317,7 @@ globalkeys = awful.util.table.join(
     -- awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
 
     -- touchpad control
-    -- awful.key({                   }, "XF86WebCam", function () awful.util.spawn('synclient touchpadoff=0') end),
+    awful.key({                   }, "F4", function () awful.util.spawn('synclient touchpadoff=0') end),
 
     -- restart and quit awesome 
     awful.key({ modkey, "Control" }, "r", awesome.restart),
@@ -407,8 +417,8 @@ awful.rules.rules = {
       callback = function( c )
 	 c:geometry( { width = 700 , height = 500 } )
       end },
-    { rule = { class = "Emacs" },
-      properties = { tag = tags[1][2] } },
+    -- { rule = { class = "Emacs" },
+    --   properties = { tag = tags[1][2] } },
     { rule = { class = "Google-chrome" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Thunderbird" },
