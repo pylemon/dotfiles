@@ -210,8 +210,6 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
-mytaglist[1] = awful.widget.taglist(1, awful.widget.taglist.label.all, mytaglist.buttons)
-
 for s = 1, screen.count() do
     -- Set a screen margin for borders
     awful.screen.padding( screen[s], {top = 0} )
@@ -225,7 +223,7 @@ for s = 1, screen.count() do
                               awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
 
     -- Create a taglist widget
-    -- mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(function(c)
