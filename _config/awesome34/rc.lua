@@ -80,6 +80,8 @@ function start_daemon(dae)
 end
 
 procs = {
+   "obfsproxy obfs2 --dest=74.117.61.81:8080 --shared-secret=leewaypass client 127.0.0.1:10086",
+   "/usr/lib/autossh/autossh -M 20000 -N -p 10086 -g -c 3des -D 7070 liwei@localhost",
    "volti",
    "nm-applet",
    "gnome-settings-daemon",
@@ -417,8 +419,8 @@ awful.rules.rules = {
       end },
     -- { rule = { class = "Emacs" },
     --   properties = { tag = tags[1][2] } },
-    { rule = { class = "Google-chrome" },
-      properties = { tag = tags[1][3] } },
+    -- { rule = { class = "Google-chrome" },
+    --   properties = { tag = tags[1][3] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
 }

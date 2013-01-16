@@ -37,7 +37,7 @@ alias upgrade='sudo aptitude update && sudo aptitude -y upgrade'
 alias show='aptitude show'
 alias search='aptitude search'
 alias mnt='mount | column -t'
-alias gfw='ssh -ND 7070 -z -Z pylemonkeyword -p 2201 liwei@pylemon -v'
+alias gfw='ssh -ND 7070 -p 10086 liwei@localhost -v'
 alias tpoff='synclient touchpadoff=1'
 alias tpon='synclient touchpadoff=0'
 
@@ -108,6 +108,6 @@ source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # delivery hero envs
 export dhero=$HOME/work/dhero/
-export PYTHONPATH=$dhero/dowant/:$dhero/msupport/:$dhero/msupport/django/v1.2.4/
+export PYTHONPATH=$dhero/dowant/:$dhero/msupport/django/v1.2.4/
 export DJANGO_SETTINGS_MODULE=dowant.settings
 export OPERATION_MODE=DEV
