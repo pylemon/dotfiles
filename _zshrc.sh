@@ -36,14 +36,7 @@ alias update='sudo aptitude update'
 alias upgrade='sudo aptitude update && sudo aptitude -y upgrade'
 alias show='aptitude show'
 alias search='aptitude search'
-alias m='udisks --mount'
-alias m1='udisks --mount /dev/sdb1'
-alias m2='udisks --mount /dev/sdc1'
-alias m3='udisks --mount /dev/sdd1'
-alias um='udisks --unmount'
-alias um1='udisks --unmount /dev/sdb1'
-alias um2='udisks --unmount /dev/sdc1'
-alias um3='udisks --unmount /dev/sdd1'
+alias mnt='mount | column -t'
 alias gfw='ssh -ND 7070 -z -Z pylemonkeyword -p 2201 liwei@pylemon -v'
 alias tpoff='synclient touchpadoff=1'
 alias tpon='synclient touchpadoff=0'
@@ -84,6 +77,9 @@ alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
 # mkdir and cd into that dirctionary
 function mcd(){
     test -e $1 || mkdir $1; cd $1;
+}
+function psg(){
+    ps auxw | grep -v grep | grep -i '[ ]\?'"$1"; 
 }
 
 # make man documents have color
