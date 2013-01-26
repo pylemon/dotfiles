@@ -59,7 +59,6 @@ end
 
 run_once("thunderbird")
 run_once("xcompmgr -cF")
--- run_once("ssh liwei@pylemon -ND 10086 -v")
 -- run_once("skype")
 -- run_once("killall emacs")
 -- }}}
@@ -82,11 +81,12 @@ end
 procs = {
    "obfsproxy obfs2 --dest=74.117.61.81:8080 --shared-secret=leewaypass client 127.0.0.1:10086",
    "/usr/lib/autossh/autossh -M 20000 -N -p 10086 -g -c 3des -D 7070 liwei@localhost",
+   -- "dnscrypt-proxy --daemonize",
    "volti",
    "nm-applet",
    "gnome-settings-daemon",
-   "tilda",
    "/home/liwei/.dropbox-dist/dropboxd",
+   "tilda",
 }
 
 for k = 1, #procs do
@@ -311,13 +311,14 @@ globalkeys = awful.util.table.join(
 
     -- some useful software control keys
     awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
+    awful.key({ modkey_alt, "Control" }, "t", function () awful.util.spawn("gnome-time-tracker") end),
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
-    awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
+    awful.key({ modkey_alt, "Control" }, "w", function () awful.util.spawn("google-chrome") end),
     -- awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
 
     -- touchpad control
-    awful.key({                   }, "F4", function () awful.util.spawn('synclient touchpadoff=0') end),
+    -- awful.key({                   }, "F4", function () awful.util.spawn('synclient touchpadoff=0') end),
 
     -- restart and quit awesome 
     awful.key({ modkey, "Control" }, "r", awesome.restart),

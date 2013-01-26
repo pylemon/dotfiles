@@ -61,12 +61,13 @@ alias tree='tree -C'
 alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
 
 # project
-alias dhero='cd ~/work/dhero/ && workon dh_p26_d12'
 alias fabls='fab --list'
-alias shell='dhero && python dowant/manage.py shell_plus'
-alias dbshell='dhero && python dowant/manage.py dbshell'
-alias rs='dhero && python dowant/manage.py runserver 0.0.0.0:8000'
-alias rse='sudo /usr/sbin/lighttpd -f /opt/dh_site/lighttpd.conf'
+alias dhero='cd ~/work/dhero/'
+alias penv='dhero && source /opt/venvs/p26_d12_dh/bin/activate'
+alias tenv='dhero && source /opt/venvs/test/bin/activate'
+alias rs='tenv && python dowant/manage.py runserver 0.0.0.0:8000'
+alias prs='penv && python dowant/manage.py runserver 0.0.0.0:8000'
+alias shell='tenv && python dowant/manage.py shell_plus'
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
@@ -79,7 +80,7 @@ function mcd(){
     test -e $1 || mkdir $1; cd $1;
 }
 function psg(){
-    ps auxw | grep -v grep | grep -i '[ ]\?'"$1"; 
+    ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
 }
 
 # make man documents have color
@@ -107,7 +108,9 @@ export WORKON_HOME=~/Envs
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # delivery hero envs
-export dhero=$HOME/work/dhero/
-export PYTHONPATH=$dhero/dowant/:$dhero/msupport/django/v1.2.4/
-export DJANGO_SETTINGS_MODULE=dowant.settings
+# export dhero=$HOME/work/dhero/
+# export PYTHONPATH=$dhero/dowant:$dhero/msupport
+# export DJANGO_SETTINGS_MODULE=dowant.settings
+
+# default mode is LIVE
 export OPERATION_MODE=DEV
