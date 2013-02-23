@@ -314,7 +314,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey_alt, "Control" }, "t", function () awful.util.spawn("gnome-time-tracker") end),
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
-    awful.key({ modkey_alt, "Control" }, "w", function () awful.util.spawn("google-chrome") end),
+    awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
     -- awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
 
     -- touchpad control
