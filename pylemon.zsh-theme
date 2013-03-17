@@ -9,7 +9,7 @@
 MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
 local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
 
-PROMPT='%{$fg_bold[cyan]%}%m%{$reset_color%}%{$fg_bold[white]%} %{$fg[yellow]%}%D{[%H:%M]} %{$reset_color%}%{$fg_bold[green]%}%~ %{$reset_color%}$(git_time_since_commit)$(git_prompt_info)${return_status}$(git_prompt_status)%{$reset_color%}
+PROMPT='%{$fg_bold[cyan]%}%m%{$reset_color%}%{$fg_bold[white]%} %{$fg[yellow]%}%D{[%H:%M]} %{$reset_color%}%{$fg_bold[green]%}%~ %{$reset_color%}[ $(git_prompt_info)${return_status}$(git_prompt_status)%{$reset_color%}
 %{$fg[magenta]%}%!%{$reset_color%} $(prompt_char) '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}@ %{$bg[black]%}%{$fg[white]%}"
@@ -33,7 +33,7 @@ function prompt_char() {
 }
 
 # Colors vary depending on time lapsed.
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
+sZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
 ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg_bold[cyan]%}"
