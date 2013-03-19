@@ -79,9 +79,15 @@ function start_daemon(dae)
 end
 
 procs = {
-   "obfsproxy obfs2 --dest=74.117.61.81:8080 --shared-secret=leewaypass client 127.0.0.1:10086",
-   "/usr/lib/autossh/autossh -M 20000 -N -p 10086 -g -c 3des -D 7070 liwei@localhost",
-   -- "dnscrypt-proxy --daemonize",
+   -- "obfsproxy obfs2 --dest=74.117.61.81:8080 --shared-secret=leewaypass client 127.0.0.1:10086",
+   -- "/usr/lib/autossh/autossh -M 20000 -N -p 10086 -g -c 3des -D 7070 liwei@localhost",
+
+   -- NOTICE: using goagent need to import the cert file, it's located in Dropbox
+   -- $ sudo apt-get install libnss3-tools
+   -- $ certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i '/home/liwei/Dropbox/goagent/local/CA.crt'
+   -- END NOTICE
+
+   "/home/liwei/Dropbox/goagent/local/proxy.py",
    "volti",
    "nm-applet",
    "gnome-settings-daemon",

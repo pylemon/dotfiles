@@ -113,4 +113,4 @@ source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export DJANGO_SETTINGS_MODULE=dowant.settings
 
 # default mode is LIVE
-export OPERATION_MODE=DEV
+export OPERATION_MODE=LIVEDEV
