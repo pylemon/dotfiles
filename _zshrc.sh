@@ -1,15 +1,16 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="../../dotfiles/pylemon"
-
+# ZSH_THEME="../../dotfiles/pylemon"
+# ZSH_THEME="random"
+ZSH_THEME="sunaku"
 
 plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting gitfast command-not-found cp rsync python django)
 
 source $ZSH/oh-my-zsh.sh
 setopt correctall
 
-compctl -g '~/.teamocil/*(:t:r)' teamocil
+# compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 export EDITOR="emacsclient -a ''"
 export LC_CTYPE="zh_CN.UTF-8"
