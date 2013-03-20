@@ -57,7 +57,7 @@ function run_once(cmd)
 end
 
 
-run_once("thunderbird")
+-- run_once("thunderbird")
 run_once("xcompmgr -cF")
 -- run_once("skype")
 -- run_once("killall emacs")
@@ -317,7 +317,7 @@ globalkeys = awful.util.table.join(
 
     -- some useful software control keys
     awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
-    awful.key({ modkey_alt, "Control" }, "t", function () awful.util.spawn("gnome-time-tracker") end),
+    -- awful.key({ modkey_alt, "Control" }, "t", function () awful.util.spawn("gnome-time-tracker") end),
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
