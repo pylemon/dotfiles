@@ -1,16 +1,16 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-# ZSH_THEME="../../dotfiles/pylemon"
+ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="random"
-ZSH_THEME="sunaku"
+# ZSH_THEME="sunaku"
 
 plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting gitfast command-not-found cp rsync python django)
 
 source $ZSH/oh-my-zsh.sh
 setopt correctall
 
-# compctl -g '~/.teamocil/*(:t:r)' teamocil
+compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 export EDITOR="emacsclient -a ''"
 export LC_CTYPE="zh_CN.UTF-8"
@@ -22,7 +22,6 @@ alias la='ls -A'
 alias df='df -h'
 alias tm='teamocil'
 alias ipy='ipython'
-alias rmsvn='find . -type d -name ".svn" -print0 | xargs -0 rm -Rf'
 alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
 alias kk='sudo fuser -k -n tcp $@'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
@@ -59,16 +58,16 @@ alias nautilus='nautilus --no-desktop'
 alias pdf='evince'
 alias epub='fbreader'
 alias tree='tree -C'
-alias sdf='svn diff > /tmp/svn.diff && emacsclient -t /tmp/svn.diff'
 
 # project
 alias fabls='fab --list'
 alias dhero='cd ~/work/dhero/'
 alias penv='dhero && source /opt/venvs/p26_d12_dh/bin/activate'
-alias tenv='dhero && source /opt/venvs/test/bin/activate'
-alias rs='tenv && python dowant/manage.py runserver 0.0.0.0:8000'
 alias prs='penv && python dowant/manage.py runserver 0.0.0.0:8000'
-alias shell='tenv && python dowant/manage.py shell_plus'
+alias shell='penv && python dowant/manage.py shell_plus'
+
+alias tail_log='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log'
+alias backup_setup='penv && fab set_up_scheduled_backups:liwei,production -H hk'
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
@@ -82,6 +81,11 @@ function mcd(){
 }
 function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
+}
+
+function replace_unicode(){
+    sed 's/ü/u/g' $1 | sed 's/Ä/A/g' | sed 's/ä/a/g' | sed 's/ß/B/g' | sed 's/ö/o/g' | sed 's/—/-/g' > /tmp/hero_temp;
+    mv /tmp/hero_temp $1;
 }
 
 # make man documents have color
