@@ -25,12 +25,11 @@ alias ipy='ipython'
 alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
 alias kk='sudo fuser -k -n tcp $@'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
-alias htop='htop'
 alias halt='sudo halt -p'
 alias suspend='sudo pm-suspend'
 alias iotop='sudo iotop'
 alias iftop='sudo iftop'
-alias netop='sudo nethogs $@'
+alias nettop='sudo nethogs $@'
 alias aptinstall='sudo aptitude install'
 alias update='sudo aptitude update'
 alias upgrade='sudo aptitude update && sudo aptitude -y upgrade'
@@ -62,12 +61,17 @@ alias tree='tree -C'
 # project
 alias fabls='fab --list'
 alias dhero='cd ~/work/dhero/'
-alias penv='dhero && source /opt/venvs/p26_d12_dh/bin/activate'
-alias prs='penv && python dowant/manage.py runserver 0.0.0.0:8000'
+alias dowant='cd ~/work/dhero/dowant/'
+alias penv='dhero && source /opt/venvs/p27_d13_dh/bin/activate'
+alias collect='penv && python dowant/manage.py collectstatic --noinput'
+alias message='penv && dowant && python manage.py compilemessages && penv'
+alias rs='collect && message && python dowant/manage.py runserver 0.0.0.0:8000'
 alias shell='penv && python dowant/manage.py shell_plus'
 
-alias tail_log='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log'
+alias logs='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log | grep ">>>"'
 alias backup_setup='penv && fab set_up_scheduled_backups:liwei,production -H hk'
+alias backup_setuphk='fab set_up_scheduled_backups:liwei,hk -H production'
+
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
@@ -79,6 +83,7 @@ alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
 function mcd(){
     test -e $1 || mkdir $1; cd $1;
 }
+
 function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
 }
