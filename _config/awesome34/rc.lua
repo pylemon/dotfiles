@@ -57,10 +57,9 @@ function run_once(cmd)
 end
 
 
--- run_once("thunderbird")
 run_once("xcompmgr -cF")
 run_once("fcitx")
-run_once("killall emacs")
+-- run_once("killall emacs")
 run_once('export LC_CTYPE="zh_CN.UTF-8" && emacs --daemon')
 -- }}}
 
