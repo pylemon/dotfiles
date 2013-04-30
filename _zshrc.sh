@@ -57,6 +57,7 @@ alias nautilus='nautilus --no-desktop'
 alias pdf='evince'
 alias epub='fbreader'
 alias tree='tree -C'
+alias pg='sudo -u postgres psql'
 
 # project
 alias fabls='fab --list'

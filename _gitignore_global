@@ -2,4 +2,6 @@
 *~
 runtests.sh
 .dir-locals.el
+liwei.py
+makemessages.sh
 

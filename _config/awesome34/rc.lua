@@ -423,10 +423,10 @@ awful.rules.rules = {
       callback = function( c )
 	 c:geometry( { width = 700 , height = 500 } )
       end },
-    -- { rule = { class = "Emacs" },
-    --   properties = { tag = tags[1][2] } },
-    -- { rule = { class = "Google-chrome" },
-    --   properties = { tag = tags[1][3] } },
+    { rule = { class = "Emacs" },
+      properties = { tag = tags[1][2] } },
+    { rule = { class = "Google-chrome" },
+      properties = { tag = tags[1][3] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
 }
