@@ -407,6 +407,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Kupfer" },
       properties = { floating = true } },
+    { rule = { class = "Skype" },
+      properties = { floating = true }, opacity = 0.8 },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "Download" },

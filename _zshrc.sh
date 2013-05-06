@@ -3,7 +3,8 @@ ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="random"
-# ZSH_THEME="sunaku"
+# themes I don't like
+# agnoster avit fishy gentoo minimal mgutz tjkirch fwalch kphoen juanghurtado lambda essembeh norm intheloop wedisagree josh trapd00r rixius example kiwi
 
 plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting gitfast command-not-found cp rsync python django)
 
@@ -17,7 +18,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 
 # system
 alias l='ls -C --group-directories-first'
-alias ll='ls -ahlF'
+alias ll='ls -ahlF --group-directories-first'
 alias la='ls -A'
 alias df='df -h'
 alias tm='teamocil'
@@ -44,6 +45,7 @@ alias tpon='synclient touchpadoff=0'
 alias gl='git glog'
 alias gla='git glog --all'
 alias gls='git slog'
+alias gup='git remote update && git remote prune origin'
 alias gs='git status -s'
 alias gdf='git diff -w'
 alias grm='git rm --cached'
