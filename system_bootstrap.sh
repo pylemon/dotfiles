@@ -11,11 +11,13 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 # useful tools
-sudo apt-get -y install htop tilda tmux feh git mg zsh nginx apache2-utils awesome awesome-extra suckless-tools lxterminal fcitx-googlepinyin xcompmgr
+sudo apt-get -y install htop tilda tmux feh git mg zsh nginx apache2-utils awesome awesome-extra suckless-tools lxterminal fcitx-googlepinyin xcompmgr gnome-tweak-tool
 
 # python dependence
 sudo apt-get -y install python-dev build-essential python-pip
 
+# disable ubuntu crash report
+sudo sed -i "s/enabled=1/enabled=0/g" '/etc/default/apport'
 
 # install zsh
 if [ ! -d $HOME/.oh-my-zsh ]; then
@@ -32,8 +34,7 @@ if [ ! -d ~/dotfiles ]; then
     cd ~/
     git clone git@github.com:pylemon/dotfiles.git
     cd ~/dotfiles
-    git submodule init
-    git submodule update
+    git submodule update --init
     cd ~/
     if [ ! -d ~/.zshrc ]; then
 	mv ~/.zshrc ~/.zshrc.`date +%s`
