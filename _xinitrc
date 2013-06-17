@@ -2,3 +2,4 @@ xmodmap ~/.xmodmap
 export XMODIFIERS="@im=fcitx"
 export XIM=fcitx
 export XIM_PROGRAM=fcitx
+wmname LG3D

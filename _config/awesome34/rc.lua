@@ -409,6 +409,17 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Skype" },
       properties = { floating = true }, opacity = 0.8 },
+    { rule = { instance = "Emacs" },
+      properties = { floating = true },
+      callback = function( c )
+	 c:geometry( { width = 700 , height = 500 } )
+      end },
+    -- flash player fullscreen
+    { rule = { instance = "plugin-container" },
+      properties = { floating = true },
+      callback = function( c )
+	 c:geometry( { width = 700 , height = 500 } )
+      end },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "Download" },
@@ -418,15 +429,7 @@ awful.rules.rules = {
     { rule = { class = "Wine" },
       properties = { floating = true } },
     { rule = { class = "Pidgin" },
-      properties = { floating = true, opacity = 0.8 },
-    -- flash player fullscreen
-    { rule = { instance = "plugin-container" },
-      properties = { floating = true } },
-      callback = function( c )
-	 c:geometry( { width = 700 , height = 500 } )
-      end },
-    { rule = { class = "Emacs" },
-      properties = { tag = tags[1][2] } },
+      properties = { floating = true }, opacity = 0.8 },
     { rule = { class = "Google-chrome" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Thunderbird" },
