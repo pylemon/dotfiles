@@ -8,7 +8,7 @@ ShareStateAmongWindow=No
 # Default Input Method State
 # Available Value:
 # Close Inactive Active
-DefaultInputMethodState=Inactive
+DefaultInputMethodState=Close
 # It's the first time Fcitx Start.
 # Available Value:
 # True False
@@ -30,7 +30,7 @@ EnterAction=Commit
 # Disable Paging in Remind Mode
 # Available Value:
 # True False
-RemindModeDisablePaging=True
+RemindModeDisablePaging=False
 # Send inputed Text if Switch to English Mode
 # Available Value:
 # True False
@@ -40,33 +40,33 @@ CandidateWordNumber=7
 # Give the tips of Phrase
 # Available Value:
 # True False
-PhraseTips=True
+PhraseTips=False
 
 [Appearance]
 # Show Input Window After Trigger Input Mode
 # Available Value:
 # True False
-ShowInputWindowAfterTriggering=True
+ShowInputWindowAfterTriggering=False
 # Show Point After Index
 # Available Value:
 # True False
-ShowPointAfterIndex=True
+ShowPointAfterIndex=False
 # Show Input Speed
 # Available Value:
 # True False
-ShowInputSpeed=True
+ShowInputSpeed=False
 # Show Version
 # Available Value:
 # True False
-ShowVersion=True
+ShowVersion=False
 # Do not show input window if there is only preedit string
 # Available Value:
 # True False
-HideInputWindowWhenOnlyPreeditString=False
+HideInputWindowWhenOnlyPreeditString=True
 # Do not show input window if there is one one candidate (Hide when only preedit string must be selected)
 # Available Value:
 # True False
-HideInputWindowWhenOnlyOneCandidate=False
+HideInputWindowWhenOnlyOneCandidate=True
 
 [Hotkey]
 # Hot key of Triggering Input Method
@@ -78,7 +78,7 @@ IMSwitchKey=False
 # Hotkey of Switching Chinese and English Mode
 # Available Value:
 # R_CTRL R_SHIFT L_SHIFT L_CTRL ALT_L_SHIFT ALT_R_SHIFT Disabled
-SwitchKey=L_SHIFT
+SwitchKey=Disabled
 # Double click Switch Key to Change Mode
 # Available Value:
 # True False
