@@ -15,6 +15,7 @@ compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 export EDITOR="emacsclient -a ''"
 export LC_CTYPE="zh_CN.UTF-8"
+export TERM=xterm-256color
 
 # system
 alias l='ls -C --group-directories-first'
@@ -66,9 +67,10 @@ alias fabls='fab --list'
 alias dhero='cd ~/work/dhero/'
 alias dowant='cd ~/work/dhero/dowant/'
 alias penv='dhero && source /opt/venvs/p27_d13_dh/bin/activate'
-alias collect='penv && python dowant/manage.py collectstatic --noinput'
 alias message='penv && dowant && python manage.py compilemessages && penv'
-alias rs='collect && message && python dowant/manage.py runserver 0.0.0.0:8000'
+alias rskill='fuser -k -n tcp 8000'
+alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000'
+alias m='python dowant/manage.py'
 alias shell='penv && python dowant/manage.py shell_plus'
 
 alias logs='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log | grep ">>>"'
@@ -90,7 +92,6 @@ function mcd(){
 function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
 }
-
 function replace_unicode(){
     sed 's/ü/u/g' $1 | sed 's/Ä/A/g' | sed 's/ä/a/g' | sed 's/ß/B/g' | sed 's/ö/o/g' | sed 's/—/-/g' > /tmp/hero_temp;
     mv /tmp/hero_temp $1;
@@ -120,10 +121,6 @@ export WORKON_HOME=~/Envs
 # zsh syntax highlighting when input a command
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# delivery hero envs
-# export dhero=$HOME/work/dhero/
-# export PYTHONPATH=$dhero/dowant:$dhero/msupport
 # export DJANGO_SETTINGS_MODULE=dowant.settings
-
 # default mode is LIVE
 export OPERATION_MODE=LIVEDEV
