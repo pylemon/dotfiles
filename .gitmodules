@@ -1,3 +1,6 @@
 [submodule "zsh-syntax-highlighting"]
 	path = zsh-syntax-highlighting
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "_config/awesome_powerarrow"]
+	path = _config/awesome_powerarrow
+	url = https://github.com/romockee/powerarrow.git
