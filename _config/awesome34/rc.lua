@@ -30,7 +30,7 @@ layouts =
 
 -- {{{ Tags
 tags = {
-   names  = { "1.Term", "2.Emacs", "3.Chrome", "4.Mail"},
+   names  = { "1.ETO", "2.Sublime", "3.Chrome", "4.Skype"},
    layout = { layouts[2], layouts[3], layouts[3], layouts[3] }
 }
 if screen.count() > 1 then
@@ -60,7 +60,7 @@ end
 run_once("xcompmgr -cF")
 run_once("fcitx")
 -- run_once("killall emacs")
-run_once('export LC_CTYPE="zh_CN.UTF-8" && emacs --daemon')
+-- run_once('export LC_CTYPE="zh_CN.UTF-8" && emacs --daemon')
 -- }}}
 
 
@@ -89,7 +89,8 @@ procs = {
    "/home/liwei/Dropbox/goagent/local/proxy.py",
    "volti",
    "nm-applet",
-   "gnome-settings-daemon",
+   "bluetooth-applet",
+   -- "gnome-settings-daemon",
    "/home/liwei/.dropbox-dist/dropboxd",
    "tilda",
 }
@@ -139,7 +140,7 @@ vicious.register(cpuwidget, vicious.widgets.cpu,
 		    end
 		 end)
 cpuwidget:buttons(
-   awful.util.table.join(awful.button({ }, 1, 
+   awful.util.table.join(awful.button({ }, 1,
 				      function ()
 					 awful.util.spawn(terminal .. " -e htop -s PERCENT_CPU")
 				      end),
@@ -150,12 +151,12 @@ cpuwidget:buttons(
 
 -- Memory widget
 memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, 
+vicious.register(memwidget, vicious.widgets.mem,
                  function (widget, args)
                     return "<span color='#1793d1'>♻ " ..args[2].."M </span>"
                  end, 13)
 memwidget:buttons(
-   awful.util.table.join(awful.button({ }, 1, 
+   awful.util.table.join(awful.button({ }, 1,
 				      function ()
 					 awful.util.spawn(terminal .. " -e htop -s PERCENT_MEM")
 				      end),
@@ -315,17 +316,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
 
     -- some useful software control keys
-    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
-    -- awful.key({ modkey_alt, "Control" }, "t", function () awful.util.spawn("gnome-time-tracker") end),
-    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
+    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("sublime") end),
+    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("pcmanfm") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
-    -- awful.key({ modkey_alt,           }, "Return", function () awful.util.spawn(terminal) end),
 
     -- touchpad control
     -- awful.key({                   }, "F4", function () awful.util.spawn('synclient touchpadoff=0') end),
 
-    -- restart and quit awesome 
+    -- restart and quit awesome
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -432,6 +431,8 @@ awful.rules.rules = {
       properties = { floating = true }, opacity = 0.8 },
     { rule = { class = "Google-chrome" },
       properties = { tag = tags[1][3] } },
+    { rule = { class = "Firefox" },
+      properties = { tag = tags[1][1] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
 }
