@@ -90,7 +90,7 @@ procs = {
    "volti",
    "nm-applet",
    "bluetooth-applet",
-   -- "gnome-settings-daemon",
+   "gnome-settings-daemon",
    "/home/liwei/.dropbox-dist/dropboxd",
    "tilda",
 }
