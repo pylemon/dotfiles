@@ -1,0 +1,2 @@
+--type-set=html=.inc,.html
+--ignore-dir=migrations/
