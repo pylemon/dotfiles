@@ -60,7 +60,7 @@ end
 run_once("xcompmgr -cF")
 run_once("fcitx")
 -- run_once("killall emacs")
--- run_once('export LC_CTYPE="zh_CN.UTF-8" && emacs --daemon')
+run_once('export LC_CTYPE="zh_CN.UTF-8" && emacs --daemon')
 -- }}}
 
 
@@ -266,9 +266,9 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
 
-    -- M-left, M-right 切换左右 tag
-    awful.key({ modkey_alt, "Control" }, "Left",   awful.tag.viewprev       ),
-    awful.key({ modkey_alt, "Control" }, "Right",  awful.tag.viewnext       ),
+    -- S-C-left, S-C-right 切换左右 tag
+    awful.key({ modkey, "Control" }, "Left",   awful.tag.viewprev       ),
+    awful.key({ modkey, "Control" }, "Right",  awful.tag.viewnext       ),
 
     -- M-j, M-k 切换程序
     awful.key({ modkey,           }, "j",
@@ -309,14 +309,15 @@ globalkeys = awful.util.table.join(
     awful.key({                       }, "XF86PowerOff", function () suspend() end),
 
     -- C-M-j C-M-k switch screen
-    awful.key({ modkey_alt, "Control" }, "Up", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey_alt, "Control" }, "Down", function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey_alt, "Control" }, "Left", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey_alt, "Control" }, "Right", function () awful.screen.focus_relative(-1) end),
 
     -- jump to alert tag
     awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
 
     -- some useful software control keys
-    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("sublime") end),
+    awful.key({ modkey_alt, "Control" }, "s", function () awful.util.spawn("sublime") end),
+    awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
     awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("pcmanfm") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
