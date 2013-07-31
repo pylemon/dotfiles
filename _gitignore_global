@@ -3,5 +3,6 @@
 runtests.sh
 .dir-locals.el
 liwei.py
-makemessages.sh
+django_db_sampler
+pg_deliveryhero_dump.sql.gz
 
