@@ -5,8 +5,7 @@ ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="random"
 # themes I don't like
 # agnoster avit fishy gentoo minimal mgutz tjkirch fwalch kphoen juanghurtado lambda essembeh norm intheloop wedisagree josh trapd00r rixius example kiwi
-
-plugins=(git pip virtualenvwrapper history-substring-search zsh-syntax-highlighting gitfast command-not-found cp rsync python django)
+plugins=(git web-search github pip encode64 fabric last-working-dir virtualenvwrapper zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 setopt correctall
@@ -91,6 +90,11 @@ function mcd(){
 function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
 }
+
+function clean(){
+    git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D;
+}
+
 function replace_unicode(){
     sed 's/ü/u/g' $1 | sed 's/Ä/A/g' | sed 's/ä/a/g' | sed 's/ß/B/g' | sed 's/ö/o/g' | sed 's/—/-/g' > /tmp/hero_temp;
     mv /tmp/hero_temp $1;
