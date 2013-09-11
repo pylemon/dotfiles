@@ -309,8 +309,8 @@ globalkeys = awful.util.table.join(
     awful.key({                       }, "XF86PowerOff", function () suspend() end),
 
     -- C-M-j C-M-k switch screen
-    awful.key({ modkey_alt, "Control" }, "Left", function () awful.screen.focus_relative( 1) end),
-    awful.key({ modkey_alt, "Control" }, "Right", function () awful.screen.focus_relative(-1) end),
+    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
 
     -- jump to alert tag
     awful.key({ modkey,               }, "u", awful.client.urgent.jumpto),
@@ -318,7 +318,7 @@ globalkeys = awful.util.table.join(
     -- some useful software control keys
     awful.key({ modkey_alt, "Control" }, "s", function () awful.util.spawn("sublime") end),
     awful.key({ modkey_alt, "Control" }, "e", function () awful.util.spawn("emacsclient -a '' -c") end),
-    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("pcmanfm") end),
+    awful.key({ modkey_alt, "Control" }, "f", function () awful.util.spawn("nautilus --no-desktop") end),
     awful.key({ modkey_alt, "Control" }, "l", function () awful.util.spawn("slock") end),
     awful.key({ modkey_alt, "Control" }, "g", function () awful.util.spawn("google-chrome") end),
 

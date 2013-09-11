@@ -13,7 +13,6 @@ setopt correctall
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 export EDITOR="emacsclient -a ''"
-export LC_CTYPE="zh_CN.UTF-8"
 export TERM=xterm-256color
 
 # system
@@ -22,6 +21,7 @@ alias ll='ls -ahlF --group-directories-first'
 alias la='ls -A'
 alias df='df -h'
 alias tm='teamocil'
+alias cp='rsync -aP'
 alias ipy='ipython'
 alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
 alias kk='sudo fuser -k -n tcp $@'
@@ -63,14 +63,14 @@ alias pg='sudo -u postgres psql'
 
 # project
 alias fabls='fab --list'
-alias dhero='cd ~/work/dhero/'
-alias dowant='cd ~/work/dhero/dowant/'
+alias dhero='cd ~/dhero/'
+alias dowant='cd ~/dhero/dowant/'
 alias penv='dhero && source /opt/venvs/p27_d13_dh/bin/activate'
 alias message='penv && dowant && python manage.py compilemessages && penv'
 alias rskill='fuser -k -n tcp 8000'
-alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.settings_dev'
-alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.settings_dev'
-alias m='python dowant/manage.py'
+alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.dev_settings'
+alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.dev_settings'
+
 alias logs='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log | grep ">>>"'
 alias backup_setup='penv && fab set_up_scheduled_backups:liwei,production -H hk'
 alias backup_setuphk='fab set_up_scheduled_backups:liwei,hk -H production'
@@ -82,6 +82,10 @@ alias ay='DISPLAY=:1.0 awesome -c ~/dotfiles/_config/awesome/rc.lua'
 alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
 
 # custom commands
+function m(){
+   penv && python dowant/manage.py $1 $2 $3 $4 --settings=dowant.dev_settings
+}
+
 # mkdir and cd into that dirctionary
 function mcd(){
     test -e $1 || mkdir $1; cd $1;
@@ -93,6 +97,7 @@ function psg(){
 
 function clean(){
     git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D;
+    rm fixture.py fixture_maker make_fixture.log
 }
 
 function replace_unicode(){
@@ -127,3 +132,5 @@ source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export DJANGO_SETTINGS_MODULE=dowant.settings
 # default mode is LIVE
 export OPERATION_MODE=LIVEDEV
+export LC_ALL="en_US.UTF8"
+export LC_CTYPE="zh_CN.UTF-8"
