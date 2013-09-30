@@ -6,7 +6,7 @@
 # Use Wide Punctuation
 # Available Value:
 # True False
-WidePunc=False
+#WidePunc=True
 # Prompt the phrases after input
 # Available Value:
 # True False

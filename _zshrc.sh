@@ -63,8 +63,8 @@ alias pg='sudo -u postgres psql'
 
 # project
 alias fabls='fab --list'
-alias dhero='cd ~/dhero/'
-alias dowant='cd ~/dhero/dowant/'
+alias dhero='cd ~/work/dhero/'
+alias dowant='cd ~/work/dhero/dowant/'
 alias penv='dhero && source /opt/venvs/p27_d13_dh/bin/activate'
 alias message='penv && dowant && python manage.py compilemessages && penv'
 alias rskill='fuser -k -n tcp 8000'
