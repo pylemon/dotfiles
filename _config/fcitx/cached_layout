@@ -1,5 +1,5 @@
 English (US):us:en
-English (US):us:Cherokee:chr:
+English (US):us:Cherokee:chr:chr
 English (US):us:English (US, with euro on 5):euro:en
 English (US):us:English (US, international with dead keys):intl:en
 English (US):us:English (US, alternative international):alt-intl:en
@@ -104,12 +104,12 @@ Bulgarian:bg:Bulgarian (traditional phonetic):phonetic:bg
 Bulgarian:bg:Bulgarian (new phonetic):bas_phonetic:bg
 Arabic (Morocco):ma:
 Arabic (Morocco):ma:French (Morocco):french:fr
-Arabic (Morocco):ma:Berber (Morocco, Tifinagh):tifinagh:
-Arabic (Morocco):ma:Berber (Morocco, Tifinagh alternative):tifinagh-alt:
-Arabic (Morocco):ma:Berber (Morocco, Tifinagh alternative phonetic):tifinagh-alt-phonetic:
-Arabic (Morocco):ma:Berber (Morocco, Tifinagh extended):tifinagh-extended:
-Arabic (Morocco):ma:Berber (Morocco, Tifinagh phonetic):tifinagh-phonetic:
-Arabic (Morocco):ma:Berber (Morocco, Tifinagh extended phonetic):tifinagh-extended-phonetic:
+Arabic (Morocco):ma:Berber (Morocco, Tifinagh):tifinagh:ber
+Arabic (Morocco):ma:Berber (Morocco, Tifinagh alternative):tifinagh-alt:ber
+Arabic (Morocco):ma:Berber (Morocco, Tifinagh alternative phonetic):tifinagh-alt-phonetic:ber
+Arabic (Morocco):ma:Berber (Morocco, Tifinagh extended):tifinagh-extended:ber
+Arabic (Morocco):ma:Berber (Morocco, Tifinagh phonetic):tifinagh-phonetic:ber
+Arabic (Morocco):ma:Berber (Morocco, Tifinagh extended phonetic):tifinagh-extended-phonetic:ber
 English (Cameroon):cm:en
 English (Cameroon):cm:French (Cameroon):french:fr
 English (Cameroon):cm:Cameroon Multilingual (qwerty):qwerty:en
@@ -197,7 +197,7 @@ English (Ghana):gh:English (Ghana, multilingual):generic:en
 English (Ghana):gh:Akan:akan:ak
 English (Ghana):gh:Ewe:ewe:ee
 English (Ghana):gh:Fula:fula:ff
-English (Ghana):gh:Ga:ga:
+English (Ghana):gh:Ga:ga:gaa
 English (Ghana):gh:Hausa:hausa:ha
 English (Ghana):gh:Avatime:avn:
 English (Ghana):gh:English (Ghana, GILLBT):gillbt:en
@@ -218,8 +218,8 @@ German:de:German (Sun dead keys):sundeadkeys:de
 German:de:German (Neo 2):neo:de
 German:de:German (Macintosh):mac:de
 German:de:German (Macintosh, eliminate dead keys):mac_nodeadkeys:de
-German:de:Lower Sorbian:dsb:
-German:de:Lower Sorbian (qwertz):dsb_qwertz:
+German:de:Lower Sorbian:dsb:dsb
+German:de:Lower Sorbian (qwertz):dsb_qwertz:dsb
 German:de:Russian (Germany, phonetic):ru:ru
 German:de:German (US keyboard with German letters):us:en
 German:de:German (with Hungarian letters and no dead keys):hu:de
@@ -327,7 +327,7 @@ Polish:pl:Polish (qwertz):qwertz:pl
 Polish:pl:Polish (Dvorak):dvorak:pl
 Polish:pl:Polish (Dvorak, Polish quotes on quotemark key):dvorak_quotes:pl
 Polish:pl:Polish (Dvorak, Polish quotes on key 1):dvorak_altquotes:pl
-Polish:pl:Kashubian:csb:
+Polish:pl:Kashubian:csb:csb
 Polish:pl:Russian (Poland, phonetic Dvorak):ru_phonetic_dvorak:ru
 Polish:pl:Polish (programmer Dvorak):dvp:pl
 Polish:pl:Polish (international with dead keys):intl:pl
@@ -345,7 +345,7 @@ Romanian:ro:Romanian (cedilla):cedilla:ro
 Romanian:ro:Romanian (standard):std:ro
 Romanian:ro:Romanian (standard cedilla):std_cedilla:ro
 Romanian:ro:Romanian (WinKeys):winkeys:ro
-Romanian:ro:Crimean Tatar (Dobruja Q):crh_dobruja:
+Romanian:ro:Crimean Tatar (Dobruja Q):crh_dobruja:crh
 Romanian:ro:Romanian (ergonomic Touchtype):ergonomic:ro
 Russian:ru:ru
 Russian:ru:Russian (phonetic):phonetic:ru
@@ -358,14 +358,14 @@ Russian:ru:Ossetian (legacy):os_legacy:os
 Russian:ru:Ossetian (WinKeys):os_winkeys:os
 Russian:ru:Chuvash:cv:cv
 Russian:ru:Chuvash (Latin):cv_latin:cv
-Russian:ru:Udmurt:udm:
+Russian:ru:Udmurt:udm:udm
 Russian:ru:Komi:kom:kv
-Russian:ru:Yakut:sah:
-Russian:ru:Kalmyk:xal:
+Russian:ru:Yakut:sah:sah
+Russian:ru:Kalmyk:xal:xal
 Russian:ru:Russian (DOS):dos:ru
 Russian:ru:Serbian (Russia):srp:ru
 Russian:ru:Bashkirian:bak:ba
-Russian:ru:Mari:chm:
+Russian:ru:Mari:chm:chm
 Russian:ru:Church Slavonic:chu:cu
 Russian:ru:Russian (with Ukrainian-Belorussian layout):ruu:ru
 Serbian (Cyrillic):rs:sr
@@ -390,7 +390,7 @@ Spanish:es:Spanish (eliminate dead keys):nodeadkeys:es
 Spanish:es:Spanish (include dead tilde):deadtilde:es
 Spanish:es:Spanish (Sun dead keys):sundeadkeys:es
 Spanish:es:Spanish (Dvorak):dvorak:es
-Spanish:es:Asturian (Spain, with bottom-dot H and bottom-dot L):ast:
+Spanish:es:Asturian (Spain, with bottom-dot H and bottom-dot L):ast:ast
 Spanish:es:Catalan (Spain, with middle-dot L):cat:ca
 Spanish:es:Spanish (Macintosh):mac:es
 Swedish:se:sv
@@ -411,9 +411,9 @@ German (Switzerland):ch:French (Switzerland, eliminate dead keys):fr_nodeadkeys:
 German (Switzerland):ch:French (Switzerland, Sun dead keys):fr_sundeadkeys:fr
 German (Switzerland):ch:French (Switzerland, Macintosh):fr_mac:fr
 German (Switzerland):ch:German (Switzerland, Macintosh):de_mac:de
-Arabic (Syria):sy:
-Arabic (Syria):sy:Syriac:syc:
-Arabic (Syria):sy:Syriac (phonetic):syc_phonetic:
+Arabic (Syria):sy:syr
+Arabic (Syria):sy:Syriac:syc:syr
+Arabic (Syria):sy:Syriac (phonetic):syc_phonetic:syr
 Arabic (Syria):sy:Kurdish (Syria, Latin Q):ku:ku
 Arabic (Syria):sy:Kurdish (Syria, F):ku_f:ku
 Arabic (Syria):sy:Kurdish (Syria, Latin Alt-Q):ku_alt:ku
@@ -433,9 +433,9 @@ Turkish:tr:Kurdish (Turkey, Latin Q):ku:ku
 Turkish:tr:Kurdish (Turkey, F):ku_f:ku
 Turkish:tr:Kurdish (Turkey, Latin Alt-Q):ku_alt:ku
 Turkish:tr:Turkish (international with dead keys):intl:tr
-Turkish:tr:Crimean Tatar (Turkish Q):crh:
-Turkish:tr:Crimean Tatar (Turkish F):crh_f:
-Turkish:tr:Crimean Tatar (Turkish Alt-Q):crh_alt:
+Turkish:tr:Crimean Tatar (Turkish Q):crh:crh
+Turkish:tr:Crimean Tatar (Turkish F):crh_f:crh
+Turkish:tr:Crimean Tatar (Turkish Alt-Q):crh_alt:crh
 Taiwanese:tw:
 Taiwanese:tw:Taiwanese (indigenous):indigenous:
 Taiwanese:tw:Saisiyat (Taiwan):saisiyat:
@@ -464,8 +464,8 @@ Japanese (PC-98xx Series):nec_vndr/jp:ja
 Irish:ie:en
 Irish:ie:CloGaelach:CloGaelach:gd
 Irish:ie:Irish (UnicodeExpert):UnicodeExpert:en
-Irish:ie:Ogham:ogam:
-Irish:ie:Ogham (IS434):ogam_is434:
+Irish:ie:Ogham:ogam:sga
+Irish:ie:Ogham (IS434):ogam_is434:sga
 Urdu (Pakistan):pk:ur
 Urdu (Pakistan):pk:Urdu (Pakistan, CRULP):urd-crulp:ur
 Urdu (Pakistan):pk:Urdu (Pakistan, NLA):urd-nla:ur
@@ -495,16 +495,16 @@ Swahili (Tanzania):tz:sw
 Swahili (Kenya):ke:sw
 Swahili (Kenya):ke:Kikuyu:kik:ki
 Tswana:bw:tn
-Filipino:ph:en
-Filipino:ph:Filipino (QWERTY Baybayin):qwerty-bay:
-Filipino:ph:Filipino (Capewell-Dvorak Latin):capewell-dvorak:en
-Filipino:ph:Filipino (Capewell-Dvorak Baybayin):capewell-dvorak-bay:
-Filipino:ph:Filipino (Capewell-QWERF 2006 Latin):capewell-qwerf2k6:en
-Filipino:ph:Filipino (Capewell-QWERF 2006 Baybayin):capewell-qwerf2k6-bay:
-Filipino:ph:Filipino (Colemak Latin):colemak:en
-Filipino:ph:Filipino (Colemak Baybayin):colemak-bay:
-Filipino:ph:Filipino (Dvorak Latin):dvorak:en
-Filipino:ph:Filipino (Dvorak Baybayin):dvorak-bay:
+Filipino:ph:fil
+Filipino:ph:Filipino (QWERTY Baybayin):qwerty-bay:fil
+Filipino:ph:Filipino (Capewell-Dvorak Latin):capewell-dvorak:fil
+Filipino:ph:Filipino (Capewell-Dvorak Baybayin):capewell-dvorak-bay:fil
+Filipino:ph:Filipino (Capewell-QWERF 2006 Latin):capewell-qwerf2k6:fil
+Filipino:ph:Filipino (Capewell-QWERF 2006 Baybayin):capewell-qwerf2k6-bay:fil
+Filipino:ph:Filipino (Colemak Latin):colemak:fil
+Filipino:ph:Filipino (Colemak Baybayin):colemak-bay:fil
+Filipino:ph:Filipino (Dvorak Latin):dvorak:fil
+Filipino:ph:Filipino (Dvorak Baybayin):dvorak-bay:fil
 APL Keyboard Symbols:apl:en
 APL Keyboard Symbols:apl:dyalog:dyalog:en
 APL Keyboard Symbols:apl:sax:sax:en

@@ -1,20 +1,15 @@
 =========================
-FCITX 4.2.7 -- Get Signal No.: 6
-Date: try "date -d @1377505258" if you are using GNU date ***
-ProcessID: 2667
+FCITX 4.2.7 -- Get Signal No.: 11
+Date: try "date -d @1381463885" if you are using GNU date ***
+ProcessID: 6062
 fcitx[0x4016c0]
-/lib/x86_64-linux-gnu/libc.so.6(+0x370b0)[0x7fe972eb00b0]
-/lib/x86_64-linux-gnu/libc.so.6(gsignal+0x37)[0x7fe972eb0037]
-/lib/x86_64-linux-gnu/libc.so.6(abort+0x148)[0x7fe972eb3698]
-/lib/x86_64-linux-gnu/libc.so.6(+0x745ab)[0x7fe972eed5ab]
-/lib/x86_64-linux-gnu/libc.so.6(+0x80a46)[0x7fe972ef9a46]
-/usr/lib/x86_64-linux-gnu/fcitx/fcitx-autoeng.so(+0x27ee)[0x7fe96d6437ee]
-/usr/lib/x86_64-linux-gnu/fcitx/fcitx-autoeng.so(+0x33c9)[0x7fe96d6443c9]
-/usr/lib/x86_64-linux-gnu/libfcitx-core.so.0(FcitxInstanceReloadConfig+0x36d)[0x7fe9738969fd]
-/usr/lib/x86_64-linux-gnu/fcitx/fcitx-ipc.so(+0x3316)[0x7fe968426316]
-/lib/x86_64-linux-gnu/libdbus-1.so.3(+0x1c9f0)[0x7fe97257f9f0]
-/lib/x86_64-linux-gnu/libdbus-1.so.3(dbus_connection_dispatch+0x3a5)[0x7fe972571c55]
-/usr/lib/x86_64-linux-gnu/fcitx/fcitx-dbus.so(+0x1e58)[0x7fe9727a8e58]
-/usr/lib/x86_64-linux-gnu/libfcitx-core.so.0(+0x807e)[0x7fe97388d07e]
-/lib/x86_64-linux-gnu/libpthread.so.0(+0x7f8e)[0x7fe973248f8e]
-/lib/x86_64-linux-gnu/libc.so.6(clone+0x6d)[0x7fe972f72e1d]
+/lib/x86_64-linux-gnu/libc.so.6(+0x370b0)[0x7f6ce69520b0]
+/usr/lib/x86_64-linux-gnu/libfcitx-config.so.4(FcitxHotkeyIsHotKey+0x0)[0x7f6ce711e600]
+/usr/lib/x86_64-linux-gnu/libfcitx-core.so.0(FcitxInstanceProcessKey+0x77d)[0x7f6ce733a24d]
+/usr/lib/x86_64-linux-gnu/fcitx/fcitx-ipc.so(+0x45f6)[0x7f6cd1f385f6]
+/lib/x86_64-linux-gnu/libdbus-1.so.3(+0x1c9f0)[0x7f6ce60219f0]
+/lib/x86_64-linux-gnu/libdbus-1.so.3(dbus_connection_dispatch+0x3a5)[0x7f6ce6013c55]
+/usr/lib/x86_64-linux-gnu/fcitx/fcitx-dbus.so(+0x1e58)[0x7f6ce624ae58]
+/usr/lib/x86_64-linux-gnu/libfcitx-core.so.0(+0x807e)[0x7f6ce732f07e]
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x7f8e)[0x7f6ce6ceaf8e]
+/lib/x86_64-linux-gnu/libc.so.6(clone+0x6d)[0x7f6ce6a14e1d]
