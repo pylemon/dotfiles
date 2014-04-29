@@ -12,8 +12,15 @@ setopt correctall
 
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
-export EDITOR="emacsclient -a ''"
-export TERM=xterm-256color
+EDITOR_META='emacsclient -nw'
+export EDITOR=$EDITOR_META
+
+pgrep -f 'emacs --daemon' > /dev/null
+if [ $? -ne 0 ]
+then
+    emacs --daemon
+fi
+alias e=$EDITOR
 
 # system
 alias l='ls -C --group-directories-first'
@@ -21,7 +28,6 @@ alias ll='ls -ahlF --group-directories-first'
 alias la='ls -A'
 alias df='df -h'
 alias tm='teamocil'
-alias cp='rsync -aP'
 alias ipy='ipython'
 alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
 alias kk='sudo fuser -k -n tcp $@'
@@ -31,7 +37,6 @@ alias suspend='sudo pm-suspend'
 alias iotop='sudo iotop'
 alias iftop='sudo iftop'
 alias nettop='sudo nethogs $@'
-alias aptinstall='sudo aptitude install'
 alias update='sudo aptitude update'
 alias upgrade='sudo aptitude update && sudo aptitude -y upgrade'
 alias show='aptitude show'
@@ -51,7 +56,6 @@ alias gdf='git diff -w'
 alias grm='git rm --cached'
 
 # software
-alias et="emacsclient -a '' -t"
 alias vi='vim'
 alias du='ncdu'
 alias nau='nautilus --no-desktop'
@@ -62,10 +66,10 @@ alias tree='tree -C'
 alias pg='sudo -u postgres psql'
 
 # project
-alias fabls='fab --list'
 alias dhero='cd ~/work/dhero/'
 alias dowant='cd ~/work/dhero/dowant/'
-alias penv='dhero && source /opt/venvs/p27_d13_dh/bin/activate'
+alias penv='dhero && source /opt/venvs/deliveryhero_venv/bin/activate'
+alias fb='penv && fab -f sysadmin/fabric/fabfile.py'
 alias message='penv && dowant && python manage.py compilemessages && penv'
 alias rskill='fuser -k -n tcp 8000'
 alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.dev_settings'
@@ -77,8 +81,8 @@ alias backup_setuphk='fab set_up_scheduled_backups:liwei,hk -H production'
 
 
 # awesome
-alias ax='Xephyr :1 -ac -br -noreset -screen 800x600 &'
-alias ay='DISPLAY=:1.0 awesome -c ~/dotfiles/_config/awesome/rc.lua'
+alias ax='Xephyr :1 -ac -br -noreset -screen 1280x800 &'
+alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
 alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
 
 # custom commands
@@ -86,23 +90,24 @@ function m(){
    penv && python dowant/manage.py $1 $2 $3 $4 --settings=dowant.dev_settings
 }
 
-# mkdir and cd into that dirctionary
-function mcd(){
-    test -e $1 || mkdir $1; cd $1;
-}
-
 function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
 }
 
 function clean(){
-    git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D;
-    rm fixture.py fixture_maker make_fixture.log
-}
+    git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D 2> /dev/null;
 
-function replace_unicode(){
-    sed 's/ü/u/g' $1 | sed 's/Ä/A/g' | sed 's/ä/a/g' | sed 's/ß/B/g' | sed 's/ö/o/g' | sed 's/—/-/g' > /tmp/hero_temp;
-    mv /tmp/hero_temp $1;
+    if [ -f "fixture.py" ]; then
+        rm fixture.py
+    fi
+
+    if [ -f "fixture_maker" ]; then
+        rm fixture_maker
+    fi
+
+    if [ -f "make_fixture.log" ]; then
+        rm make_fixture.log
+    fi
 }
 
 # make man documents have color
@@ -132,5 +137,6 @@ source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export DJANGO_SETTINGS_MODULE=dowant.settings
 # default mode is LIVE
 export OPERATION_MODE=LIVEDEV
-export LC_ALL="en_US.UTF8"
+export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="zh_CN.UTF-8"
+export PYTHONPATH=/home/liwei/work/dhero/:$PYTHONPATH

@@ -1,8 +1,9 @@
 .ropeproject/
+.idea/
+atlassian-ide-plugin.xml
 *~
 runtests.sh
 .dir-locals.el
 liwei.py
 django_db_sampler
 pg_deliveryhero_dump.sql.gz
-

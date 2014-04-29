@@ -7,8 +7,29 @@ TriggerKey=CTRL_\
 UseExtraTriggerKeyOnlyWhenUseItToInactivate=False
 # Extra key for trigger input method
 # Available Value:
-# R_CTRL R_SHIFT L_SHIFT L_CTRL ALT_L_SHIFT ALT_R_SHIFT CTRL Both SHIFT Both L_ALT R_ALT ALT Both Disabled
+# R_CTRL
+# R_SHIFT
+# L_SHIFT
+# L_CTRL
+# ALT_L_SHIFT
+# ALT_R_SHIFT
+# CTRL Both
+# SHIFT Both
+# L_ALT
+# R_ALT
+# ALT Both
+# Left Super
+# Right Super
+# Super Both
+# Ctrl+Left Super
+# Ctrl+Right Super
+# Super+Left Ctrl
+# Super+Right Ctrl
+# Disabled
+# Custom
 SwitchKey=Disabled
+# Custom switch key
+#CustomSwitchKey=
 # Activate input method
 #ActivateKey=
 # Inactivate Input Method
@@ -23,14 +44,13 @@ IMSwitchKey=False
 #IMSwitchIncludeInactive=False
 # Scroll between Input Method
 # Available Value:
-# CTRL_SHIFT ALT_SHIFT CTRL_SUPER ALT_SUPER
+# CTRL_SHIFT
+# ALT_SHIFT
+# CTRL_SUPER
+# ALT_SUPER
 IMSwitchHotkey=ALT_SHIFT
 # Reload configuration
 ReloadConfig=CTRL_F12
-# Press Switch Key twice to Change Mode
-# Available Value:
-# True False
-DoubleSwitchKey=True
 # Interval of Two Key Input
 #TimeInterval=250
 # Switching Virtual Keyboard
@@ -61,11 +81,14 @@ PrevWord=ALT_TAB
 #DelayStart=0
 # Share State Among Window
 # Available Value:
-# No All PerProgram
-ShareStateAmongWindow=All
+# No
+# All
+# PerProgram
+ShareStateAmongWindow=PerProgram
 # Default Input Method State
 # Available Value:
-# Inactive Active
+# Inactive
+# Active
 #DefaultInputMethodState=Inactive
 
 [Output]
@@ -73,10 +96,6 @@ ShareStateAmongWindow=All
 # Available Value:
 # True False
 #HalfPuncAfterNumber=True
-# Action after press enter
-# Available Value:
-# Nothing Clean Commit
-#EnterAction=Commit
 # Disable Paging in Remind Mode
 # Available Value:
 # True False
@@ -84,7 +103,7 @@ RemindModeDisablePaging=False
 # Commit when toggle state
 # Available Value:
 # True False
-SendTextWhenSwitchEng=True
+#SendTextWhenSwitchEng=True
 # Candidate Word Number
 CandidateWordNumber=7
 # Give the tips of Phrase

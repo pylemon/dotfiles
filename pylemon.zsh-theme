@@ -6,15 +6,20 @@
 #    SCREENSHOT: coming soon
 # -----------------------------------------------------------------------------
 
+function git_hash_info() {
+  last_commit=`git log --pretty=format:'%h' -1 2> /dev/null`
+  echo "${last_commit}"
+}
+
 MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
 local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
 
-PROMPT='%{$fg_bold[cyan]%}%m%{$reset_color%}%{$fg_bold[white]%} %{$fg[yellow]%}%D{[%H:%M]} %{$reset_color%}%{$fg_bold[green]%}%~ %{$reset_color%}[ $(git_prompt_info)${return_status}$(git_prompt_status)%{$reset_color%}
+PROMPT='%{$FG[111]%}%m%{$reset_color%}%{$FG[208]%} %{$FG[208]%}%D{[%H:%M]} %{$reset_color%}%{$FG[103]%}%~ %{$reset_color%}[ $(git_prompt_info)${return_status}$(git_prompt_status)%{$reset_color%}
 %{$fg[magenta]%}%!%{$reset_color%} $(prompt_char) '
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$reset_color%}@ %{$bg[black]%}%{$fg[white]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[148]%} $(git_hash_info)%{$FG[111]%} @ %{$FG[148]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} ]"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}!%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[124]%}!%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 RPROMPT=''
@@ -31,6 +36,7 @@ function prompt_char() {
   hg root >/dev/null 2>/dev/null && echo "%{$fg_bold[red]%}☿%{$reset_color%}" && return
   echo "%{$fg[cyan]%}%%%{$reset_color%}"
 }
+
 
 # Colors vary depending on time lapsed.
 sZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
