@@ -1,3 +1,9 @@
+#!/bin/sh
+
+# language settings
+export LC_CTYPE=zh_CN.UTF-8
+
+# zsh settings
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -5,46 +11,32 @@ ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="random"
 # themes I don't like
 # agnoster avit fishy gentoo minimal mgutz tjkirch fwalch kphoen juanghurtado lambda essembeh norm intheloop wedisagree josh trapd00r rixius example kiwi
-plugins=(git web-search github pip encode64 fabric last-working-dir virtualenvwrapper zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search)
+plugins=(git github pip encode64 fabric last-working-dir zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search per-directory-history colored-man docker golang z colorize)
 
 source $ZSH/oh-my-zsh.sh
 setopt correctall
 
-compctl -g '~/.teamocil/*(:t:r)' teamocil
-
-EDITOR_META='emacsclient -nw'
-export EDITOR=$EDITOR_META
-
-pgrep -f 'emacs --daemon' > /dev/null
-if [ $? -ne 0 ]
-then
-    emacs --daemon
-fi
-alias e=$EDITOR
-
-# system
+# system alias
+alias c='colorize'
 alias l='ls -C --group-directories-first'
 alias ll='ls -ahlF --group-directories-first'
 alias la='ls -A'
 alias df='df -h'
-alias tm='teamocil'
+alias t='teamocil'
 alias ipy='ipython'
-alias rmpyc='find . -name "*.pyc" -print0 | xargs -0 rm -Rf'
 alias kk='sudo fuser -k -n tcp $@'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
-alias halt='sudo halt -p'
-alias suspend='sudo pm-suspend'
-alias iotop='sudo iotop'
-alias iftop='sudo iftop'
 alias nettop='sudo nethogs $@'
-alias update='sudo aptitude update'
-alias upgrade='sudo aptitude update && sudo aptitude -y upgrade'
-alias show='aptitude show'
+alias update='sudo apt-fast update'
+alias upgrade='sudo apt-fast update && sudo apt-fast -y upgrade'
 alias search='aptitude search'
 alias mnt='mount | column -t'
-alias gfw='ssh -ND 7070 -p 10086 liwei@localhost -v'
-alias tpoff='synclient touchpadoff=1'
-alias tpon='synclient touchpadoff=0'
+
+#alias halt='sudo halt -p'
+#alias suspend='sudo pm-suspend'
+#alias tpoff='synclient touchpadoff=1'
+#alias tpon='synclient touchpadoff=0'
+#alias gfw='ssh -ND 7070 -p 10086 liwei@localhost -v'
 
 # git
 alias gl='git glog'
@@ -73,12 +65,11 @@ alias fb='penv && fab -f sysadmin/fabric/fabfile.py'
 alias message='penv && dowant && python manage.py compilemessages && penv'
 alias rskill='fuser -k -n tcp 8000'
 alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.dev_settings'
-alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.dev_settings'
+alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.dev_settings --quiet-load'
 
 alias logs='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log | grep ">>>"'
 alias backup_setup='penv && fab set_up_scheduled_backups:liwei,production -H hk'
 alias backup_setuphk='fab set_up_scheduled_backups:liwei,hk -H production'
-
 
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 1280x800 &'
@@ -94,8 +85,14 @@ function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
 }
 
+function vpntest(){
+    sudo fping -C 5 -q < ~/work/vpn_ip_list.txt 2>&1 >/dev/null | awk '{ print ($3+$4+$5+$6+$7)/5 "\t " $1}' | sort -n
+}
+
 function clean(){
     git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D 2> /dev/null;
+
+    find . -name '*.pyc' | xargs rm -f;
 
     if [ -f "fixture.py" ]; then
         rm fixture.py
@@ -110,33 +107,46 @@ function clean(){
     fi
 }
 
-# make man documents have color
-man() {
-	env \
-		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-		LESS_TERMCAP_md=$(printf "\e[1;31m") \
-		LESS_TERMCAP_me=$(printf "\e[0m") \
-		LESS_TERMCAP_se=$(printf "\e[0m") \
-		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-		LESS_TERMCAP_ue=$(printf "\e[0m") \
-		LESS_TERMCAP_us=$(printf "\e[1;32m") \
-			man "$@"
-}
-
 # for colorful ls
 test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"
 
 # exports
 # add dropbox bin path to sys.path
 export PATH=$HOME/Dropbox/bin:$PATH
-# for virtualenvwrapper
-export WORKON_HOME=~/Envs
+
 # zsh syntax highlighting when input a command
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# export DJANGO_SETTINGS_MODULE=dowant.settings
-# default mode is LIVE
+# DHC django settings
+source ~/work/dhero/sysadmin/envs/env_leeway
 export OPERATION_MODE=LIVEDEV
-export LC_ALL="en_US.UTF-8"
-export LC_CTYPE="zh_CN.UTF-8"
+export IPYTHONDIR=$HOME/.ipython
 export PYTHONPATH=/home/liwei/work/dhero/:$PYTHONPATH
+export WORKON_HOME=~/Envs
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Go settings
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export GOARCH=amd64
+export GOOS=linux
+
+# Ruby settings
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+
+# teamocil auto-complete
+compctl -g '~/.teamocil/*(:t:r)' teamocil
+
+# emacs daemon must after LC_CTYPE update.
+export EDITOR='emacsclient -nw'
+pgrep -f 'emacs --daemon' > /dev/null
+if [ $? -ne 0 ]
+then
+    emacs --daemon
+fi
+alias e=$EDITOR
+
+# Make zsh know about hosts already accessed by SSH
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'

@@ -1,9 +1,15 @@
 .ropeproject/
 .idea/
+.project.sublime-workspace
 atlassian-ide-plugin.xml
 *~
 runtests.sh
 .dir-locals.el
 liwei.py
 django_db_sampler
+django_fixture_tools
 pg_deliveryhero_dump.sql.gz
+todos.org
+dingus_note.py
+runtests.py
+.coverage

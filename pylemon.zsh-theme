@@ -17,7 +17,7 @@ local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
 PROMPT='%{$FG[111]%}%m%{$reset_color%}%{$FG[208]%} %{$FG[208]%}%D{[%H:%M]} %{$reset_color%}%{$FG[103]%}%~ %{$reset_color%}[ $(git_prompt_info)${return_status}$(git_prompt_status)%{$reset_color%}
 %{$fg[magenta]%}%!%{$reset_color%} $(prompt_char) '
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[148]%} $(git_hash_info)%{$FG[111]%} @ %{$FG[148]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[111]%}@ %{$FG[148]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} ]"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[124]%}!%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""

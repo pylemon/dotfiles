@@ -48,9 +48,9 @@ IMSwitchKey=False
 # ALT_SHIFT
 # CTRL_SUPER
 # ALT_SUPER
-IMSwitchHotkey=ALT_SHIFT
+#IMSwitchHotkey=CTRL_SHIFT
 # Reload configuration
-ReloadConfig=CTRL_F12
+ReloadConfig=
 # Interval of Two Key Input
 #TimeInterval=250
 # Switching Virtual Keyboard
