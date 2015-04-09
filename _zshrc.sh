@@ -7,11 +7,19 @@ export LC_CTYPE=zh_CN.UTF-8
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
+bgnotify_threshold=5  ## set your own notification threshold
+
+function bgnotify_formatted {
+  ## $1=exit_status, $2=command, $3=elapsed_time
+  ##[ $1 -eq 0 ] && title="#Done" || title="## Failed!"
+  bgnotify "#done (took $3 secs), cmd:" "$2";
+}
+
 ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="random"
 # themes I don't like
 # agnoster avit fishy gentoo minimal mgutz tjkirch fwalch kphoen juanghurtado lambda essembeh norm intheloop wedisagree josh trapd00r rixius example kiwi
-plugins=(git github pip encode64 fabric last-working-dir zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search per-directory-history colored-man docker golang z colorize)
+plugins=(git github pip encode64 fabric last-working-dir zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search per-directory-history colored-man docker golang z colorize bgnotify)
 
 source $ZSH/oh-my-zsh.sh
 setopt correctall
@@ -98,6 +106,14 @@ function clean(){
         rm fixture.py
     fi
 
+    if [ -f "DeliveryService" ]; then
+        rm DeliveryService
+    fi
+
+    if [ -f "main" ]; then
+        rm main
+    fi
+
     if [ -f "fixture_maker" ]; then
         rm fixture_maker
     fi
@@ -124,6 +140,18 @@ export IPYTHONDIR=$HOME/.ipython
 export PYTHONPATH=/home/liwei/work/dhero/:$PYTHONPATH
 export WORKON_HOME=~/Envs
 source /usr/local/bin/virtualenvwrapper.sh
+
+# Management settings
+export MANAGEMENT_MODEL_URL=http://192.168.1.11:8000
+export MANAGEMENT_POINT_URL=http://127.0.0.1
+export MANAGEMENT_POLLING_URL=http://192.168.1.11:4001
+export MANAGEMENT_POLLING_CHANNEL=leeway
+export MANAGEMENT_ALLOWED_ORDER_POST_IPS=127.0.0.1,114.80.201.200,192.168.1.11
+export MANAGEMENT_MONGODB_URI=mongodb://127.0.0.1:27017/management
+export MANAGEMENT_LOG_FILE_PREFIX=/var/log/management.log
+export MANAGEMENT_LOG_TO_STDERR=1
+export MANAGEMENT_PORT=22222
+export MANAGEMENT_DEBUG=1
 
 # Go settings
 export GOPATH=$HOME/go
