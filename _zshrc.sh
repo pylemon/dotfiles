@@ -2,6 +2,8 @@
 
 # language settings
 export LC_CTYPE=zh_CN.UTF-8
+export LC_ALL=C
+export LANGUAGE=zh_CN.UTF-8
 
 # zsh settings
 # Path to your oh-my-zsh configuration.
@@ -51,9 +53,7 @@ alias gl='git glog'
 alias gla='git glog --all'
 alias gls='git slog'
 alias gup='git remote update && git remote prune origin'
-alias gs='git status -s'
 alias gdf='git diff -w'
-alias grm='git rm --cached'
 
 # software
 alias vi='vim'
@@ -75,10 +75,6 @@ alias rskill='fuser -k -n tcp 8000'
 alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.dev_settings'
 alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.dev_settings --quiet-load'
 
-alias logs='tail -f -s 1 /var/log/DeliveryHeroChina/deliveryhero.log | grep ">>>"'
-alias backup_setup='penv && fab set_up_scheduled_backups:liwei,production -H hk'
-alias backup_setuphk='fab set_up_scheduled_backups:liwei,hk -H production'
-
 # awesome
 alias ax='Xephyr :1 -ac -br -noreset -screen 1280x800 &'
 alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
@@ -91,10 +87,6 @@ function m(){
 
 function psg(){
     ps auxw | grep -v grep | grep -i '[ ]\?'"$1";
-}
-
-function vpntest(){
-    sudo fping -C 5 -q < ~/work/vpn_ip_list.txt 2>&1 >/dev/null | awk '{ print ($3+$4+$5+$6+$7)/5 "\t " $1}' | sort -n
 }
 
 function clean(){
@@ -134,24 +126,9 @@ export PATH=$HOME/Dropbox/bin:$PATH
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # DHC django settings
-source ~/work/dhero/sysadmin/envs/env_leeway
-export OPERATION_MODE=LIVEDEV
 export IPYTHONDIR=$HOME/.ipython
-export PYTHONPATH=/home/liwei/work/dhero/:$PYTHONPATH
 export WORKON_HOME=~/Envs
 source /usr/local/bin/virtualenvwrapper.sh
-
-# Management settings
-export MANAGEMENT_MODEL_URL=http://192.168.1.11:8000
-export MANAGEMENT_POINT_URL=http://127.0.0.1
-export MANAGEMENT_POLLING_URL=http://192.168.1.11:4001
-export MANAGEMENT_POLLING_CHANNEL=leeway
-export MANAGEMENT_ALLOWED_ORDER_POST_IPS=127.0.0.1,114.80.201.200,192.168.1.11
-export MANAGEMENT_MONGODB_URI=mongodb://127.0.0.1:27017/management
-export MANAGEMENT_LOG_FILE_PREFIX=/var/log/management.log
-export MANAGEMENT_LOG_TO_STDERR=1
-export MANAGEMENT_PORT=22222
-export MANAGEMENT_DEBUG=1
 
 # Go settings
 export GOPATH=$HOME/go
@@ -168,13 +145,13 @@ export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 # emacs daemon must after LC_CTYPE update.
-export EDITOR='emacsclient -nw'
-pgrep -f 'emacs --daemon' > /dev/null
-if [ $? -ne 0 ]
-then
-    emacs --daemon
-fi
-alias e=$EDITOR
+#export EDITOR='emacsclient -nw'
+#pgrep -f 'emacs --daemon' > /dev/null
+#if [ $? -ne 0 ]
+#then
+#    emacs --daemon
+#fi
+#alias e=$EDITOR
 
 # Make zsh know about hosts already accessed by SSH
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'

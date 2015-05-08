@@ -11,16 +11,10 @@ sudo apt-get update
 sudo apt-get -y upgrade
 
 # useful tools
-sudo apt-get -y install htop tilda tmux feh git mg zsh nginx apache2-utils awesome awesome-extra suckless-tools lxterminal fcitx-googlepinyin xcompmgr gnome-tweak-tool pgadmin3 volti libnss3-tools
-
-# python dependence
-sudo apt-get -y install python-dev build-essential python-pip
+sudo apt-get -y install htop tilda tmux git mg zsh nginx apache2-utils suckless-tools xcompmgr gnome-tweak-tool pgadmin3 python-dev build-essential python-pip
 
 # disable ubuntu crash report
 sudo sed -i "s/enabled=1/enabled=0/g" '/etc/default/apport'
-
-# add goAgent crt to system
-certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i '/home/liwei/Dropbox/goagent/local/CA.crt'
 
 # install zsh
 if [ ! -d $HOME/.oh-my-zsh ]; then
