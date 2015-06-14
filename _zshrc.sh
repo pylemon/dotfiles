@@ -1,9 +1,6 @@
 #!/bin/sh
 
 # language settings
-export LC_CTYPE=zh_CN.UTF-8
-export LC_ALL=zh_CN.UTF-8
-export LANGUAGE=zh_CN.UTF-8
 
 # zsh settings
 # Path to your oh-my-zsh configuration.
@@ -24,7 +21,7 @@ ZSH_THEME="../../dotfiles/pylemon"
 plugins=(git github pip encode64 fabric last-working-dir zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search per-directory-history colored-man docker golang z colorize bgnotify)
 
 source $ZSH/oh-my-zsh.sh
-setopt correctall
+unsetopt correct_all
 
 # system alias
 alias c='colorize'
@@ -49,6 +46,7 @@ alias mnt='mount | column -t'
 #alias gfw='ssh -ND 7070 -p 10086 liwei@localhost -v'
 
 # git
+alias git="LANG=C git"
 alias gl='git glog'
 alias gla='git glog --all'
 alias gls='git slog'
@@ -66,19 +64,18 @@ alias tree='tree -C'
 alias pg='sudo -u postgres psql'
 
 # project
-alias dhero='cd ~/work/dhero/'
-alias dowant='cd ~/work/dhero/dowant/'
-alias penv='dhero && source /opt/venvs/deliveryhero_venv/bin/activate'
-alias fb='penv && fab -f sysadmin/fabric/fabfile.py'
-alias message='penv && dowant && python manage.py compilemessages && penv'
-alias rskill='fuser -k -n tcp 8000'
-alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.dev_settings'
-alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.dev_settings --quiet-load'
+alias bolo='cd ~/bolo-server/'
+alias penv='bolo && workon bolo'
+#alias fb='penv && fab -f sysadmin/fabric/fabfile.py'
+#alias message='penv && dowant && python manage.py compilemessages && penv'
+#alias rskill='fuser -k -n tcp 8000'
+#alias rs='rskill || message && python dowant/manage.py runserver 0.0.0.0:8000 --settings=dowant.dev_settings'
+#alias shell='penv && python dowant/manage.py shell_plus --settings=dowant.dev_settings --quiet-load'
 
 # awesome
-alias ax='Xephyr :1 -ac -br -noreset -screen 1280x800 &'
-alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
-alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
+#alias ax='Xephyr :1 -ac -br -noreset -screen 1280x800 &'
+#alias ay='DISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua'
+#alias setscreen='xrandr --output DP-1 --mode 1920x1080 --above LVDS-1'
 
 # custom commands
 function m(){
@@ -90,28 +87,12 @@ function psg(){
 }
 
 function clean(){
-    git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D 2> /dev/null;
+    #git branch | grep '^ ' | grep -v 'leeway' | xargs git branch -D 2> /dev/null;
 
     find . -name '*.pyc' | xargs rm -f;
-
-    if [ -f "fixture.py" ]; then
-        rm fixture.py
-    fi
-
-    if [ -f "DeliveryService" ]; then
-        rm DeliveryService
-    fi
-
+    # clean up golang main binary file
     if [ -f "main" ]; then
         rm main
-    fi
-
-    if [ -f "fixture_maker" ]; then
-        rm fixture_maker
-    fi
-
-    if [ -f "make_fixture.log" ]; then
-        rm make_fixture.log
     fi
 }
 
@@ -125,21 +106,46 @@ export PATH=$HOME/Dropbox/bin:$PATH
 # zsh syntax highlighting when input a command
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# DHC django settings
+# python settings
 export IPYTHONDIR=$HOME/.ipython
 export WORKON_HOME=~/Envs
 source /usr/local/bin/virtualenvwrapper.sh
+
+# Bolo.me settings
+PROJECT_HOME='/home/liwei/bolo-server/'
+CORE_SRC_HOME=$PROJECT_HOME/core/src
+INTERNAL_SRC_HOME=$PROJECT_HOME/internal/src
+INTERNAL_TEST_HOME=$PROJECT_HOME/internal/test
+INTERNAL_LOG_HOME=$PROJECT_HOME/internal/log
+API_SRC_HOME=$PROJECT_HOME/rest_api/src
+API_TEST_HOME=$PROJECT_HOME/rest_api/test
+API_SQL_HOME=$PROJECT_HOME/rest_api/sql
+API_LOG_HOME=$PROJECT_HOME/rest_api/log
+CRON_SRC_HOME=$PROJECT_HOME/cron/src
+CRON_TEST_HOME=$PROJECT_HOME/cron/test
+CRON_LOG_HOME=$PROJECT_HOME/cron/log
+
+
+PYTHONPATH=$PYTHONPATH:$CORE_SRC_HOME:$INTERNAL_SRC_HOME:$INTERNAL_TEST_HOME:$INTERNAL_LOG_HOME:$API_SRC_HOME:$API_TEST_HOME:$API_SQL_HOME:$API_LOG_HOME:$CRON_SRC_HOME:$CRON_TEST_HOME:$CRON_LOG_HOME
+export PYTHONPATH
+
+function internal_run {
+    fuser -k -n tcp 8871
+    echo "Starting server at: http://localhost:8871"
+    python $INTERNAL_SRC_HOME/handler.py -port=8871 -logging=debug -log_to_stderr=True -log_file_prefix=$INTERNAL_LOG_HOME/bolo-internal.log
+}
+
+function rest_api_run {
+    fuser -k -n tcp 8870
+    echo "Starting server at: http://192.168.1.218:8870"
+    python $API_SRC_HOME/handler.py -port=8870 -logging=error -log_to_stderr=True -log_file_prefix=$API_LOG_HOME/bolo-dev.log
+}
 
 # Go settings
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export GOARCH=amd64
 export GOOS=linux
-
-# Ruby settings
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 # teamocil auto-complete
 compctl -g '~/.teamocil/*(:t:r)' teamocil

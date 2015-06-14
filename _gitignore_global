@@ -1,3 +1,10 @@
+bolo-server/rest_api/src/bolome_rest_api/settings/dev.py
+bolo-server/internal/src/bolome_int/settings/dev.py
+*dev.py*
+dev.py
+get_live_show_test.py
+rest_api/src/wsgi_handler.py
+
 .ropeproject/
 .idea/
 .project.sublime-workspace
