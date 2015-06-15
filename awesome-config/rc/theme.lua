@@ -22,8 +22,8 @@ theme = {}
 theme.scale = scale()
 theme.icons = icons
 theme.wallpaper_cmd = { "/bin/true" }
-theme.font = "Source Code Pro " .. 10 * theme.scale
-theme.tasklist_font = "Source Code Pro " .. 10 * theme.scale
+theme.font = "Profont " .. 10 * theme.scale
+theme.tasklist_font = "Profont " .. 10 * theme.scale
 
 theme.bg_normal     = "#22222299"
 theme.bg_focus      = "#d8d8d8bb"
