@@ -11,7 +11,7 @@ bgnotify_threshold=5  ## set your own notification threshold
 function bgnotify_formatted {
   ## $1=exit_status, $2=command, $3=elapsed_time
   ##[ $1 -eq 0 ] && title="#Done" || title="## Failed!"
-  bgnotify "#done (took $3 secs), cmd:" "$2";
+  bgnotify "#cmd done! (took $3 secs);"
 }
 
 ZSH_THEME="../../dotfiles/pylemon"
@@ -50,7 +50,7 @@ alias git="LANG=C git"
 alias gl='git glog'
 alias gla='git glog --all'
 alias gls='git slog'
-alias gup='git remote update && git remote prune origin'
+alias gup='git remote update && git remote prune gerrit'
 alias gdf='git diff -w'
 
 # software
@@ -64,8 +64,10 @@ alias tree='tree -C'
 alias pg='sudo -u postgres psql'
 
 # project
-alias bolo='cd ~/bolo-server/'
-alias penv='bolo && workon bolo'
+alias penv='cd ~/work/bolo-server/ && workon bolo'
+alias report='cd ~/work/bolo-report-service/ && workon report'
+alias deploy='cd ~/work/bolo-server-deployment/ && workon report'
+
 #alias fb='penv && fab -f sysadmin/fabric/fabfile.py'
 #alias message='penv && dowant && python manage.py compilemessages && penv'
 #alias rskill='fuser -k -n tcp 8000'
@@ -79,7 +81,7 @@ alias penv='bolo && workon bolo'
 
 # custom commands
 function m(){
-   penv && python dowant/manage.py $1 $2 $3 $4 --settings=dowant.dev_settings
+   penv && python manage.py $1 $2 $3 $4
 }
 
 function psg(){
@@ -112,7 +114,7 @@ export WORKON_HOME=~/Envs
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Bolo.me settings
-PROJECT_HOME='/home/liwei/bolo-server/'
+PROJECT_HOME='/home/liwei/work/bolo-server/'
 CORE_SRC_HOME=$PROJECT_HOME/core/src
 INTERNAL_SRC_HOME=$PROJECT_HOME/internal/src
 INTERNAL_TEST_HOME=$PROJECT_HOME/internal/test
@@ -124,9 +126,9 @@ API_LOG_HOME=$PROJECT_HOME/rest_api/log
 CRON_SRC_HOME=$PROJECT_HOME/cron/src
 CRON_TEST_HOME=$PROJECT_HOME/cron/test
 CRON_LOG_HOME=$PROJECT_HOME/cron/log
+PYCHARM_DEBUG_EGG='/home/liwei/Apps/pycharm/debug-eggs/pycharm-debug.egg'
 
-
-PYTHONPATH=$PYTHONPATH:$CORE_SRC_HOME:$INTERNAL_SRC_HOME:$INTERNAL_TEST_HOME:$INTERNAL_LOG_HOME:$API_SRC_HOME:$API_TEST_HOME:$API_SQL_HOME:$API_LOG_HOME:$CRON_SRC_HOME:$CRON_TEST_HOME:$CRON_LOG_HOME
+PYTHONPATH=$PYTHONPATH:$CORE_SRC_HOME:$INTERNAL_SRC_HOME:$INTERNAL_TEST_HOME:$INTERNAL_LOG_HOME:$API_SRC_HOME:$API_TEST_HOME:$API_SQL_HOME:$API_LOG_HOME:$CRON_SRC_HOME:$CRON_TEST_HOME:$CRON_LOG_HOME:$PYCHARM_DEBUG_EGG
 export PYTHONPATH
 
 function internal_run {

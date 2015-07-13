@@ -1,7 +1,4 @@
-bolo-server/rest_api/src/bolome_rest_api/settings/dev.py
-bolo-server/internal/src/bolome_int/settings/dev.py
-*dev.py*
-dev.py
+test.py
 get_live_show_test.py
 rest_api/src/wsgi_handler.py
 
@@ -12,7 +9,6 @@ atlassian-ide-plugin.xml
 *~
 runtests.sh
 .dir-locals.el
-liwei.py
 django_db_sampler
 django_fixture_tools
 pg_deliveryhero_dump.sql.gz
