@@ -1,3 +1,4 @@
+.env
 test.py
 get_live_show_test.py
 rest_api/src/wsgi_handler.py

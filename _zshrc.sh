@@ -1,5 +1,17 @@
 #!/bin/sh
 
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+
+# 不保留重复的历史记录项
+setopt hist_ignore_all_dups
+# 在命令前添加空格，不将此命令添加到记录文件中
+setopt hist_ignore_space
+# zsh 4.3.6 doesn't have this option
+setopt hist_fcntl_lock 2>/dev/null
+setopt hist_reduce_blanks
+
 # language settings
 
 # zsh settings
@@ -18,7 +30,9 @@ ZSH_THEME="../../dotfiles/pylemon"
 # ZSH_THEME="random"
 # themes I don't like
 # agnoster avit fishy gentoo minimal mgutz tjkirch fwalch kphoen juanghurtado lambda essembeh norm intheloop wedisagree josh trapd00r rixius example kiwi
-plugins=(git github pip encode64 fabric last-working-dir zsh-syntax-highlighting gitfast command-not-found cp rsync python django history-substring-search per-directory-history colored-man docker golang z colorize bgnotify)
+plugins=(alias-tips zsh-256color git github pip encode64 fabric zsh-syntax-highlighting gitfast command-not-found cp rsync python django 
+
+history-substring-search per-directory-history docker golang z colorize bgnotify mosh colored-man-pages common-aliases)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
@@ -31,9 +45,11 @@ alias la='ls -A'
 alias df='df -h'
 alias t='teamocil'
 alias ipy='ipython'
+alias dstat='dstat --cpu --io --mem --net --load --fs --vm --disk-util --disk-tps --freespace --swap --top-io --top-bio-adv'
 alias kk='sudo fuser -k -n tcp $@'
 alias fontls="fc-list | sed 's,:.*,,' | sort -u"
 alias nettop='sudo nethogs $@'
+alias apt-get='sudo apt-fast'
 alias update='sudo apt-fast update'
 alias upgrade='sudo apt-fast update && sudo apt-fast -y upgrade'
 alias search='aptitude search'
@@ -53,6 +69,7 @@ alias gls='git slog'
 alias gup='git remote update && git remote prune gerrit'
 alias gdf='git diff -w'
 
+
 # software
 alias vi='vim'
 alias du='ncdu'
@@ -67,6 +84,7 @@ alias pg='sudo -u postgres psql'
 alias penv='cd ~/work/bolo-server/ && workon bolo'
 alias report='cd ~/work/bolo-report-service/ && workon report'
 alias deploy='cd ~/work/bolo-server-deployment/ && workon report'
+alias wiki='cd ~/work/wiki/'
 
 #alias fb='penv && fab -f sysadmin/fabric/fabfile.py'
 #alias message='penv && dowant && python manage.py compilemessages && penv'
@@ -82,6 +100,10 @@ alias deploy='cd ~/work/bolo-server-deployment/ && workon report'
 # custom commands
 function m(){
    penv && python manage.py $1 $2 $3 $4
+}
+
+function gline() {
+   gawk 'match($0,"^@@ -([0-9]+),[0-9]+ [+]([0-9]+),[0-9]+ @@",a){left=a[1];right=a[2];next};/^(---|\+\+\+|[^-+ ])/{print;next};{line=substr($0,2)};/^-/{print "-" left++ ":" line;next};/^[+]/{print "+" right++ ":" line;next};{print "(" left++ "," right++ "):"line}'
 }
 
 function psg(){
@@ -103,7 +125,7 @@ test -r ~/.dircolors && eval "$(dircolors ~/.dircolors)"
 
 # exports
 # add dropbox bin path to sys.path
-export PATH=$HOME/Dropbox/bin:$PATH
+export PATH=$HOME/tools:$HOME/Dropbox/bin:$PATH
 
 # zsh syntax highlighting when input a command
 source $HOME/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -114,7 +136,7 @@ export WORKON_HOME=~/Envs
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Bolo.me settings
-PROJECT_HOME='/home/liwei/work/bolo-server/'
+PROJECT_HOME='/home/liwei/work/bolo-server'
 CORE_SRC_HOME=$PROJECT_HOME/core/src
 INTERNAL_SRC_HOME=$PROJECT_HOME/internal/src
 INTERNAL_TEST_HOME=$PROJECT_HOME/internal/test
@@ -144,8 +166,9 @@ function rest_api_run {
 }
 
 # Go settings
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export GOROOT=$HOME/go
+export GOPATH=$HOME/work/Go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export GOARCH=amd64
 export GOOS=linux
 
@@ -153,13 +176,8 @@ export GOOS=linux
 compctl -g '~/.teamocil/*(:t:r)' teamocil
 
 # emacs daemon must after LC_CTYPE update.
-#export EDITOR='emacsclient -nw'
-#pgrep -f 'emacs --daemon' > /dev/null
-#if [ $? -ne 0 ]
-#then
-#    emacs --daemon
-#fi
-#alias e=$EDITOR
+export EDITOR='emacs.nw'
+alias e=$EDITOR
 
 # Make zsh know about hosts already accessed by SSH
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
